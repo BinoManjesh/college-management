@@ -5,12 +5,12 @@ if (is_post_request()) {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $sql = '
-        SELECT pword
-        FROM users
-        WHERE username = :username
+        SELECT Password
+        FROM user
+        WHERE Username = :username
     ';
     $result = make_query($sql, [":username" => $username], true);
-    $actual_pwd = $result ? $result['pword'] : null;
+    $actual_pwd = $result ? $result['Password'] : null;
     if ($actual_pwd === $password) {
         session_regenerate_id();
         $_SESSION['username'] = $username;
