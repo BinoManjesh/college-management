@@ -1,39 +1,6 @@
 <?php
 require_once __DIR__ . '/../src/bootstrap.php';
 require_once __DIR__ . '/../src/libs/dashboard.php';
-
-$user_courses = [
-    ['course_id'=>0, 'course_name'=>'CName1', 'faculty_name'=>'fName'],
-    ['course_id'=>1, 'course_name'=>'CName2', 'faculty_name'=>'fName'],
-    ['course_id'=>2, 'course_name'=>'CName3', 'faculty_name'=>'fName'],
-    ['course_id'=>3, 'course_name'=>'CName4', 'faculty_name'=>'fName'],
-    ['course_id'=>4, 'course_name'=>'CName5', 'faculty_name'=>'fName'],
-    ['course_id'=>5, 'course_name'=>'CName6', 'faculty_name'=>'fName'],
-    ['course_id'=>6, 'course_name'=>'CName7', 'faculty_name'=>'fName'],
-    ['course_id'=>7, 'course_name'=>'CName8', 'faculty_name'=>'fName'],
-    ['course_id'=>8, 'course_name'=>'CName9', 'faculty_name'=>'fName'],
-];
-$assn_query = [
-    ['assn_name'=>'A1', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A2', 'course_name'=>'C1', 'submitted'=>'0', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A3', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A4', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A5', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A6', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A7', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A8', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-];
-$notifications = [
-    ['course_name' => 'c1', 'content'=>'blah blah blah'],
-    ['course_name' => 'c2', 'content'=>'blah blah blah'],
-    ['course_name' => 'c3', 'content'=>'blah blah blah']
-];
-$enroll_courses = [
-    ['course_id' => 0, 'enrolled' => 0, 'course_name' => 'c1', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-    ['course_id' => 0, 'enrolled' => 1, 'course_name' => 'c2', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-    ['course_id' => 0, 'enrolled' => 0, 'course_name' => 'c3', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-    ['course_id' => 0, 'enrolled' => 1, 'course_name' => 'c4', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-];
 ?>
 
 <?php
@@ -53,7 +20,9 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <button id="closepopup" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer"><i class="fa fa-close"></i></button>
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
-        <div class="addcourse" style="display: none;grid-auto-flow: column">
+            <form method="post" action="dashboard.php">
+                <input hidden="true" name="action" value="enroll">
+            <div class="addcourse" style="display: none;grid-auto-flow: column">
             <label for="coursename">Course-Name:</label>
             <input type="text" id="coursename" style="width: 100px;">
             <label for="Departmentname">Department:</label>
@@ -66,29 +35,28 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <!-- coursename,facultyid,credits,department -->
         </div>
             <div class="pendingassignment">
-                <div class="card shadow">
-                    <table class="table align-items-center table-flush" style="display:block;border-collapse: collapse;height:auto;text-align:center">
-                        <tbody style="display: block;">
-                            <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                                <th style="text-align: center;">Select</th>
-                                <th style="text-align: center;">Course</th>
-                                <th style="text-align: center;">Department</th>
-                                <th style="text-align: center;">Faculty</th>
-                            </tr>
-                            <?php
-                                foreach ($enroll_courses as $course) {
-                                    EnrollCourseRow($course);
-                                }
-                            ?>
-                        </tbody>
-                    </table>
-
-
+                    <div class="card shadow">
+                        <table class="table align-items-center table-flush" style="display:block;border-collapse: collapse;height:auto;text-align:center">
+                            <tbody style="display: block;">
+                                <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
+                                    <th style="text-align: center;">Select</th>
+                                    <th style="text-align: center;">Course</th>
+                                    <th style="text-align: center;">Department</th>
+                                    <th style="text-align: center;">Faculty</th>
+                                </tr>
+                                <?php
+                                    foreach ($enroll_courses as $course) {
+                                        EnrollCourseRow($course);
+                                    }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div style="width: 100%;justify-content:center;display:flex">
-                <button id="confirmpopup" type="submit">Confirm</button>
-            </div>
+                <div style="width: 100%;justify-content:center;display:flex">
+                    <button id="confirmpopup" type="submit">Confirm</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

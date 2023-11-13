@@ -30,7 +30,7 @@ function make_query(string $sql, array $data, bool $need_fetch=false) : array | 
         $temp = $statement->fetch();
         return $temp;
     } else {
-        return null;
+        return false;
     }
 }
 
