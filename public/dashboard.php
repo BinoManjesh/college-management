@@ -87,13 +87,13 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <div class='card-header' style="grid-template-columns: none;">
                 <!-- <div class="profile-img"><button type='submit' id="profilepic" style="background:white;opacity:0.5;width:100%;overflow:hidden;height:25%;border:none;z-index:10;cursor:pointer;position:relative;top:75%">Edit</button></div> -->
                 <div style="display: flex;align-items: center;">
-                    <h3 class='data1'>Name:<br>Id:</h3>
+                    <h3 class='data1'>Name:<br><br>Id:</h3>
                 </div>
                 <div style="display: flex;align-items: center;">
-                    <h3 class='data1'>Department<br>Credits</h3>
+                    <h3 class='data1'>Department:<br><br>Credits:</h3>
                 </div>
                 <div style="display: flex;align-items: center;">
-                    <h3 class='data1'>CGPA/Salary:<br>Semester</h3>
+                    <h3 class='data1'>CGPA/Salary:<br><br>Semester:</h3>
                 </div>
                 <p style="position: absolute;bottom:0;right:0;margin:0;">Administrator</p>
             </div>
