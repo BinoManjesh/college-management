@@ -201,51 +201,81 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                                     <th style="text-align: center;">Marks</th>
                                     <!-- <th style="text-align: center;">Department</th>
                                     <th style="text-align: center;">Faculty</th> -->
-                                </tr>
                 <tr>
-                    <td>Student Id</td>
+                    <td>
+                        Student Id
+                        <button class="btn"><i class="fa fa-download"></i></button>
+                    </td>
                     <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                     </td>
                 </tr>
                 <tr>
-                    <td>Student Id</td>
+                    <td>
+                        Student Id
+                        <button class="btn"><i class="fa fa-download"></i></button>
+                    </td>
                     <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                     </td>
                 </tr>
                 <tr>
-                    <td>Student Id</td>
+                    <td>
+                        Student Id
+                        <button class="btn"><i class="fa fa-download"></i></button>
+                    </td>
                     <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                     </td>
                 </tr>
                 <tr>
-                    <td>Student Id</td>
+                    <td>
+                        Student Id
+                        <button class="btn"><i class="fa fa-download"></i></button>
+                    </td>
                     <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                     </td>
                 </tr>
                 <tr>
-                    <td>Student Id</td>
+                    <td>
+                        Student Id
+                        <button class="btn"><i class="fa fa-download"></i></button>
+                    </td>
                     <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                     </td>
                 </tr>
                 <tr>
-                    <td>Student Id</td>
+                    <td>
+                        Student Id
+                        <button class="btn"><i class="fa fa-download"></i></button>
+                    </td>
                     <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                     </td>
                 </tr>
                 <tr>
-                    <td>Student Id</td>
+                    <td>
+                        Student Id
+                        <button class="btn"><i class="fa fa-download"></i></button>
+                    </td>
+                    <td> Date </td>
+                    <td>
+                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Student Id
+                        <button class="btn"><i class="fa fa-download"></i></button>
+                    </td>
                     <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
@@ -529,7 +559,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                             <tbody style="display: block;height: 225px;overflow: auto;">
                                 <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
                                     <th style="text-align: center;padding-left:5px;padding-right:5px;">Topic<br><input type="text" style="width: 100px;"></th>
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="text" style="width: 100px;"></th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="date" style="width: 100px;"></th>
                                     <th style="text-align: center;padding-left:5px;padding-right:5px;">Grade<br><button>Add</button></th>
                                     <!-- <th style="text-align: center;">Last Date</th>
                                     <th style="text-align: center;">Submit</th> -->
@@ -605,7 +635,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                     <table class="table align-items-center table-flush" style="border-collapse: collapse;text-align:center;">
                             <tbody style="display: block;height: 225px;overflow: auto;">
                             <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="text" style="width: 100px;"></th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="date" style="width: 100px;"></th>
                                     <th style="text-align: center;padding-left:5px;padding-right:5px;">Edit<br><button>Add</button></th>
                                 </tr>
                 <tr>
