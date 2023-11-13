@@ -70,42 +70,54 @@ view('header', [
                                     <th style="text-align: center;">Faculty</th> -->
                             </tr>
                             <tr>
-                                <td>Student Id</td>
+                                <td>Student Id
+                                    <button><i class="fa fa-download"></i></button>
+                                </td>
                                 <td> Date </td>
                                 <td>
                                     <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                                 </td>
                             </tr>
                             <tr>
-                                <td>Student Id</td>
+                                <td>Student Id
+                                <button><i class="fa fa-download"></i></button>
+                                </td>
                                 <td> Date </td>
                                 <td>
                                     <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                                 </td>
                             </tr>
                             <tr>
-                                <td>Student Id</td>
+                                <td>Student Id
+                                <button><i class="fa fa-download"></i></button>
+                                </td>
                                 <td> Date </td>
                                 <td>
                                     <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                                 </td>
                             </tr>
                             <tr>
-                                <td>Student Id</td>
+                                <td>Student Id
+                                <button><i class="fa fa-download"></i></button>
+                                </td>
                                 <td> Date </td>
                                 <td>
                                     <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                                 </td>
                             </tr>
                             <tr>
-                                <td>Student Id</td>
+                                <td>Student Id
+                                <button><i class="fa fa-download"></i></button>
+                                </td>
                                 <td> Date </td>
                                 <td>
                                     <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                                 </td>
                             </tr>
                             <tr>
-                                <td>Student Id</td>
+                                <td>Student Id
+                                <button><i class="fa fa-download"></i></button>
+                                </td>
                                 <td> Date </td>
                                 <td>
                                     <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
