@@ -24,13 +24,15 @@ function AttendanceRow($student) {
     END;
 }
 
-function GradeRow($stu_assn) {
+function GradeRow($submission) {
     echo <<<END
         <tr>
-            <td>{$stu_assn['Off_id']}</td>
-            <td>{$stu_assn['Dat']}</td>
+            <td>Student Id
+                <a href='uploaded_files/{$submission['Sub_file']}'><i class="fa fa-download"></i></a>
+            </td>
+            <td> Date </td>
             <td>
-                <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
+                <input type="number" id="marks-{$submission['Stu_id']}" name="marks-{$submission['Stu_id']}" min="0" max="100">
             </td>
         </tr>
     END;
