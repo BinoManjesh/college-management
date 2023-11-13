@@ -72,16 +72,14 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <form method="post" action="dashboard.php">
                 <input hidden="true" name="action" value="enroll">
             <div class="adduser" style="display: grid;grid-auto-flow: row">
-            <label for="useridregister">User Id:</label>
-            <input type="text" id="useridregister" style="width: 100%;">
+            <label for="Officialid">Official Id:</label>
+            <input type="text" id="Officialid" style="width: 100%;">
             <label for="passwordregister">Password:</label>
             <input type="text" id="passwordregister" style="width: 100%;">
             <label for="firstnameregister">First Name:</label>
             <input type="text" id="firstnameregister" style="width: 100%;">
             <label for="lastnameregister">Last Name:</label>
             <input type="text" id="lastnameregister" style="width: 100%;">
-            <label for="Officialid">Official Id:</label>
-            <input type="text" id="Officialid" style="width: 100%;">
             <label for="departmentregister">Department Name:</label>
             <input type="text" id="departmentregister" style="width: 100%;">
             <label for="branchregister">Branch Name:</label>
