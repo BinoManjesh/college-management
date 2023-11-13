@@ -27,7 +27,7 @@ function make_query(string $sql, array $data, bool $need_fetch=false) : array | 
     }
     $statement->execute();
     if ($need_fetch) {
-        $temp = $statement->fetchAll();
+        $temp = $statement->fetchAll(PDO::FETCH_ASSOC);
         if (sizeof($temp) === 1) {
             return $temp[0];
         } else {
