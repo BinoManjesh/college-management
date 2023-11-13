@@ -1,5 +1,33 @@
 <?php
 
+if (is_post_request()) {
+    switch($_POST['action']) {
+        case 'upload_material':
+            upload_file('course-material');
+            break;
+    }
+}
+
+function getCourse($course_id) {
+    $sql = '
+        SELECT Course_id, Course_name, Fac_id, Credits, First_name as Fac_fname, Last_name as Fac_lname, user.Dept_name
+        FROM course
+        INNER JOIN user
+        ON user.User_id = course.Fac_id;
+        WHERE Course_id = :course_id
+    ';
+    return make_query($sql, [':course_id' => $course_id], true);
+}
+
+function getMaterial($course_id) {
+    $sql = '
+        SELECT *
+        FROM coursematerial
+        WHERE Course_id = :course_id
+    ';
+    return make_query($sql, [':course_id' => $course_id], true);
+}
+
 $students = [
     ['User_id'=>0, 'Off_id'=>'BT21CSE000'],
     ['User_id'=>1, 'Off_id'=>'BT21CSE001'],
@@ -8,6 +36,10 @@ $students = [
     ['User_id'=>4, 'Off_id'=>'BT21CSE004'],
     ['User_id'=>5, 'Off_id'=>'BT21CSE005']
 ];
+
+$course_id = $_GET['course_id'];
+$course = getCourse($course_id);
+$material = getMaterial($course_id);
 
 function AttendanceRow($student) {
     $id = $student['User_id'];

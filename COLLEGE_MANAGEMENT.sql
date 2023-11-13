@@ -57,6 +57,7 @@ CREATE TABLE `attendance` (
 CREATE TABLE `course` (
   `Course_id` int(11) NOT NULL,
   `Course_name` varchar(40) NOT NULL,
+  `Dept_name` varchar(40) NOT NULL,
   `Fac_id` int(11) NOT NULL,
   `Credits` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -69,6 +70,7 @@ CREATE TABLE `course` (
 
 CREATE TABLE `coursematerial` (
   `Course_id` int(11) NOT NULL,
+  `Mat_name` varchar(50) NOT NULL
   `Mat_file` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

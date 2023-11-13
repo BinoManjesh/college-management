@@ -5,7 +5,7 @@ require_once __DIR__ . '/../src/libs/course.php';
 
 <?php
 view('header', [
-    'title' => 'Dashboard', 'stylesheets' => [
+    'title' => $course['Course_name'], 'stylesheets' => [
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css',
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
         'coursepage'
@@ -410,13 +410,13 @@ view('header', [
                 <div class="card">
                     <div class="card-header" style="display: grid;grid-auto-flow:column;grid-template-columns:none;">
                         <h2>
-                            Course Name:
+                            Course Name: <?= $course['Course_name'] ?>
                         </h2>
                         <h2>
-                            Department:
+                            Department: <?= $course['Dept_name'] ?>
                         </h2>
                         <h2>
-                            Faculty:
+                            Faculty: <?= $course['Fac_fname'] . ' ' . $course['Fac_lname']?>
                         </h2>
                     </div>
                 </div>
@@ -425,39 +425,24 @@ view('header', [
                 <div class='card'>
                     <div class="card-header" style="grid-template-columns: none;">
                         <h2>Study Material</h2>
-                        <button type="submit" style="width: 10%;left:90%;position:relative;cursor:pointer;" id="uploadbut" onclick="document.getElementById('uploadfile').click()">Upload</button>
-                        <input type="file" style="display: none;" id="uploadfile">
+                        <form action="course.php" method="post" enctype="multipart/form-data">
+                            <input hidden name="action" value="upload_material">
+                            <button type="submit" style="width: 10%;left:65%;position:relative;cursor:pointer;" id="uploadbut">Upload</button>
+                            <input style="width: 20%;left:70%;position:relative;cursor:pointer;" name="course-material" type="file" id="uploadfile">
+                        </form>
                     </div>
                     <div class="card-body">
                         <div class="cardcourses-wrapper">
-                            <div class="cardcourses">
-                                <h3>Book1</h3>
-                                <p><a href="">Download</a></p>
-                            </div>
-                            <div class="cardcourses">
-                                <h3>Book1</h3>
-                                <p><a href="">Download</a></p>
-                            </div>
-                            <div class="cardcourses">
-                                <h3>Book1</h3>
-                                <p><a href="">Download</a></p>
-                            </div>
-                            <div class="cardcourses">
-                                <h3>Book1</h3>
-                                <p><a href="">Download</a></p>
-                            </div>
-                            <div class="cardcourses">
-                                <h3>Book1</h3>
-                                <p><a href="">Download</a></p>
-                            </div>
-                            <div class="cardcourses">
-                                <h3>Book1</h3>
-                                <p><a href="">Download</a></p>
-                            </div>
-                            <div class="cardcourses">
-                                <h3>Book1</h3>
-                                <p><a href="">Download</a></p>
-                            </div>
+                            <?php
+                            foreach ($material as $mat) {
+                                echo <<<END
+                                <div class="cardcourses">
+                                    <h3>{$mat['Mat_name']}</h3>  
+                                    <p><a href="uploaded_files/{$mat['Mat_file']}">Download</a></p>
+                                </div>
+                                END;
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>

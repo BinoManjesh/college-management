@@ -4,7 +4,7 @@ const DB_HOST = 'localhost';
 const DB_NAME = 'college_management';
 const DB_USER = 'root';
 const DB_PASSWORD = '';
-const FILE_DIR = __DIR__ . '/../../files/';
+const FILE_DIR = __DIR__ . '/../../public/uploaded_files/';
 
 function database(): PDO {
     static $pdo;
