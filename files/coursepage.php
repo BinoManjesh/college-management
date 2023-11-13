@@ -190,149 +190,60 @@
                             <tbody style="display: block;">
                                 <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
                                     <th style="text-align: center;">Student Id</th>
+                                    <th style="text-align: center;">Submission Date</th>
                                     <th style="text-align: center;">Marks</th>
                                     <!-- <th style="text-align: center;">Department</th>
                                     <th style="text-align: center;">Faculty</th> -->
                                 </tr>
                 <tr>
                     <td>Student Id</td>
+                    <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                     </td>
                 </tr>
                 <tr>
                     <td>Student Id</td>
+                    <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                     </td>
                 </tr>
                 <tr>
                     <td>Student Id</td>
+                    <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                     </td>
                 </tr>
                 <tr>
                     <td>Student Id</td>
+                    <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                     </td>
                 </tr>
                 <tr>
                     <td>Student Id</td>
+                    <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                     </td>
                 </tr>
                 <tr>
                     <td>Student Id</td>
+                    <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                     </td>
                 </tr>
                 <tr>
                     <td>Student Id</td>
+                    <td> Date </td>
                     <td>
                         <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
                     </td>
                 </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Student Id</td>
-                    <td>
-                        <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                    </td>
-                </tr>
-                
             </tbody>
               </table>
             
@@ -559,7 +470,8 @@
     <div class='card'>
                     <div class="card-header" style="grid-template-columns: none;">
                         <h2>Study Material</h2>
-                        <button type="submit" style="width: 10%;left:90%;position:relative;cursor:pointer;" id="uploadbut">Upload</button>
+                        <button type="submit" style="width: 10%;left:90%;position:relative;cursor:pointer;" id="uploadbut" onclick="document.getElementById('uploadfile').click()">Upload</button>
+                        <input type="file" style="display: none;" id="uploadfile">
                     </div>
                     <div class="card-body">
                     <div class="cardcourses-wrapper">
