@@ -542,12 +542,15 @@
  
   <section class="home-section">
   <div class="card">
-    <div class="card-header">
+    <div class="card-header" style="display: grid;grid-auto-flow:column;grid-template-columns:none;">
         <h2>
-            Course
+            Course Name:
         </h2>
-        <h2 style = "position: absolute;right: 20px;top: 25%;" >
-            Faculty 
+        <h2>
+            Department:
+        </h2>
+        <h2>
+            Faculty:
         </h2>
     </div>
   </div>
