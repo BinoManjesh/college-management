@@ -410,7 +410,10 @@ view('header', [
                                                     </div>
                                                 </th>
                                                 <td>Date</td>
-                                                <td><button type="submit" onclick="myFunction2()">Grade</button></td>
+                                                <td>
+                                                    Grade text if student
+                                                    <!-- <button type="submit" onclick="myFunction2()">Grade</button> -->
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">
@@ -470,7 +473,10 @@ view('header', [
                 </tr> 
                 <tr>
                     <th >Date</th>
-                    <td><button type="submit" onclick="myFunction()">Edit</button></td>
+                    <td>
+                        Present/absent text if student
+                        <button type="submit" onclick="myFunction()">Edit</button>
+                    </td>
                 </tr>
                 <tr>
                     <th >Date</th>
@@ -511,7 +517,10 @@ view('header', [
                                 </tr>
                 <tr>
                     <th >Exam</th>
-                    <td><button type="submit" onclick="myFunction4()">Edit</button></td>
+                    <td>
+                        Marks if student
+                        <!-- <button type="submit" onclick="myFunction4()">Edit</button> -->
+                    </td>
                 </tr> 
                 <tr>
                     <th >Exam</th>
