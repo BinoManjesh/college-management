@@ -6,9 +6,6 @@ require_once __DIR__ . '/../src/libs/login.php';
 <?php view('header', ['title' => 'Login', 'stylesheets' => ['loginpage']]) ?>
 
 <!-- Error message for wrong password -->
-<?php if (isset($error)): ?>
-<p>Wrong password or username </p>
-<?php endif ?>
 
 <form method="post" class='login-form'>
     <div class="flex-row">
@@ -19,7 +16,7 @@ require_once __DIR__ . '/../src/libs/login.php';
         </label>
         <input id="username" name="username" class='lf--input' placeholder='Username' type='text'>
     </div>
-    <div class="flex-row">
+    <div class="flex-row" style="margin-bottom: 10px;">
         <label class="lf--label" for="password">
             <svg x="0px" y="0px" width="15px" height="5px">
                 <g> <path fill="#B1B7C4" d="M6,2L6,2c0-1.1-1-2-2.1-2H2.1C1,0,0,0.9,0,2.1v0.8C0,4.1,1,5,2.1,5h1.7C5,5,6,4.1,6,2.9V3h5v1h1V3h1v2h1V3h1 V2H6z M5.1,2.9c0,0.7-0.6,1.2-1.3,1.2H2.1c-0.7,0-1.3-0.6-1.3-1.2V2.1c0-0.7,0.6-1.2,1.3-1.2h1.7c0.7,0,1.3,0.6,1.3,1.2V2.9z"/></g>
@@ -27,6 +24,11 @@ require_once __DIR__ . '/../src/libs/login.php';
         </label>
         <input id="password" name="password" class='lf--input' placeholder='Password' type='password'>
     </div>
+    <?php if (isset($error)): ?>
+        <div class="flex-row" style="text-align: center;margin-bottom:0px;justify-content:center;">
+            <p id="wronguser" style="display: flex;text-align:center;margin:0px;margin-bottom:5px;color:red;">Wrong Username or Password</p>
+        </div>
+    <?php endif ?>
     <input class='lf--submit' type='submit' value='LOGIN'>
 </form>
 
