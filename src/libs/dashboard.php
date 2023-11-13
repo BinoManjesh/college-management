@@ -102,7 +102,8 @@ function Notification(array $notification) {
     echo <<<EOS
         <tr>
             <th>{$notification['course_name']}</th>
-            <td style="width:80%;text-align:left;">{$notification['content']}</td>
+            <td style="width:70%;text-align:left;">{$notification['content']}</td>
+            <td style="width:10%"><button><i class="fa fa-trash"></i></button></td>
         </tr>
     EOS;
 }
