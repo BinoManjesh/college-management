@@ -520,7 +520,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                     <div class="card">
                     <div class="card-header">
                         <h2>Assignments</h2>
-                        <button style="width: min-content;position:relative;left:90%">Add</button>
+                        
                     </div>
                     <div class="card-body">
                     <div class="pendingassignment">
@@ -528,9 +528,9 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                     <table class="table align-items-center table-flush" style="border-collapse: collapse;text-align:center">
                             <tbody style="display: block;height: 225px;overflow: auto;">
                                 <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                                    <th style="text-align: center;">Topic</th>
-                                    <th style="text-align: center;">Date</th>
-                                    <th style="text-align: center;">Grade</th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Topic<br><input type="text" style="width: 100px;"></th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="text" style="width: 100px;"></th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Grade<br><button>Add</button></th>
                                     <!-- <th style="text-align: center;">Last Date</th>
                                     <th style="text-align: center;">Submit</th> -->
                                 </tr>
@@ -598,7 +598,6 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                     <div class="card" >
                         <div class="card-header">
                             <h2>Attendance</h2>
-                            <button style="width: min-content;position:relative;left:90%">Add</button>
                         </div>
                         <div class="card-body">
                         <div class="pendingassignment">
@@ -606,8 +605,8 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                     <table class="table align-items-center table-flush" style="border-collapse: collapse;text-align:center;">
                             <tbody style="display: block;height: 225px;overflow: auto;">
                             <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                                    <th >Date</th>
-                                    <th >Edit</th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="text" style="width: 100px;"></th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Edit<br><button>Add</button></th>
                                 </tr>
                 <tr>
                     <th >Date</th>
@@ -644,7 +643,6 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                         <div class="card" >
                         <div class="card-header">
                             <h2>Marks</h2>
-                            <button style="width: min-content;position:relative;left:90%">Add</button>
                         </div>
                         <div class="card-body">
                         <div class="pendingassignment">
@@ -652,8 +650,8 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                     <table class="table align-items-center table-flush" style="border-collapse: collapse;text-align:center;">
                             <tbody style="display: block;height: 225px;overflow: auto;">
                             <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                                    <th >Exam</th>
-                                    <th >Edit</th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Exam<br><input type="text" style="width: 100px;"></th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Edit<br><button>Add</button></th>
                                 </tr>
                 <tr>
                     <th >Exam</th>
