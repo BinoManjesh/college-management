@@ -20,7 +20,7 @@ function database(): PDO {
     return $pdo;
 }
 
-function make_query(string $sql, array $data, bool $need_fetch=false) : array | false {
+function make_query(string $sql, array $data, bool $need_fetch=false, bool $one_row=false) : array | false {
     $statement = database()->prepare($sql);
     foreach ($data as $key => $value) {
         $statement->bindValue($key, $value);
@@ -28,7 +28,7 @@ function make_query(string $sql, array $data, bool $need_fetch=false) : array | 
     $statement->execute();
     if ($need_fetch) {
         $temp = $statement->fetchAll(PDO::FETCH_ASSOC);
-        if (sizeof($temp) === 1) {
+        if ($one_row) {
             return $temp[0];
         } else {
             return $temp;

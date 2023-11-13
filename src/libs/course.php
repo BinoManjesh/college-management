@@ -8,7 +8,7 @@ function getCourse($course_id) {
         ON user.User_id = course.Fac_id;
         WHERE Course_id = :course_id
     ';
-    return make_query($sql, [':course_id' => $course_id], true);
+    return make_query($sql, [':course_id' => $course_id], true, true);
 }
 
 function getMaterial($course_id) {
