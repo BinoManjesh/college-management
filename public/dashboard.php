@@ -1,39 +1,6 @@
 <?php
 require_once __DIR__ . '/../src/bootstrap.php';
 require_once __DIR__ . '/../src/libs/dashboard.php';
-
-$user_courses = [
-    ['course_id'=>0, 'course_name'=>'CName1', 'faculty_name'=>'fName'],
-    ['course_id'=>1, 'course_name'=>'CName2', 'faculty_name'=>'fName'],
-    ['course_id'=>2, 'course_name'=>'CName3', 'faculty_name'=>'fName'],
-    ['course_id'=>3, 'course_name'=>'CName4', 'faculty_name'=>'fName'],
-    ['course_id'=>4, 'course_name'=>'CName5', 'faculty_name'=>'fName'],
-    ['course_id'=>5, 'course_name'=>'CName6', 'faculty_name'=>'fName'],
-    ['course_id'=>6, 'course_name'=>'CName7', 'faculty_name'=>'fName'],
-    ['course_id'=>7, 'course_name'=>'CName8', 'faculty_name'=>'fName'],
-    ['course_id'=>8, 'course_name'=>'CName9', 'faculty_name'=>'fName'],
-];
-$assn_query = [
-    ['assn_name'=>'A1', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A2', 'course_name'=>'C1', 'submitted'=>'0', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A3', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A4', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A5', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A6', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A7', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A8', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-];
-$notifications = [
-    ['course_name' => 'c1', 'content'=>'blah blah blah'],
-    ['course_name' => 'c2', 'content'=>'blah blah blah'],
-    ['course_name' => 'c3', 'content'=>'blah blah blah']
-];
-$enroll_courses = [
-    ['course_id' => 0, 'enrolled' => 0, 'course_name' => 'c1', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-    ['course_id' => 1, 'enrolled' => 1, 'course_name' => 'c2', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-    ['course_id' => 2, 'enrolled' => 0, 'course_name' => 'c3', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-    ['course_id' => 3, 'enrolled' => 1, 'course_name' => 'c4', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-];
 ?>
 
 <?php

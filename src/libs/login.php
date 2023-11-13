@@ -5,7 +5,7 @@ if (is_post_request()) {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $sql = '
-        SELECT Password
+        SELECT *
         FROM user
         WHERE Username = :username
     ';
@@ -13,7 +13,7 @@ if (is_post_request()) {
     $actual_pwd = $result ? $result['Password'] : null;
     if ($actual_pwd === $password) {
         session_regenerate_id();
-        $_SESSION['username'] = $username;
+        $_SESSION['user_data'] = $result;
         redirect_to('dashboard.php');
     } else {
         $error = true;
