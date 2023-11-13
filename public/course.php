@@ -306,11 +306,102 @@ view('header', [
         </div>
     </div>
 </div>
+<div class='popupendcourse' id="endcoursepopup" style="width: 100%;height:100%;display:none;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
+    <div class='card' style="width: 50%;">
+        <div class="card-header" style="text-align:center;grid-template-columns:none">
+            <h3 style="text-align: center;">
+                End Course
+            </h3>
+            <button id="closeendcoursepopup" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer" onclick="myFunction7()"><i class="fa fa-close"></i></button>
+        </div>
+        <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
+            <form method="post" action="course.php">
+                <input hidden="true" name="action" value="enroll">
+                <div class="pendingassignment">
+                    <div class="card shadow">
+                        <table class="table align-items-center table-flush" style="display:block;border-collapse: collapse;height:auto;text-align:center">
+                            <tbody style="display: block;">
+                                <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
+                                    <th style="text-align: center;">Grade</th>
+                                    <th style="text-align: center;">Starting Marks(Included)</th>
+                                    <th style="text-align: center;">Ending Marks(Included)</th>
+                                </tr>
+                                <tr>
+                                    <td>AA(10)</td>
+                                    <td><input type="number" id="startingmarksAA" name="startingmarksAA" max="100" min="0" value="0" 
+                                    onchange="document.getElementById('endingmarksAB').value=(document.getElementById('startingmarksAA').value-1);
+                                    document.getElementById('startingmarksAB').max=(document.getElementById('startingmarksAA').value-1)">
+                                    </td>
+                                    <td>100</td>
+                                </tr>
+                                <tr>
+                                    <td>AB(9)</td>
+                                    <td><input type="number" id="startingmarksAB" max="100" min="0" value="0"
+                                    onchange="document.getElementById('endingmarksBB').value=(document.getElementById('startingmarksAB').value-1);
+                                    document.getElementById('startingmarksBB').max=(document.getElementById('startingmarksAB').value-1)">
+                                    </td>
+                                    <td><input type="number" id="endingmarksAB" disabled max="100" min="0" value="0"></td>
+                                </tr>
+                                <tr>
+                                    <td>BB(8)</td>
+                                    <td><input type="number" id="startingmarksBB" max="100" min="0" value="0"
+                                    onchange="document.getElementById('endingmarksBC').value=(document.getElementById('startingmarksBB').value-1);
+                                    document.getElementById('startingmarksBC').max=(document.getElementById('startingmarksBB').value-1)">
+                                    </td>
+                                    <td><input type="number" id="endingmarksBB" value="0" max="100" min="0" disabled></td>
+                                </tr>
+                                <tr>
+                                    <td>BC(7)</td>
+                                    <td><input type="number" id="startingmarksBC" max="100" min="0" value="0"
+                                    onchange="document.getElementById('endingmarksCC').value=(document.getElementById('startingmarksBC').value-1);
+                                    document.getElementById('startingmarksCC').max=(document.getElementById('startingmarksBC').value-1)">
+                                    </td>
+                                    <td><input type="number" id="endingmarksBC" max="100" min="0" value="0" disabled></td>
+                                </tr>
+                                <tr>
+                                    <td>CC(6)</td>
+                                    <td><input type="number" id="startingmarksCC" max="100" min="0" value="0"
+                                    onchange="document.getElementById('endingmarksCD').value=(document.getElementById('startingmarksCC').value-1);
+                                    document.getElementById('startingmarksCD').max=(document.getElementById('startingmarksCC').value-1)">
+                                    </td>
+                                    <td><input type="number" id="endingmarksCC" max="100" min="0" value="0" disabled></td>
+                                </tr>
+                                <tr>
+                                    <td>CD(5)</td>
+                                    <td><input type="number" id="startingmarksCD" max="100" min="0" value="0"
+                                    onchange="document.getElementById('endingmarksDD').value=(document.getElementById('startingmarksCD').value-1);
+                                    document.getElementById('startingmarksDD').max=(document.getElementById('startingmarksCD').value-1)">
+                                    </td>
+                                    <td><input type="number" id="endingmarksCD" max="100" min="0" value="0" disabled></td>
+                                </tr>
+                                <tr>
+                                    <td>DD(4)</td>
+                                    <td><input type="number" id="startingmarksDD" max="100" min="0" value="0" onchange="document.getElementById('endingmarksFF').value=(document.getElementById('startingmarksDD').value-1)"></td>
+                                    <td><input type="number" id="endingmarksDD" max="100" min="0" value="0" disabled></td>
+                                </tr>
+                                <tr>
+                                    <td>FF(0)</td>
+                                    <td>0</td>
+                                    <td><input type="number" id="endingmarksFF" max="100" min="0" value="0" disabled></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        <br>
+                <div style="width: 100%;justify-content:center;display:flex">
+                    <button id="confirmendcoursepopup" type="submit" onsubmit="myFunction7()">End</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class='dashboard'>
     <?= view('navbar'); ?>
     <div class='dashboard-app'>
         <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
             <h1 style="position: absolute;text-align: center;width: 100%;z-index: -1;color: #443ea2;">College</h1>
+            <button style="position: absolute;right:0;padding:5px;" onclick="myFunction6()">End Course</button>
         </header>
         <div class='dashboard-content'>
 
@@ -598,6 +689,15 @@ sidebarBtn.onclick = function() {
 
     function myFunction5() {
         document.getElementById("popupexams").style.display = "none";
+    }
+    function myFunction6()
+    {
+        document.getElementById("endcoursepopup").style.display="flex";
+    }
+    function myFunction7()
+    {
+        document.getElementById("endcoursepopup").style.display="none";
+        console.log((document.getElementById('startingmarksAA').value));
     }
 </script>
 
