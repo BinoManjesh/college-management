@@ -1,13 +1,5 @@
 <?php
 
-if (is_post_request()) {
-    switch($_POST['action']) {
-        case 'upload_material':
-            upload_file('course-material');
-            break;
-    }
-}
-
 function getCourse($course_id) {
     $sql = '
         SELECT Course_id, Course_name, Fac_id, Credits, First_name as Fac_fname, Last_name as Fac_lname, user.Dept_name
@@ -40,6 +32,23 @@ $students = [
 $course_id = $_GET['course_id'];
 $course = getCourse($course_id);
 $material = getMaterial($course_id);
+
+if (is_post_request()) {
+    switch($_POST['action']) {
+        case 'upload_material':
+            $mat_name = $_FILES['course-material']['name'];
+            if ($mat_name) {
+                $file = upload_file('course-material');
+                $sql = '
+                    INSERT INTO coursematerial(Course_id, Mat_file, Mat_name)
+                    VALUES (:course_id, :mat_file, :mat_name);
+                ';
+                make_query($sql, [':course_id'=>$course_id, ':mat_file'=>$file, ':mat_name'=> $mat_name]);
+            }
+            break;
+    }
+    redirect_to("course.php?course_id=$course_id");
+}
 
 function AttendanceRow($student) {
     $id = $student['User_id'];

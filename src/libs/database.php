@@ -39,10 +39,8 @@ function make_query(string $sql, array $data, bool $need_fetch=false) : array | 
 }
 
 function upload_file(string $input_name) : string {
-    var_dump($_FILES);
     $file_name = time() . '-' . basename($_FILES[$input_name]['name']);
     $full_name = FILE_DIR . $file_name;
-    print $full_name;
     move_uploaded_file($_FILES[$input_name]['tmp_name'], $full_name);
     return $file_name;
 }

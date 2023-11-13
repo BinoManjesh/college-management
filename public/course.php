@@ -425,7 +425,7 @@ view('header', [
                 <div class='card'>
                     <div class="card-header" style="grid-template-columns: none;">
                         <h2>Study Material</h2>
-                        <form action="course.php" method="post" enctype="multipart/form-data">
+                        <form action='course.php?course_id=<?=$course_id?>' method="post" enctype="multipart/form-data">
                             <input hidden name="action" value="upload_material">
                             <button type="submit" style="width: 10%;left:65%;position:relative;cursor:pointer;" id="uploadbut">Upload</button>
                             <input style="width: 20%;left:70%;position:relative;cursor:pointer;" name="course-material" type="file" id="uploadfile">
