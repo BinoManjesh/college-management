@@ -1,4 +1,31 @@
 <?php
+if (is_post_request()) {
+    if ($_POST['action'] === 'enroll') {
+    }
+}
+
+function updateEnrollment($stu_id, $enroll_courses, $choice) {
+    $add_course = '
+        INSERT INTO stucourse(Stu_id, Course_id)
+        VALUES (:Stu_id, :Course_id)
+    ';
+    $remove_course = '
+        DELET FROM stucourse
+        WHERE Stu_id = :Stu_id AND Course_id = :Course_id
+    ';
+    foreach ($enroll_courses as $course) {
+        $current = $course['enrolled'];
+        $new = isset($choice[$course['user_id']]);
+        if ($new != $current) {
+            $data = [':Stu_id' => $stu_id, ':Course_id' => $course['course_id']];
+            if ($new) {
+                make_query($add_course, $data);
+            } else {
+                make_query($remove_course, $data);
+            }
+        }
+    }
+}
 
 function CardCourse(array $course) {
     echo <<<EOS
@@ -42,7 +69,7 @@ function EnrollCourseRow(array $course) {
     echo <<<EOS
         <tr>
             <th scope="row">
-                <input $checked value="{$course['course_id']}" type="checkbox">
+                <input name="course[]" $checked value="{$course['course_id']}" type="checkbox">
             </th>
             <td>{$course['course_name']}</td>
             <td>{$course['department_name']}</td>
