@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../src/bootstrap.php';
 require_once __DIR__ . '/../src/libs/dashboard.php';
 
-$courses = [
+$user_courses = [
     ['course_id'=>0, 'course_name'=>'CName1', 'faculty_name'=>'fName'],
     ['course_id'=>1, 'course_name'=>'CName2', 'faculty_name'=>'fName'],
     ['course_id'=>2, 'course_name'=>'CName3', 'faculty_name'=>'fName'],
@@ -29,10 +29,10 @@ $notifications = [
     ['course_name' => 'c3', 'content'=>'blah blah blah']
 ];
 $enroll_courses = [
-    ['course_id' => 0, 'course_name' => 'c1', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-    ['course_id' => 0, 'course_name' => 'c2', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-    ['course_id' => 0, 'course_name' => 'c3', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-    ['course_id' => 0, 'course_name' => 'c4', 'department_name'=>'D1', 'faculty_name'=>'F1'],
+    ['course_id' => 0, 'enrolled' => 0, 'course_name' => 'c1', 'department_name'=>'D1', 'faculty_name'=>'F1'],
+    ['course_id' => 0, 'enrolled' => 1, 'course_name' => 'c2', 'department_name'=>'D1', 'faculty_name'=>'F1'],
+    ['course_id' => 0, 'enrolled' => 0, 'course_name' => 'c3', 'department_name'=>'D1', 'faculty_name'=>'F1'],
+    ['course_id' => 0, 'enrolled' => 1, 'course_name' => 'c4', 'department_name'=>'D1', 'faculty_name'=>'F1'],
 ];
 ?>
 
@@ -89,8 +89,9 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <div class='dashboard-nav-dropdown'><a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-photo-video"></i> Courses </a>
                 <div class='dashboard-nav-dropdown-menu'>
                     <?php
-                        foreach ($courses as $course) {
-                            echo "<a href=\"#\" class=\"dashboard-nav-dropdown-item\">{$course['course_name']}</a>";
+                        foreach ($user_courses as $course) {
+                            $link = "course.php?course_id={$course['course_id']}";
+                            echo "<a href=\"$link\" class=\"dashboard-nav-dropdown-item\">{$course['course_name']}</a>";
                         }
                     ?>
                 </div>
@@ -123,7 +124,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <div class="card-body">
                 <div class="cardcourses-wrapper">
                     <?php
-                        foreach($courses as $course) {
+                        foreach($user_courses as $course) {
                             CardCourse($course);
                         }
                     ?>

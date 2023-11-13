@@ -38,9 +38,12 @@ function Notification(array $notification) {
 }
 
 function EnrollCourseRow(array $course) {
+    $checked = $course['enrolled'] ? 'checked' : '';
     echo <<<EOS
         <tr>
-            <th scope="row"><input value="{$course['course_id']}" type="checkbox"></th>
+            <th scope="row">
+                <input $checked value="{$course['course_id']}" type="checkbox">
+            </th>
             <td>{$course['course_name']}</td>
             <td>{$course['department_name']}</td>
             <td>{$course['faculty_name']}</td>
