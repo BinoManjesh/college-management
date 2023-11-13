@@ -17,7 +17,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <h3 style="text-align: center;">
                 Courses
             </h3>
-            <button id="closepopup" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer"><i class="fa fa-close"></i></button>
+            <button id="closepopup" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer" onclick="myFunction1()"><i class="fa fa-close"></i></button>
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
             <form method="post" action="dashboard.php">
@@ -54,7 +54,47 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                     </div>
                 </div>
                 <div style="width: 100%;justify-content:center;display:flex">
-                    <button id="confirmpopup" type="submit">Confirm</button>
+                    <button id="confirmpopup" type="submit" onclick="myFunction1()">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class='popupregister' id="registerpopup" style="width: 100%;height:100%;display:none;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
+    <div class='card' style="width: 50%;">
+        <div class="card-header" style="text-align:center;grid-template-columns:none">
+            <h3 style="text-align: center;">
+                New User
+            </h3>
+            <button id="closepopupregister" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer" onclick="myFunction3()"><i class="fa fa-close"></i></button>
+        </div>
+        <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
+            <form method="post" action="dashboard.php">
+                <input hidden="true" name="action" value="enroll">
+            <div class="adduser" style="display: grid;grid-auto-flow: row">
+            <label for="useridregister">User Id:</label>
+            <input type="text" id="useridregister" style="width: 100%;">
+            <label for="passwordregister">Password:</label>
+            <input type="text" id="passwordregister" style="width: 100%;">
+            <label for="firstnameregister">First Name:</label>
+            <input type="text" id="firstnameregister" style="width: 100%;">
+            <label for="lastnameregister">Last Name:</label>
+            <input type="text" id="lastnameregister" style="width: 100%;">
+            <label for="Officialid">Official Id:</label>
+            <input type="text" id="Officialid" style="width: 100%;">
+            <label for="departmentregister">Department Name:</label>
+            <input type="text" id="departmentregister" style="width: 100%;">
+            <label for="branchregister">Branch Name:</label>
+            <input type="text" id="branchregister" style="width: 100%;">
+            <label for="Typeregister">Type:</label>
+            <input type="text" id="Typeregister" style="width: 100%;">
+            <label for="Semesterregister">Semester:</label>
+            <input type="number" id="Semesterregister" style="width: 100%;">            
+            <!-- coursename,facultyid,credits,department -->
+        </div>
+        <br>
+                <div style="width: 100%;justify-content:center;display:flex">
+                    <button id="confirmpopupregister" type="submit" onclick="myFunction3()">Add</button>
                 </div>
             </form>
         </div>
@@ -65,7 +105,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
     <div class='dashboard-app'>
         <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
             <h1 style="position: absolute;text-align: center;width: 100%;z-index: -1;color: #443ea2;">College</h1>
-            <button style="position: absolute;right:0;padding:5px;">Register Students</button>
+            <button style="position: absolute;right:0;padding:5px;" onclick="myFunction2()">Register User</button>
         </header>
         <div class='card'>
             <div class='card-header' style="grid-template-columns: none;">
@@ -85,7 +125,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
         <div class='card'>
             <div class="card-header">
                 <h2>Courses</h2>
-                <button type="submit" style="width: 10%;left:90%;position:relative;cursor:pointer;" id="enrollbut">Enroll/Add</button>
+                <button type="submit" style="width: 10%;left:90%;position:relative;cursor:pointer;" id="enrollbut" onclick="myFunction()">Enroll/Add</button>
             </div>
             <div class="card-body">
                 <div class="cardcourses-wrapper">
@@ -110,7 +150,6 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                                     <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
                                         <th style="text-align: center;">Assignment</th>
                                         <th style="text-align: center;">Course</th>
-                                        <th style="text-align: center;">Status</th>
                                         <th style="text-align: center;">Last Date</th>
                                         <th style="text-align: center;">Submit</th>
                                     </tr>
@@ -163,16 +202,20 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
 <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="scripts/dashboardpage.js"></script>
 <script>
-    document.getElementById("enrollbut").addEventListener("click", myFunction);
-    document.getElementById("closepopup").addEventListener("click", myFunction1);
-    document.getElementById("confirmpopup").addEventListener("click", myFunction1);
-
     function myFunction() {
         document.getElementById("popup").style.display = "flex";
     }
-
     function myFunction1() {
         document.getElementById("popup").style.display = "none";
+    }
+    function myFunction2()
+    {
+        document.getElementById("registerpopup").style.display="flex";
+        // console.log("debug");
+    }
+    function myFunction3(){
+        document.getElementById("registerpopup").style.display="none";
+        // console.log("debug");
     }
 </script>
 

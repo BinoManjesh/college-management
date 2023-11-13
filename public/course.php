@@ -424,7 +424,7 @@ view('header', [
                                                     </div>
                                                 </th>
                                                 <td>Date</td>
-                                                <td><button type="submit" onclick="myFunction2()">Grade</button></td>
+                                                <td><button type="submit" onclick="document.getElementById('submitassignment').click()"><input type="file" id="submitassignment" style="display:none">Submit</button></td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">

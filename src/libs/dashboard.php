@@ -12,14 +12,14 @@ $user_courses = [
     ['course_id'=>8, 'course_name'=>'CName9', 'faculty_name'=>'fName'],
 ];
 $assn_query = [
-    ['assn_name'=>'A1', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A2', 'course_name'=>'C1', 'submitted'=>'0', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A3', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A4', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A5', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A6', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A7', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
-    ['assn_name'=>'A8', 'course_name'=>'C1', 'submitted'=>'1', 'due_date'=>'1/2/3'],
+    ['assn_name'=>'A1', 'course_name'=>'C1', 'due_date'=>'1/2/3'],
+    ['assn_name'=>'A2', 'course_name'=>'C1', 'due_date'=>'1/2/3'],
+    ['assn_name'=>'A3', 'course_name'=>'C1', 'due_date'=>'1/2/3'],
+    ['assn_name'=>'A4', 'course_name'=>'C1', 'due_date'=>'1/2/3'],
+    ['assn_name'=>'A5', 'course_name'=>'C1', 'due_date'=>'1/2/3'],
+    ['assn_name'=>'A6', 'course_name'=>'C1', 'due_date'=>'1/2/3'],
+    ['assn_name'=>'A7', 'course_name'=>'C1', 'due_date'=>'1/2/3'],
+    ['assn_name'=>'A8', 'course_name'=>'C1', 'due_date'=>'1/2/3'],
 ];
 $notifications = [
     ['course_name' => 'c1', 'content'=>'blah blah blah'],
@@ -80,7 +80,6 @@ function CardCourse(array $course) {
 }
 
 function AssignmentRow(array $data) {
-    $status = $data['submitted'] ? 'Submitted': 'Pending';
     echo <<<EOS
         <tr>
             <th scope="row">
@@ -91,7 +90,6 @@ function AssignmentRow(array $data) {
                 </div>
             </th>
             <td>{$data['course_name']}</td>
-            <td>$status</td>
             <td>{$data['due_date']}</td>
             <td><button type="submit">Submit</button></td>
         </tr>
