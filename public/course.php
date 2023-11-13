@@ -735,6 +735,9 @@ sidebarBtn.onclick = function() {
 </div>
 </div>
 </div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js'></script>
+<script src="scripts/dashboardpage.js"></script>
 <script>
 function myFunction() {
     document.getElementById("popupattendance").style.display = "flex";

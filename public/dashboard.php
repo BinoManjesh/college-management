@@ -62,7 +62,9 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
 </div>
 <div class='dashboard'>
     <div class="dashboard-nav">
-        <header><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a><a href="#" class="brand-logo"><i class="fas fa-book"></i> <span>College</span></a></header>
+        <header><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a><a href="#" class="brand-logo"><i class="fas fa-book"></i> <span>College</span></a>
+        
+    </header>
         <nav class="dashboard-nav-list"><a href="#" class="dashboard-nav-item"><i class="fas fa-home"></i>
                 Home </a><a href="#" class="dashboard-nav-item active"><i class="fas fa-tachometer-alt"></i> Dashboard
             </a>
@@ -82,6 +84,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
     <div class='dashboard-app'>
         <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
             <h1 style="position: absolute;text-align: center;width: 100%;z-index: -1;color: #443ea2;">College</h1>
+            <button style="position: absolute;right:0;padding:5px;">Register Students</button>
         </header>
         <div class='card'>
             <div class='card-header' style="grid-template-columns: none;">
