@@ -6,7 +6,11 @@
     <?php
         foreach ($stylesheets as $sheet) 
         {
-            echo "<link rel=\"stylesheet\" href=\"styles/$sheet.css\">\n";
+            if (str_starts_with($sheet, 'https')) {
+                echo "<link rel=\"stylesheet\" href=\"$sheet\">";
+            } else {
+                echo "<link rel=\"stylesheet\" href=\"styles/$sheet.css\">";
+            }
         }
     ?>
     <title><?= $title ?? 'Home' ?></title>
