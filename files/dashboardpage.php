@@ -140,10 +140,6 @@
     </div>
     <div class='dashboard-app'>
         <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a><h1 style="position: absolute;text-align: center;width: 100%;z-index: -1;color: #443ea2;">College</h1></header>
-        <div class='dashboard-content'>
-
-            
-            </div>
                 <div class='card'>
                     <div class='card-header'><div class="profile-img"><button type='submit' id="profilepic" style="background:white;opacity:0.5;width:100%;overflow:hidden;height:25%;border:none;z-index:10;cursor:pointer;position:relative;top:75%">Edit</button></div>
                     <h3 class='data1'>Name:</h3>
