@@ -91,7 +91,8 @@ function AssignmentRow(array $data) {
             </th>
             <td>{$data['course_name']}</td>
             <td>{$data['due_date']}</td>
-            <td><button type="submit">Submit</button></td>
+            <td><button type="submit" onclick="document.getElementById('submitassign').click()">
+            <input type="file" id="submitassign" style="display:none">Submit</button></td>
         </tr>
     EOS;
 }
