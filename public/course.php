@@ -1,14 +1,21 @@
-<!DOCTYPE html>
+<?php
+require_once __DIR__ . '/../src/bootstrap.php';
+require_once __DIR__ . '/../src/libs/course.php';
+?>
 
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css'><link rel="stylesheet" href="coursepage.css">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-     <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js'></script><script  src="./dashboardpage.js"></script>
-   </head>
-<body>
+<?php
+view('header', ['title' => 'Dashboard', 'stylesheets'=>[
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+    'coursepage'
+],
+'scripts' => [
+    'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js',
+    'dashboardpage'
+]]);
+?>
+
 <div class='popup' id="popupattendance" style="width: 100%;height:100%;display:none;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
                 <div class='card' style="width: 50%;" >
                     <div class="card-header" style="text-align:center;grid-template-columns:none">
@@ -723,5 +730,5 @@ function myFunction() {
     document.getElementById("popupexams").style.display = "none";
   }
     </script>
-</body>
-</html>
+
+<?php view('footer') ?>
