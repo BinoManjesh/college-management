@@ -27,8 +27,12 @@ function make_query(string $sql, array $data, bool $need_fetch=false) : array | 
     }
     $statement->execute();
     if ($need_fetch) {
-        $temp = $statement->fetch();
-        return $temp;
+        $temp = $statement->fetchAll();
+        if (sizeof($temp) === 1) {
+            return $temp[0];
+        } else {
+            return $temp;
+        }
     } else {
         return false;
     }
