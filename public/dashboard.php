@@ -53,6 +53,18 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <button id="closepopup" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer"><i class="fa fa-close"></i></button>
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
+        <div class="addcourse" style="display: none;grid-auto-flow: column">
+            <label for="coursename">Course-Name:</label>
+            <input type="text" id="coursename" style="width: 100px;">
+            <label for="Departmentname">Department:</label>
+            <input type="text" id="Departmentname" style="width: 75px;">
+            <label for="FacultyIdname">Faculty-Id:</label>
+            <input type="text" id="FacultyIdname" style="width: 75px;">
+            <label for="Creditsname">Credits:</label>
+            <input type="number" id="Creditsname" style="width: 50px;">
+            <button id="addcoursebutton">Add</button>
+            <!-- coursename,facultyid,credits,department -->
+        </div>
             <div class="pendingassignment">
                 <div class="card shadow">
                     <table class="table align-items-center table-flush" style="display:block;border-collapse: collapse;height:auto;text-align:center">
@@ -103,23 +115,25 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
         <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
             <h1 style="position: absolute;text-align: center;width: 100%;z-index: -1;color: #443ea2;">College</h1>
         </header>
-        <div class='dashboard-content'>
-
-
-        </div>
         <div class='card'>
-            <div class='card-header'>
-                <div class="profile-img"><button type='submit' id="profilepic" style="background:white;opacity:0.5;width:100%;overflow:hidden;height:25%;border:none;z-index:10;cursor:pointer;position:relative;top:75%">Edit</button></div>
-                <h3 class='data1'>Name:</h3>
-                <h3 class='data1'>Id:</h3>
-                <h3 class='data1'>CGPA/Salary:</h3>
+            <div class='card-header' style="grid-template-columns: none;">
+                <!-- <div class="profile-img"><button type='submit' id="profilepic" style="background:white;opacity:0.5;width:100%;overflow:hidden;height:25%;border:none;z-index:10;cursor:pointer;position:relative;top:75%">Edit</button></div> -->
+                <div style="display: flex;align-items: center;">
+                    <h3 class='data1'>Name:<br>Id:</h3>
+                </div>
+                <div style="display: flex;align-items: center;">
+                    <h3 class='data1'>Department<br>Credits</h3>
+                </div>
+                <div style="display: flex;align-items: center;">
+                    <h3 class='data1'>CGPA/Salary:<br>Semester</h3>
+                </div>
                 <p style="position: absolute;bottom:0;right:0;margin:0;">Administrator</p>
             </div>
         </div>
         <div class='card'>
             <div class="card-header">
                 <h2>Courses</h2>
-                <button type="submit" style="width: 10%;left:90%;position:relative;cursor:pointer;" id="enrollbut">Enroll</button>
+                <button type="submit" style="width: 10%;left:90%;position:relative;cursor:pointer;" id="enrollbut">Enroll/Add</button>
             </div>
             <div class="card-body">
                 <div class="cardcourses-wrapper">
