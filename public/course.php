@@ -69,9 +69,10 @@ view('header', [
                                 <!-- <th style="text-align: center;">Department</th>
                                     <th style="text-align: center;">Faculty</th> -->
                             </tr>
+                            
                             <tr>
                                 <td>Student Id
-                                    <button><i class="fa fa-download"></i></button>
+                                    <a href="uploaded_files/placeholder" download><i class="fa fa-download"></i></a>
                                 </td>
                                 <td> Date </td>
                                 <td>
