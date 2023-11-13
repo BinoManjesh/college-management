@@ -315,8 +315,8 @@ view('header', [
             <button id="closeendcoursepopup" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer" onclick="myFunction7()"><i class="fa fa-close"></i></button>
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
-            <form method="post" action="course.php">
-                <input hidden="true" name="action" value="enroll">
+            <form action='course.php?course_id=<?=$course_id?>' method="post" enctype="multipart/form-data">
+                <input hidden="true" name="action" value="endcourse">
                 <div class="pendingassignment">
                     <div class="card shadow">
                         <table class="table align-items-center table-flush" style="display:block;border-collapse: collapse;height:auto;text-align:center">
@@ -336,7 +336,7 @@ view('header', [
                                 </tr>
                                 <tr>
                                     <td>AB(9)</td>
-                                    <td><input type="number" id="startingmarksAB" max="100" min="0" value="0"
+                                    <td><input type="number" id="startingmarksAB" name="startingmarksAB" max="100" min="0" value="0"
                                     onchange="document.getElementById('endingmarksBB').value=(document.getElementById('startingmarksAB').value-1);
                                     document.getElementById('startingmarksBB').max=(document.getElementById('startingmarksAB').value-1)">
                                     </td>
@@ -344,7 +344,7 @@ view('header', [
                                 </tr>
                                 <tr>
                                     <td>BB(8)</td>
-                                    <td><input type="number" id="startingmarksBB" max="100" min="0" value="0"
+                                    <td><input type="number" id="startingmarksBB" name="startingmarksBB" max="100" min="0" value="0"
                                     onchange="document.getElementById('endingmarksBC').value=(document.getElementById('startingmarksBB').value-1);
                                     document.getElementById('startingmarksBC').max=(document.getElementById('startingmarksBB').value-1)">
                                     </td>
@@ -352,7 +352,7 @@ view('header', [
                                 </tr>
                                 <tr>
                                     <td>BC(7)</td>
-                                    <td><input type="number" id="startingmarksBC" max="100" min="0" value="0"
+                                    <td><input type="number" id="startingmarksBC" name="startingmarksBC" max="100" min="0" value="0"
                                     onchange="document.getElementById('endingmarksCC').value=(document.getElementById('startingmarksBC').value-1);
                                     document.getElementById('startingmarksCC').max=(document.getElementById('startingmarksBC').value-1)">
                                     </td>
@@ -360,7 +360,7 @@ view('header', [
                                 </tr>
                                 <tr>
                                     <td>CC(6)</td>
-                                    <td><input type="number" id="startingmarksCC" max="100" min="0" value="0"
+                                    <td><input type="number" id="startingmarksCC" name="startingmarksCC" max="100" min="0" value="0"
                                     onchange="document.getElementById('endingmarksCD').value=(document.getElementById('startingmarksCC').value-1);
                                     document.getElementById('startingmarksCD').max=(document.getElementById('startingmarksCC').value-1)">
                                     </td>
@@ -368,7 +368,7 @@ view('header', [
                                 </tr>
                                 <tr>
                                     <td>CD(5)</td>
-                                    <td><input type="number" id="startingmarksCD" max="100" min="0" value="0"
+                                    <td><input type="number" id="startingmarksCD" name="startingmarksCD" max="100" min="0" value="0"
                                     onchange="document.getElementById('endingmarksDD').value=(document.getElementById('startingmarksCD').value-1);
                                     document.getElementById('startingmarksDD').max=(document.getElementById('startingmarksCD').value-1)">
                                     </td>
@@ -376,7 +376,7 @@ view('header', [
                                 </tr>
                                 <tr>
                                     <td>DD(4)</td>
-                                    <td><input type="number" id="startingmarksDD" max="100" min="0" value="0" onchange="document.getElementById('endingmarksFF').value=(document.getElementById('startingmarksDD').value-1)"></td>
+                                    <td><input type="number" id="startingmarksDD" name="startingmarksDD" max="100" min="0" value="0" onchange="document.getElementById('endingmarksFF').value=(document.getElementById('startingmarksDD').value-1)"></td>
                                     <td><input type="number" id="endingmarksDD" max="100" min="0" value="0" disabled></td>
                                 </tr>
                                 <tr>
@@ -461,70 +461,32 @@ view('header', [
                     <table class="table align-items-center table-flush" style="border-collapse: collapse;text-align:center">
                             <tbody style="display: block;height: 225px;overflow: auto;">
                                 <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Topic<br><input type="text" style="width: 100px;"></th>
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="date" style="width: 100px;"></th>
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Grade<br><button>Add</button></th>
+                                <form action='course.php?course_id=<?=$course_id?>' method="post" enctype="multipart/form-data">
+                                <input hidden="true" name="action" value="newassignment">
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Topic<br><input type="text" id="newassignmenttopic" name="newassignmenttopic" style="width: 100px;"></th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="date" id="newassignmentdate" name="newassignmentdate" style="width: 100px;"></th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Grade<br><button type="submit">Add</button></th>
                                     <!-- <th style="text-align: center;">Last Date</th>
                                     <th style="text-align: center;">Submit</th> -->
+                                </form>
                                             </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <div class="media align-items-center">
-                                                        <div class="media-body">
-                                                            <span class="mb-0 text-sm">Course</span>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                                <td>Date</td>
-                                                <td><button type="submit" onclick="myFunction2()">Grade</button></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <div class="media align-items-center">
-                                                        <div class="media-body">
-                                                            <span class="mb-0 text-sm">Course</span>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                                <td>Date</td>
-                                                <td>
-                                                    Grade text if student
-                                                    <!-- <button type="submit" onclick="myFunction2()">Grade</button> -->
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <div class="media align-items-center">
-                                                        <div class="media-body">
-                                                            <span class="mb-0 text-sm">Course</span>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                                <td>Date</td>
-                                                <td><button type="submit" onclick="document.getElementById('submitassignment').click()"><input type="file" id="submitassignment" style="display:none">Submit</button></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <div class="media align-items-center">
-                                                        <div class="media-body">
-                                                            <span class="mb-0 text-sm">Course</span>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                                <td>Date</td>
-                                                <td><button type="submit" onclick="myFunction2()">Grade</button></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <div class="media align-items-center">
-                                                        <div class="media-body">
-                                                            <span class="mb-0 text-sm">Course</span>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                                <td>Date</td>
-                                                <td><button type="submit" onclick="myFunction2()">Grade</button></td>
-                                            </tr>
+                                            <?php
+                            foreach ($assignments as $ass) {
+                                echo <<<END
+                                <tr>
+                                    <th scope="row" style="padding-left:0px;padding-right:0px;">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="mb-0 text-sm">{$ass['Assn_name']}</span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <td style="padding-left:0px;padding-right:0px;">{$ass['Due_time']}</td>
+                                    <td style="padding-left:0px;padding-right:0px;"><button type="submit" onclick="myFunction2()">Grade</button></td>
+                                </tr>
+                                END;
+                            }
+                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -541,36 +503,22 @@ view('header', [
                     <table class="table align-items-center table-flush" style="border-collapse: collapse;text-align:center;">
                             <tbody style="display: block;height: 225px;overflow: auto;">
                             <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="date" style="width: 100px;"></th>
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Edit<br><button>Add</button></th>
+                            <form action='course.php?course_id=<?=$course_id?>' method="post" enctype="multipart/form-data">
+                            <input hidden="true" name="action" value="newattendance1">
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="date" id="newattendance" name="newattendance" style="width: 100px;"></th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Edit<br><button type="submit">Add</button></th>
+                            </form>
                                 </tr>
-                <tr>
-                    <th >Date</th>
-                    <td><button type="submit" onclick="myFunction()">Edit</button></td>
-                </tr> 
-                <tr>
-                    <th >Date</th>
-                    <td>
-                        Present/absent text if student
-                        <button type="submit" onclick="myFunction()">Edit</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th >Date</th>
-                    <td><button type="submit" onclick="myFunction()">Edit</button></td>
-                </tr>
-                <tr>
-                    <th >Date</th>
-                    <td><button type="submit" onclick="myFunction()">Edit</button></td>
-                </tr>
-                <tr>
-                    <th >Date</th>
-                    <td><button type="submit" onclick="myFunction()">Edit</button></td>
-                </tr>
-                <tr>
-                    <th >Date</th>
-                    <td><button type="submit" onclick="myFunction()">Edit</button></td>
-                </tr>
+                                <?php
+                            foreach ($attendance as $att) {
+                                echo <<<END
+                                <tr>
+                                <th >{$att['Date']}</th>
+                                <td><button type="submit" onclick="myFunction()">Edit</button></td>
+                                </tr>
+                                END;
+                            }
+                            ?>
             </tbody>
               </table>
             
@@ -681,8 +629,8 @@ sidebarBtn.onclick = function() {
     }
     function myFunction7()
     {
-        document.getElementById("endcoursepopup").style.display="none";
-        console.log((document.getElementById('startingmarksAA').value));
+        // document.getElementById("endcoursepopup").style.display="none";
+        // console.log((document.getElementById('startingmarksAA').value));
     }
 </script>
 

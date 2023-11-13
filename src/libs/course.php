@@ -10,7 +10,14 @@ function getCourse($course_id) {
     ';
     return make_query($sql, [':course_id' => $course_id], true, true);
 }
-
+function getassignment($course_id) {
+    $sql = '
+        SELECT Assn_name, Due_time
+        FROM assignments
+        WHERE Course_id = :course_id
+    ';
+    return make_query($sql, [':course_id' => $course_id], true,false);
+}
 function getMaterial($course_id) {
     $sql = '
         SELECT *
@@ -19,7 +26,15 @@ function getMaterial($course_id) {
     ';
     return make_query($sql, [':course_id' => $course_id], true);
 }
-
+function getattendance($course_id)
+{
+    $sql = '
+        SELECT *
+        FROM attendance
+        WHERE Course_id = :course_id
+    ';
+    return make_query($sql, [':course_id' => $course_id], true);
+}
 $students = [
     ['User_id'=>0, 'Off_id'=>'BT21CSE000'],
     ['User_id'=>1, 'Off_id'=>'BT21CSE001'],
@@ -28,10 +43,8 @@ $students = [
     ['User_id'=>4, 'Off_id'=>'BT21CSE004'],
     ['User_id'=>5, 'Off_id'=>'BT21CSE005']
 ];
-
 $course_id = $_GET['course_id'];
 $course = getCourse($course_id);
-$material = getMaterial($course_id);
 
 if (is_post_request()) {
     switch($_POST['action']) {
@@ -46,10 +59,62 @@ if (is_post_request()) {
                 make_query($sql, [':course_id'=>$course_id, ':mat_file'=>$file, ':mat_name'=> $mat_name]);
             }
             break;
+        case 'endcourse':
+            $AA=(int)$_POST['startingmarksAA'];
+            $AB=(int)$_POST['startingmarksAB'];
+            $BB=(int)$_POST['startingmarksBB'];
+            $BC=(int)$_POST['startingmarksBC'];
+            $CC=(int)$_POST['startingmarksCC'];
+            $CD=(int)$_POST['startingmarksCD'];
+            $DD=(int)$_POST['startingmarksDD'];
+            $FF=(int)0;
+            $sql1 = '
+            UPDATE stucourse
+            SET Grade = CASE 
+            WHEN Marks_s1+Marks_s2+Marks_endsem>= :AA THEN \'AA\'
+            WHEN Marks_s1+Marks_s2+Marks_endsem>= :AB THEN \'AB\'
+            WHEN Marks_s1+Marks_s2+Marks_endsem>= :BB THEN \'BB\'
+            WHEN Marks_s1+Marks_s2+Marks_endsem>= :BC THEN \'BC\'
+            WHEN Marks_s1+Marks_s2+Marks_endsem>= :CC THEN \'CC\'
+            WHEN Marks_s1+Marks_s2+Marks_endsem>= :CD THEN \'CD\'
+            WHEN Marks_s1+Marks_s2+Marks_endsem>= :DD THEN \'DD\'
+            ELSE \'FF\'
+            END;
+            WHERE Course_id = :course_id
+            ';
+            make_query($sql1, [':AA'=>$AA,':AB'=>$AB,':BB'=>$BB,':BC'=>$BC,':CC'=>$CC,':CD'=>$CD,':DD'=>$DD, ':course_id'=>$course_id]);
+            break;
+        case 'newassignment':
+            $assignmentname=$_POST['newassignmenttopic'];
+            $assignmentdate=$_POST['newassignmentdate'];
+            if($assignmentname && $assignmentdate)
+            {
+                $sql = '
+                        INSERT INTO assignments(Assn_name, Due_time, Course_id)
+                        VALUES (:asign_name, :asign_date, :course_id);
+                    ';
+                make_query($sql, [':course_id'=>$course_id, ':asign_name'=>$assignmentname, ':asign_date'=> $assignmentdate]);
+            }
+            break;
+        case 'newattendance1':
+            $attendancedate=$_POST['newattendance'];
+            if($attendancedate)
+            {
+                $sql = '
+                        INSERT INTO attendance(Stu_id, Date, Course_id)
+                        SELECT Stu_id, :date as Date, Course_id
+                        From stucourse
+                        Where Course_id= :course_id;
+                    ';
+                make_query($sql,[':course_id'=>$course_id,':date'=>$attendancedate]);
+            }
+            break;
     }
-    redirect_to("course.php?course_id=$course_id");
 }
 
+$material = getMaterial($course_id);
+$assignments = getassignment($course_id);
+$attendance = getattendance($course_id);
 function AttendanceRow($student) {
     $id = $student['User_id'];
     echo <<<END
