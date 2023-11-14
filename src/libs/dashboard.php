@@ -170,17 +170,27 @@ if (is_post_request()) {
         ':deptname'=>$_POST['departmentregister'],':branchname'=>$_POST['branchregister'],':type'=>$_POST['Typeregister'],':sem'=>$_POST['Semesterregister']]);
         if($_POST['Typeregister']==='HOD')
         {
+            $temp=make_query('Select User_id from user ORDER BY User_id DESC LIMIT 1;',[],true,true);
             $sql = '
-                INSERT INTO Department(Dept_name,Head_id)
-                values (:deptname,:offid);
+                UPDATE Department
+                SET Head_id=:user_id
+                Where Dept_name=:deptname;
                 ';
-            make_query($sql,[':deptname'=>$_POST['departmentregister'],':offid'=>$_POST['Officialidregister']]);
+            make_query($sql,[':deptname'=>$_POST['departmentregister'],':user_id'=>$temp['User_id']]);
         }
     }
     else if($_POST['action']==='deletenotification')
     {
         delete_notification($_POST['notificationdel']);
         $notifications = read_notification($user_id);
+    }
+    else if($_POST['action']==='adddepartment')
+    {
+        if($_POST['departmentaddname'])
+        {
+            make_query('INSERT INTO department(Dept_name)
+            VALUES (:temp)',[':temp'=>$_POST['departmentaddname']]);
+        }
     }
 }
 function updateEnrollment($stu_id) {

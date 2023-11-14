@@ -79,6 +79,29 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
     </div>
 </div>
 <?php endif ?>
+<div class='popupregister' id="departmentpopup" style="width: 100%;height:100%;display:none;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
+    <div class='card' style="width: 50%;">
+        <div class="card-header" style="text-align:center;grid-template-columns:none">
+            <h3 style="text-align: center;">
+                New Department
+            </h3>
+            <button id="closepopupdepartment" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer" onclick="myFunction1()"><i class="fa fa-close"></i></button>
+        </div>
+        <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
+            <form method="post" action="dashboard.php">
+                <input hidden="true" name="action" value="adddepartment">
+        <div class="adduser" style="display: grid;grid-auto-flow: row">
+            <label for="departmentaddname">Department:</label>
+            <input type="text" id="departmentaddname" name="departmentaddname" style="width: 100%;">
+        </div>
+        <br>
+                <div style="width: 100%;justify-content:center;display:flex">
+                    <button id="confirmpopupdepartment" type="submit" onclick="myFunction1()">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class='popupregister' id="registerpopup" style="width: 100%;height:100%;display:none;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
     <div class='card' style="width: 50%;">
         <div class="card-header" style="text-align:center;grid-template-columns:none">
@@ -102,7 +125,18 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <label for="lastnameregister">Last Name:</label>
             <input type="text" id="lastnameregister" name="lastnameregister" style="width: 100%;">
             <label for="departmentregister">Department Name:</label>
-            <input type="text" id="departmentregister" name="departmentregister" style="width: 100%;">
+            <select name="departmentregister" id="departmentregister">
+                <?php 
+                $dept=make_query('Select Dept_name from department',[],true);
+                foreach($dept as $dept1)
+                {
+                    echo <<< END
+                    <option value="{$dept1['Dept_name']}">{$dept1['Dept_name']}</option>
+                END;    
+                }
+                ?>
+            </select>
+            <!-- <input type="text" id="departmentregister" name="departmentregister" style="width: 100%;"> -->
             <label for="branchregister">Branch Name:</label>
             <input type="text" id="branchregister" name="branchregister" style="width: 100%;">
             <label for="Typeregister">Type:</label>
@@ -130,6 +164,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
         <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
             <h1 style="position: absolute;text-align: center;width: 100%;z-index: -1;color: #443ea2;">College</h1>
             <?php if($_SESSION['user_data']['type']==='admin'): ?><button style="position: absolute;right:0;padding:5px;" onclick="myFunction2()">Register User</button><?php endif ?>
+            <?php if($_SESSION['user_data']['type']==='admin'): ?><button style="position: absolute;right:100px;padding:5px;" onclick="myFunction0()">Add Department</button><?php endif ?>    
         </header>
         <div class='card'>
             <div class='card-header' style="grid-template-columns: none;">
@@ -283,6 +318,14 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
     function myFunction3(){
         document.getElementById("registerpopup").style.display="none";
         // console.log("debug");
+    }
+    function myFunction0()
+    {
+        document.getElementById("departmentpopup").style.display="flex";
+    }
+    function myFunction1()
+    {
+        document.getElementById("departmentpopup").style.display="none";
     }
 </script>
 
