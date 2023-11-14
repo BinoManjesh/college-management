@@ -335,7 +335,7 @@ view('header', [
                                 <form action='course.php?course_id=<?=$course_id?>' method="post">
                                 <input hidden="true" name="action" value="newassignment">
                                     <th style="text-align: center;padding-left:5px;padding-right:5px;">Topic<br><input type="text" id="newassignmenttopic" name="newassignmenttopic" style="width: 100px;"></th>
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="date" id="newassignmentdate" name="newassignmentdate" style="width: 100px;"></th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="datetime-local" id="newassignmentdate" name="newassignmentdate" style="width: 100px;"></th>
                                     <th style="text-align: center;padding-left:5px;padding-right:5px;">Grade<br><button type="submit">Add</button></th>
                                     <!-- <th style="text-align: center;">Last Date</th>
                                     <th style="text-align: center;">Submit</th> -->
