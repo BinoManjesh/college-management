@@ -70,6 +70,17 @@ function getAttendanceForDate($date, $course_id) {
     return make_query($sql, [':date' => $date, ':course_id' => $course_id], true);
 }
 
+function getAssignmentsForStudent($stu_id, $course_id) {
+    $sql = '
+        SELECT Course_id, assignments.Assn_id, Assn_name, Due_time, Grade, submission.Assn_id as Sub_exists
+        FROM assignments
+        LEFT JOIN submission
+        ON assignments.Assn_id = submission.Assn_id AND Stu_id = :stu_id
+        WHERE assignments.Course_id = :course_id
+    ';
+    return make_query($sql, [':stu_id' => $stu_id, ':course_id' => $course_id], true);
+}
+
 $students = [
     ['User_id'=>0, 'Off_id'=>'BT21CSE000'],
     ['User_id'=>1, 'Off_id'=>'BT21CSE001'],
@@ -78,6 +89,7 @@ $students = [
     ['User_id'=>4, 'Off_id'=>'BT21CSE004'],
     ['User_id'=>5, 'Off_id'=>'BT21CSE005']
 ];
+$user_id = $_SESSION['user_data']['User_id'];
 $course_id = $_GET['course_id'];
 $course = getCourse($course_id);
 
@@ -237,12 +249,27 @@ if (is_post_request()) {
             }
             update_notification("Marks of - ".$marks_column." Edited");
             break;
+        case 'assn_submission':
+            $assn_id=$_POST['assn_id'];
+            $assgnfilename = $_FILES['submitassign'.$assn_id]['name'];
+            if($assgnfilename)
+            {
+                $file = upload_file('submitassign'.$assn_id);
+                $sql = '
+                        INSERT INTO submission(Assn_id, Stu_id, Sub_file)
+                        VALUES (:assgn_id, :stu_id, :sub_file);
+                    ';
+                make_query($sql,[':assgn_id'=>$assn_id,':stu_id'=>$user_id,':sub_file'=>$file]);
+            }
+            break;
     }
 }
 
 $material = getMaterial($course_id);
 $assignments = getAssignments($course_id);
 $attendance = getAttendanceDates($course_id);
+
+$assignments = getAssignmentsForStudent($user_id, $course_id);
 
 function GradeRow($submission) {
     echo <<<END

@@ -348,10 +348,28 @@ view('header', [
                                             </tr>
                                             <?php
                             foreach ($assignments as $ass) {
-                                echo <<<END
-                                <tr>
-                                    <form action="course.php?course_id=$course_id" method="post">
-                                        <input hidden name="action" value="grade_assignment">
+                                $grade = $ass['Grade'] ? $ass['Grade'] : 'Submitted';
+                                if ($_SESSION['user_data']['type'] == 'faculty') {
+                                    echo <<<END
+                                    <tr>
+                                        <form action="course.php?course_id=$course_id" method="post">
+                                            <input hidden name="action" value="grade_assignment">
+                                            <input hidden name="assn_id" value="{$ass['Assn_id']}">
+                                            <th scope="row" style="padding-left:0px;padding-right:0px;">
+                                                <div class="media align-items-center">
+                                                    <div class="media-body">
+                                                        <span class="mb-0 text-sm">{$ass['Assn_name']}</span>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <td style="padding-left:0px;padding-right:0px;">{$ass['Due_time']}</td>
+                                            <td style="padding-left:0px;padding-right:0px;"><button type="submit">Grade</button></td>
+                                        </form>
+                                    </tr>
+                                    END;
+                                } else if ($ass['Sub_exists']) {
+                                    echo <<<END
+                                    <tr>
                                         <input hidden name="assn_id" value="{$ass['Assn_id']}">
                                         <th scope="row" style="padding-left:0px;padding-right:0px;">
                                             <div class="media align-items-center">
@@ -361,10 +379,37 @@ view('header', [
                                             </div>
                                         </th>
                                         <td style="padding-left:0px;padding-right:0px;">{$ass['Due_time']}</td>
-                                        <td style="padding-left:0px;padding-right:0px;"><button type="submit">Grade</button></td>
-                                    </form>
-                                </tr>
-                                END;
+                                        <td style="padding-left:0px;padding-right:0px;">$grade</td>
+                                    </tr>
+                                    END;
+                                } else {
+                                    echo <<<END
+                                    <tr>
+                                        <form action="course.php?course_id=$course_id" method="post"  enctype="multipart/form-data">
+                                            <input hidden name="action" value="assn_submission">
+                                            <input hidden name="assn_id" value="{$ass['Assn_id']}">
+                                            <th scope="row" style="padding-left:0px;padding-right:0px;">
+                                                <div class="media align-items-center">
+                                                    <div class="media-body">
+                                                        <span class="mb-0 text-sm">{$ass['Assn_name']}</span>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <td style="padding-left:0px;padding-right:0px;">{$ass['Due_time']}</td>
+                                            <td style="padding-left:0px;padding-right:0px;">
+                                                <button type="submit" name="assgnsubmit">
+                                                    Submit
+                                                    <input type="file" id="submitassign{$ass['Assn_id']}" name="submitassign{$ass['Assn_id']}" style="display:none" onchange="document.getElementById('assign{$ass['Assn_id']}file').innerHTML=document.getElementById('submitassign{$ass['Assn_id']}').files[0].name">
+                                                </button>
+                                                <span style="width:min-content;" onclick="document.getElementById('submitassign{$ass['Assn_id']}').click()"><i class="fa fa-upload" style="cursor:pointer"></i></span>
+                                                <div>
+                                                    <p id="assign{$ass['Assn_id']}file" style="margin:0px;">No File</p>
+                                                </div>
+                                            </td>                                        
+                                        </form>
+                                    </tr>
+                                    END;
+                                }
                             }
                             ?>
                                         </tbody>
