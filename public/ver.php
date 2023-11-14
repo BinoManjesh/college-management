@@ -7,7 +7,8 @@ require_once __DIR__ . '/../src/bootstrap.php';
 // echo "Hello";
 // echo (get_marks(1,1)[0]);
 
-update_notification(1,'DBMS attendance updated.');
+// update_notification(1,'DBMS attendance updated.');
+read_notification(1);
 
 function get_course($user_id)
 {   

@@ -1,9 +1,12 @@
 <?php
-$notifications = [
-    ['course_name' => 'c1', 'content'=>'blah blah blah'],
-    ['course_name' => 'c2', 'content'=>'blah blah blah'],
-    ['course_name' => 'c3', 'content'=>'blah blah blah']
-];
+// $notifications = [
+//     ['course_name' => 'c1', 'content'=>'blah blah blah'],
+//     ['course_name' => 'c2', 'content'=>'blah blah blah'],
+//     ['course_name' => 'c3', 'content'=>'blah blah blah']
+// ];
+
+$notifications = read_notification(1);
+
 function calculateCGPA() {
     $stu_id = $_SESSION['user_data']['User_id'];
     $sql='
@@ -276,3 +279,28 @@ function pend_task($stu_id)
 }
 
 // notification function is pending!!!!!!
+function read_notification($stu_id)
+{
+    $sql='
+        Select course.course_name, notification.Announcement as content,
+        stunotification.stu_id,notification.not_id
+        From stunotification, notification, course
+        where stunotification.not_id = notification.not_id
+        and stunotification.stu_id=:stu_id 
+        and notification.course_id=course.course_id;
+    ';
+    
+    return make_query($sql,[":stu_id"=>$stu_id],true);
+
+    // var_dump($result);
+}
+
+//delete notification
+function delete_notification($stu_id,$not_id)
+{
+    $sql='
+        Delete from stunotification
+        where stu_id=:stu_id and not_id=:not_id;
+    ';
+    make_query($sql,[":stu_id"=>$stu_id,":not_id"=>$not_id]);
+}
