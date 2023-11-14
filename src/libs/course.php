@@ -249,6 +249,13 @@ function GradeRow($submission) {
 function update_notification(int $course_id,string $message)
 {
     $sql='
+        Insert into notification(Course_id,Announcemet)
+        values(:course_id,:message);
+    ';
+
+    make_query($sql,[":course_id"=>$course_id,":message"=>$message],false);
+
+    $sql='
         Select Not_id from notification ORDER BY Not_id DESC LIMIT 1;
     ';
 
