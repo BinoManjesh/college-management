@@ -99,6 +99,7 @@ function getcoursesenroll($user_id)
     else 0
     END AS enrolled,course.Course_name as course_name,course.Dept_name as department_name, CONCAT(user.First_name,\' \',user.Last_name) as faculty_name
     from course inner join user on course.Fac_id=user.User_id
+    where course.Open=1;
     ';
     return make_query($sql,[':user_id'=>$user_id],true);
 }

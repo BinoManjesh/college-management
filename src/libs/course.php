@@ -92,6 +92,7 @@ if (is_post_request()) {
                     VALUES (:course_id, :mat_file, :mat_name);
                 ';
                 make_query($sql, [':course_id'=>$course_id, ':mat_file'=>$file, ':mat_name'=> $mat_name]);
+                update_notification("Sutdy Material Uploaded - ".$mat_name);
             }
             break;
         case 'endcourse':
@@ -118,6 +119,13 @@ if (is_post_request()) {
             WHERE Course_id = :course_id
             ';
             make_query($sql1, [':AA'=>$AA,':AB'=>$AB,':BB'=>$BB,':BC'=>$BC,':CC'=>$CC,':CD'=>$CD,':DD'=>$DD, ':course_id'=>$course_id]);
+            $sql1='
+            UPDATE course
+            SET Open=0
+            WHERE Course_id = :course_id;
+            ';
+            make_query($sql1,[':course_id'=>$course_id]);
+            update_notification("Course Ended");
             break;
         case 'newassignment':
             $assignmentname=$_POST['newassignmenttopic'];
@@ -129,6 +137,7 @@ if (is_post_request()) {
                         VALUES (:asign_name, :asign_date, :course_id);
                     ';
                 make_query($sql, [':course_id'=>$course_id, ':asign_name'=>$assignmentname, ':asign_date'=> $assignmentdate]);
+                update_notification("New Assignment Added - ".$assignmentname);
             }
             break;
         case 'new_attendance':
@@ -142,6 +151,7 @@ if (is_post_request()) {
                         Where Course_id= :course_id;
                     ';
                 make_query($sql,[':course_id'=>$course_id,':date'=>$attendancedate]);
+                update_notification("New Attendance Added - ".$attendancedate);
             }
             break;
         case 'grade_assignment':
@@ -152,6 +162,7 @@ if (is_post_request()) {
         case 'confirm_grade_assignment':
             echo "HMM";
             $assn_id = $_POST['assn_id'];
+            $grade_assn = getAssignment($assn_id);
             $get_students = '
                 SELECT Stu_id
                 FROM submission
@@ -172,6 +183,7 @@ if (is_post_request()) {
                 make_query($update_assn_grade, [':grade' => $grade,
                     ':stu_id' => $id, ':assn_id' => $assn_id]);
             }
+            update_notification("Assignment - ".$grade_assn['Assn_name']." Graded");
             break;
         case 'edit_attendance':
             $attd_date = $_POST['date'];
@@ -191,6 +203,7 @@ if (is_post_request()) {
                 make_query($sql, [':present' => $present, ':stu_id' => $stu_id,
                     ':date' => $date, ':course_id' => $course_id]);
             }
+            update_notification("Attendance of date - ".$date." Edited");
             break;
         case 'edit_marks':
             $marks_type = $_POST['type'];
@@ -223,6 +236,7 @@ if (is_post_request()) {
                 make_query($update_marks, [':marks'=> $marks,
                     ':stu_id' => $stu_id, ':course_id' => $course_id]);
             }
+            update_notification("Marks of - ".$marks_column." Edited");
             break;
     }
 }
@@ -246,10 +260,11 @@ function GradeRow($submission) {
 }
 
 // this updates notification in stunotification and notification table.
-function update_notification(int $course_id,string $message)
+function update_notification(string $message)
 {
+    global $course_id;
     $sql='
-        Insert into notification(Course_id,Announcemet)
+        Insert into notification(Course_id,Announcement)
         values(:course_id,:message);
     ';
 
