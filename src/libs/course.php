@@ -10,14 +10,36 @@ function getCourse($course_id) {
     ';
     return make_query($sql, [':course_id' => $course_id], true, true);
 }
-function getassignment($course_id) {
+
+function getAssignment($assn_id) {
     $sql = '
-        SELECT Assn_name, Due_date
+        SELECT *
+        FROM assignments
+        WHERE Assn_id = :assn_id
+    ';
+    return make_query($sql, [':assn_id' => $assn_id], true, true);
+}
+
+function getAssignments($course_id) {
+    $sql = '
+        SELECT Assn_name, Due_date, Assn_id
         FROM assignments
         WHERE Course_id = :course_id
     ';
     return make_query($sql, [':course_id' => $course_id], true,false);
 }
+
+function getSubmissions($assn_id) {
+    $sql = '
+        SELECT *
+        FROM submission
+        JOIN user
+        ON User_id = Stu_id
+        WHERE Assn_id = :assn_id
+    ';
+    return make_query($sql, [':assn_id' => $assn_id]);
+}
+
 function getMaterial($course_id) {
     $sql = '
         SELECT *
@@ -26,7 +48,8 @@ function getMaterial($course_id) {
     ';
     return make_query($sql, [':course_id' => $course_id], true);
 }
-function getattendance($course_id)
+
+function getAttendance($course_id)
 {
     $sql = '
         SELECT *
@@ -109,12 +132,17 @@ if (is_post_request()) {
                 make_query($sql,[':course_id'=>$course_id,':date'=>$attendancedate]);
             }
             break;
+        case 'grade_assignment':
+            $assn_id = $_POST['assn_id'];
+            $grade_assn = getAssignment($assn_id);
+            var_dump($grade_assn);
+            $assn_submissions = getSubmissions($assn_id);
     }
 }
 
 $material = getMaterial($course_id);
-$assignments = getassignment($course_id);
-$attendance = getattendance($course_id);
+$assignments = getAssignments($course_id);
+$attendance = getAttendance($course_id);
 function AttendanceRow($student) {
     $id = $student['User_id'];
     echo <<<END
