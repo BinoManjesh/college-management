@@ -12,7 +12,7 @@ function getCourse($course_id) {
 }
 function getassignment($course_id) {
     $sql = '
-        SELECT Assn_name, Due_time
+        SELECT Assn_name, Due_date
         FROM assignments
         WHERE Course_id = :course_id
     ';
@@ -90,7 +90,7 @@ if (is_post_request()) {
             if($assignmentname && $assignmentdate)
             {
                 $sql = '
-                        INSERT INTO assignments(Assn_name, Due_time, Course_id)
+                        INSERT INTO assignments(Assn_name, Due_date, Course_id)
                         VALUES (:asign_name, :asign_date, :course_id);
                     ';
                 make_query($sql, [':course_id'=>$course_id, ':asign_name'=>$assignmentname, ':asign_date'=> $assignmentdate]);
