@@ -49,11 +49,12 @@ view('header', [
         </div>
     </div>
 </div>
-<div class='popup' id="popupassignment" style="width: 100%;height:100%;display:none;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
+<?php if (isset($grade_assn)): ?>
+<div class='popup' id="popupassignment" style="width: 100%;height:100%;display:flex;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
     <div class='card' style="width: 50%;">
         <div class="card-header" style="text-align:center;grid-template-columns:none">
             <h3 style="text-align: center;">
-                Assignment 1
+                <?= $grade_assn['Assn_name'] ?>
             </h3>
             <button id="closepopupassignment" onclick="myFunction3()" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer"><i class="fa fa-close"></i></button>
         </div>
@@ -66,64 +67,28 @@ view('header', [
                                 <th style="text-align: center;">Student Id</th>
                                 <th style="text-align: center;">Submission Date</th>
                                 <th style="text-align: center;">Marks</th>
-                                <!-- <th style="text-align: center;">Department</th>
-                                    <th style="text-align: center;">Faculty</th> -->
                             </tr>
                             
-                            <tr>
-                                <td>Student Id
-                                    <a href="uploaded_files/placeholder" download><i class="fa fa-download"></i></a>
-                                </td>
-                                <td> Date </td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id
-                                <button><i class="fa fa-download"></i></button>
-                                </td>
-                                <td> Date </td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id
-                                <button><i class="fa fa-download"></i></button>
-                                </td>
-                                <td> Date </td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id
-                                <button><i class="fa fa-download"></i></button>
-                                </td>
-                                <td> Date </td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id
-                                <button><i class="fa fa-download"></i></button>
-                                </td>
-                                <td> Date </td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id
-                                <button><i class="fa fa-download"></i></button>
-                                </td>
-                                <td> Date </td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
+                            <?php
+                                if ($assn_submissions) {
+                                    foreach ($assn_submissions as $submission) {
+                                        $name = "grade-{$submission['User_id']}";
+                                        echo <<<END
+                                        <tr>
+                                            <td>{$submission['Off_id']}
+                                                <a href="uploaded_files/{$submission['Sub_file']}" download><i class="fa fa-download"></i></a>
+                                            </td>
+                                            <td>{$submission['Sub_date']}</td>
+                                            <td>
+                                                <input type="number" id="$name" name="$name" value="{$submission['Grade']}" min="0" max="100">
+                                            </td>
+                                        </tr>
+                                        END;
+                                    }
+                                } else {
+                                    echo "<tr><td>No submissions</td></tr>";
+                                }
+                            ?>
                         </tbody>
                     </table>
 
@@ -136,6 +101,7 @@ view('header', [
         </div>
     </div>
 </div>
+<?php endif ?>
 <div class='popup' id="popupexams" style="width: 100%;height:100%;display:none;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
     <div class='card' style="width: 50%;">
         <div class="card-header" style="text-align:center;grid-template-columns:none">
@@ -315,7 +281,7 @@ view('header', [
             <button id="closeendcoursepopup" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer" onclick="myFunction7()"><i class="fa fa-close"></i></button>
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
-            <form action='course.php?course_id=<?=$course_id?>' method="post" enctype="multipart/form-data">
+            <form action='course.php?course_id=<?=$course_id?>' method="post">
                 <input hidden="true" name="action" value="endcourse">
                 <div class="pendingassignment">
                     <div class="card shadow">
@@ -461,7 +427,7 @@ view('header', [
                     <table class="table align-items-center table-flush" style="border-collapse: collapse;text-align:center">
                             <tbody style="display: block;height: 225px;overflow: auto;">
                                 <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                                <form action='course.php?course_id=<?=$course_id?>' method="post" enctype="multipart/form-data">
+                                <form action='course.php?course_id=<?=$course_id?>' method="post">
                                 <input hidden="true" name="action" value="newassignment">
                                     <th style="text-align: center;padding-left:5px;padding-right:5px;">Topic<br><input type="text" id="newassignmenttopic" name="newassignmenttopic" style="width: 100px;"></th>
                                     <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="date" id="newassignmentdate" name="newassignmentdate" style="width: 100px;"></th>
@@ -474,15 +440,19 @@ view('header', [
                             foreach ($assignments as $ass) {
                                 echo <<<END
                                 <tr>
-                                    <th scope="row" style="padding-left:0px;padding-right:0px;">
-                                        <div class="media align-items-center">
-                                            <div class="media-body">
-                                                <span class="mb-0 text-sm">{$ass['Assn_name']}</span>
+                                    <form action="course.php?course_id=$course_id" method="post">
+                                        <input hidden name="action" value="grade_assignment">
+                                        <input hidden name="assn_id" value="{$ass['Assn_id']}">
+                                        <th scope="row" style="padding-left:0px;padding-right:0px;">
+                                            <div class="media align-items-center">
+                                                <div class="media-body">
+                                                    <span class="mb-0 text-sm">{$ass['Assn_name']}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </th>
-                                    <td style="padding-left:0px;padding-right:0px;">{$ass['Due_time']}</td>
-                                    <td style="padding-left:0px;padding-right:0px;"><button type="submit" onclick="myFunction2()">Grade</button></td>
+                                        </th>
+                                        <td style="padding-left:0px;padding-right:0px;">{$ass['Due_date']}</td>
+                                        <td style="padding-left:0px;padding-right:0px;"><button type="submit">Grade</button></td>
+                                    </form>
                                 </tr>
                                 END;
                             }
@@ -503,7 +473,7 @@ view('header', [
                     <table class="table align-items-center table-flush" style="border-collapse: collapse;text-align:center;">
                             <tbody style="display: block;height: 225px;overflow: auto;">
                             <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                            <form action='course.php?course_id=<?=$course_id?>' method="post" enctype="multipart/form-data">
+                            <form action='course.php?course_id=<?=$course_id?>' method="post">
                             <input hidden="true" name="action" value="newattendance1">
                                     <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="date" id="newattendance" name="newattendance" style="width: 100px;"></th>
                                     <th style="text-align: center;padding-left:5px;padding-right:5px;">Edit<br><button type="submit">Add</button></th>
