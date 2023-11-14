@@ -136,7 +136,8 @@ if (is_post_request()) {
         ';
         if($_POST['coursename'] && $_POST['Departmentname'] && $_POST['FacultyIdname'] && $_POST['Creditsname'])
         {
-            make_query($sql,[':course_name'=>$_POST['coursename'],':dept_name'=>$_POST['Departmentname'],':fac_id'=>$_POST['FacultyIdname'],':credits'=>$_POST['Creditsname']]);
+            $temp=make_query('SELECT User_id from user where Off_id=:fac_id',[':fac_id'=>$_POST['FacultyIdname']],true,true)['User_id'];
+            make_query($sql,[':course_name'=>$_POST['coursename'],':dept_name'=>$_POST['Departmentname'],':fac_id'=>$temp,':credits'=>$_POST['Creditsname']]);
             $enroll_courses = getcoursesenroll($user_id);
             $showenroll=1;
         }
