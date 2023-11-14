@@ -1,6 +1,6 @@
 <div class="dashboard-nav">
     <header><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a><a href="#" class="brand-logo"><i class="fas fa-book"></i> <span>College</span></a></header>
-    <nav class="dashboard-nav-list"><a href="http://localhost/College-management/college-management/dashboard.php" class="dashboard-nav-item"><i class="fas fa-tachometer-alt"></i> Dashboard
+    <nav class="dashboard-nav-list"><a href="dashboard.php" class="dashboard-nav-item"><i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
         <div class='dashboard-nav-dropdown'><a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-photo-video"></i> Courses </a>
             <div class='dashboard-nav-dropdown-menu'>
@@ -13,6 +13,6 @@
                 ?>
             </div>
         </div>
-        <a href="http://localhost/College-management/college-management/login.php" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
+        <a href="login.php" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
     </nav>
 </div>
