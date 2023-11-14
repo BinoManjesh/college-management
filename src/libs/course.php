@@ -162,7 +162,6 @@ if (is_post_request()) {
         case 'confirm_grade_assignment':
             echo "HMM";
             $assn_id = $_POST['assn_id'];
-            $grade_assn = getAssignment($assn_id);
             $get_students = '
                 SELECT Stu_id
                 FROM submission
