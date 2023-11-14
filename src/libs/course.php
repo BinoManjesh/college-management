@@ -220,3 +220,21 @@ function GradeRow($submission) {
         </tr>
     END;
 }
+
+// this updates notification in stunotification and notification table.
+function update_notification(int $course_id,string $message)
+{
+    $sql='
+        Select Not_id from notification ORDER BY Not_id DESC LIMIT 1;
+    ';
+
+    $not_id=make_query($sql,[],true)[0]["Not_id"];
+
+    $sql='
+        Insert into stunotification(Not_id,Stu_id)
+        Select :not_id as Not_id, Stu_id from stucourse
+        where course_id=:course_id;
+    ';
+
+    make_query($sql,[":not_id"=>$not_id,":course_id"=>$course_id],false);
+}

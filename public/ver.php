@@ -7,7 +7,7 @@ require_once __DIR__ . '/../src/bootstrap.php';
 // echo "Hello";
 // echo (get_marks(1,1)[0]);
 
-var_dump(update_notification(1,'5'));
+update_notification(1,'DBMS attendance updated.');
 
 function get_course($user_id)
 {   
@@ -17,7 +17,7 @@ function get_course($user_id)
         Where Stu_id= :user_id
     ';
 
-    return make_query($sql, [":user_id" => $user_id], true);
+    return make_query($sql, [":user_id" => $user_id], true,false);
 
 }
 
@@ -123,25 +123,3 @@ function getEndSemMarksFromDB($stu_id,$course_id)
 
 //marks 
 
-//update notofication
-function update_notification($course_id,$message)
-{
-    $sql='Select course_name,
-        stu_id
-        from stucourse,course
-        where stucourse.course_id = course.course_id
-        and stucourse.course_id=:course_id
-    ';
-
-    $stu_id_arr=make_query($sql, [":course_id" => $course_id], true);
-
-    $sql='Insert into notification(Announcement,Course_id,Stu_id)
-    values($message, Select course_name,
-    stu_id
-    from stucourse,course
-    where stucourse.course_id = course.course_id
-    and stucourse.course_id=:course_id)'
-
-    make_query($sql,[],true);
-    // return $stu_id_arr;
-}
