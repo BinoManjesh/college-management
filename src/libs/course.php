@@ -167,6 +167,39 @@ if (is_post_request()) {
                 make_query($sql, [':present' => $present, ':stu_id' => $stu_id,
                     ':date' => $date, ':course_id' => $course_id]);
             }
+            break;
+        case 'edit_marks':
+            $marks_type = $_POST['type'];
+            $marks_column = $_POST['column'];
+            $sql = "
+                SELECT Off_id, User_id, $marks_column
+                FROM user
+                INNER JOIN stucourse
+                ON User_id = Stu_id AND Course_id = :course_id
+            ";
+            $stu_marks = make_query($sql, [':course_id' => $course_id], true);
+            break;
+        case 'confirm_marks':
+            echo "CONFIRM";
+            $marks_column = $_POST['column'];
+            $get_students = '
+                SELECT Stu_id
+                FROM stucourse
+                WHERE Course_id = :course_id
+            ';
+            $students = make_query($get_students, [':course_id' => $course_id], true);
+            $update_marks = "
+                UPDATE stucourse
+                SET $marks_column = :marks
+                WHERE Stu_id = :stu_id AND Course_id = :course_id
+            ";
+            foreach ($students as $stu) {
+                $stu_id = $stu['Stu_id'];
+                $marks = $_POST[$stu_id];
+                make_query($update_marks, [':marks'=> $marks,
+                    ':stu_id' => $stu_id, ':course_id' => $course_id]);
+            }
+            break;
     }
 }
 

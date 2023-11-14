@@ -124,176 +124,55 @@ view('header', [
     </div>
 </div>
 <?php endif ?>
-<div class='popup' id="popupexams" style="width: 100%;height:100%;display:none;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
+<?php if (isset($marks_type)): ?>
+<div class='popup' id="popupexams" style="width: 100%;height:100%;display:flex;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
     <div class='card' style="width: 50%;">
         <div class="card-header" style="text-align:center;grid-template-columns:none">
             <h3 style="text-align: center;">
-                Exam 1
+                <?= $marks_type ?>
             </h3>
             <button id="closepopupexam" onclick="myFunction5()" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer"><i class="fa fa-close"></i></button>
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
-            <div class="pendingassignment">
-                <div class="card shadow">
-                    <table class="table align-items-center table-flush" style="display:block;border-collapse: collapse;height:auto;text-align:center">
-                        <tbody style="display: block;">
-                            <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                                <th style="text-align: center;">Student Id</th>
-                                <th style="text-align: center;">Marks</th>
-                                <!-- <th style="text-align: center;">Department</th>
-                                    <th style="text-align: center;">Faculty</th> -->
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Student Id</td>
-                                <td>
-                                    <input type="number" id="grade" name="attendanceradio" value="present" min="0" max="100">
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
+            <form action='course.php?course_id=<?= $course_id ?>' method='post'>
+                <input hidden name='action' value='confirm_marks'>
+                <input hidden name='column' value='<?= $marks_column ?>'>
+                <div class="pendingassignment">
+                    <div class="card shadow">
+                        <table class="table align-items-center table-flush" style="display:block;border-collapse: collapse;height:auto;text-align:center">
+                            <tbody style="display: block;">
+                                <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
+                                    <th style="text-align: center;">Student Id</th>
+                                    <th style="text-align: center;">Marks</th>
+                                </tr>
+                                <?php
+                                foreach ($stu_marks as $stu) {
+                                    $name = $stu['User_id'];
+                                    $marks = $stu[$marks_column];
+                                    echo <<<END
+                                    <tr>
+                                        <td>{$stu['Off_id']}</td>
+                                        <td>
+                                            <input type="number" id="$name" name="$name" value="$marks" min="0" max="100">
+                                        </td>
+                                    </tr>
+                                    END;
+                                }
+                                ?>
+                            </tbody>
+                        </table>
 
 
+                    </div>
                 </div>
-            </div>
-            <div style="width: 100%;justify-content:center;display:flex">
-                <button id="confirmpopupexam" onclick="myFunction5()" type="submit">Confirm</button>
-            </div>
+                <div style="width: 100%;justify-content:center;display:flex">
+                    <button id="confirmpopupexam" type="submit">Confirm</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+<?php endif ?>
 <div class='popupendcourse' id="endcoursepopup" style="width: 100%;height:100%;display:none;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
     <div class='card' style="width: 50%;">
         <div class="card-header" style="text-align:center;grid-template-columns:none">
@@ -378,7 +257,7 @@ view('header', [
                 </div>
         <br>
                 <div style="width: 100%;justify-content:center;display:flex">
-                    <button id="confirmendcoursepopup" type="submit" onsubmit="myFunction7()">End</button>
+                    <button id="confirmendcoursepopup" type="submit">End</button>
                 </div>
             </form>
         </div>
@@ -538,28 +417,39 @@ view('header', [
                                     <th style="text-align: center;padding-left:5px;padding-right:5px;">Edit</th>
                                 </tr>
                 <tr>
-                    <th >Exam</th>
+                    <th>Exam</th>
                     <td>
                         Marks if student
                         <!-- <button type="submit" onclick="myFunction4()">Edit</button> -->
                     </td>
                 </tr> 
                 <tr>
-                    <th >Exam</th>
-                    <td><button type="submit" onclick="myFunction4()">Edit</button></td>
+                    <form action="course.php?course_id=<?= $course_id ?>" method="post">
+                        <input hidden name='action' value='edit_marks'>
+                        <input hidden name='type' value='Sessional 1'>
+                        <input hidden name='column' value='Marks_s1'>
+                        <th>Sessional 1</th>
+                        <td><button type="submit">Edit</button></td>
+                    </form>
                 </tr> 
                 <tr>
-                    <th >Exam</th>
-                    <td><button type="submit" onclick="myFunction4()">Edit</button></td>
+                    <form action="course.php?course_id=<?= $course_id ?>" method="post">
+                        <input hidden name='action' value='edit_marks'>
+                        <input hidden name='type' value='Sessional 2'>
+                        <input hidden name='column' value='Marks_s2'>
+                        <th>Sessional 2</th>
+                        <td><button type="submit">Edit</button></td>
+                    </form>
                 </tr> 
                 <tr>
-                    <th >Exam</th>
-                    <td><button type="submit" onclick="myFunction4()">Edit</button></td>
-                </tr> 
-                <tr>
-                    <th >Exam</th>
-                    <td><button type="submit" onclick="myFunction4()">Edit</button></td>
-                </tr> 
+                    <form action="course.php?course_id=<?= $course_id ?>" method="post">
+                        <input hidden name='action' value='edit_marks'>
+                        <input hidden name='type' value='Endsem'>
+                        <input hidden name='column' value='Marks_endsem'>
+                        <th>Endsem</th>
+                        <td><button type="submit">Edit</button></td>
+                    </form>
+                </tr>
                 
             </tbody>
               </table>
