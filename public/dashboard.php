@@ -10,28 +10,35 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
     'dashboardpage'
 ]]);
 ?>
-
-<div class='popup' id="popup" style="width: 100%;height:100%;display:none;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
+<?php if(isset($showenroll)): ?>
+<div class='popup' id="popup" style="width: 100%;height:100%;display:flex;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
     <div class='card' style="width: 50%;">
         <div class="card-header" style="text-align:center;grid-template-columns:none">
             <h3 style="text-align: center;">
                 Courses
             </h3>
-            <button id="closepopup" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer" onclick="myFunction1()"><i class="fa fa-close"></i></button>
+            <form method="post" action="dashboard.php">
+            <input hidden="true" name="action" value="enrollclose">
+            <button id="closepopup" name="closepopup" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer"><i class="fa fa-close"></i></button>
+            </form>
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
+        <form method="post" action="dashboard.php">
+            <input hidden="true" name="action" value="addcourse">
             <div class="addcourse" style="display: grid;grid-auto-flow: column">
             <label for="coursename">Course-Name:</label>
-            <input type="text" id="coursename" style="width: 100px;">
+            <input type="text" id="coursename" name="coursename" style="width: 100px;">
             <label for="Departmentname">Department:</label>
-            <input type="text" id="Departmentname" style="width: 75px;">
+            <input type="text" id="Departmentname" name="Departmentname" style="width: 75px;">
             <label for="FacultyIdname">Faculty-Id:</label>
-            <input type="text" id="FacultyIdname" style="width: 75px;">
+            <input type="text" id="FacultyIdname" name="FacultyIdname" style="width: 75px;">
             <label for="Creditsname">Credits:</label>
-            <input type="number" id="Creditsname" style="width: 50px;">
-            <button id="addcoursebutton">Add</button>
+            <input type="number" id="Creditsname" name="Creditsname" style="width: 50px;">
+            <button id="addcoursebutton" type="submit">Add</button>
             <!-- coursename,facultyid,credits,department -->
         </div>
+    </form>
+        <form method="post" action="dashboard.php">
             <div class="pendingassignment">
                     <div class="card shadow">
                         <table class="table align-items-center table-flush" style="display:block;border-collapse: collapse;height:auto;text-align:center">
@@ -42,7 +49,6 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                                     <th style="text-align: center;">Department</th>
                                     <th style="text-align: center;">Faculty</th>
                                 </tr>
-                                <form method="post" action="dashboard.php">
                                 <input hidden="true" name="action" value="enroll">
                                 <?php
                                     foreach ($enroll_courses as $course) {
@@ -64,12 +70,13 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                     </div>
                 </div>
                 <div style="width: 100%;justify-content:center;display:flex">
-                    <button id="confirmpopup" type="submit" onclick="myFunction1()">Confirm</button>
+                    <button id="confirmpopup" type="submit">Confirm</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<?php endif ?>
 <div class='popupregister' id="registerpopup" style="width: 100%;height:100%;display:none;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
     <div class='card' style="width: 50%;">
         <div class="card-header" style="text-align:center;grid-template-columns:none">
@@ -118,6 +125,9 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
         <div class='card'>
             <div class='card-header' style="grid-template-columns: none;">
             <?php
+            $CGPA=calculateCGPA();
+            if(!isset($CGPA))
+            $CGPA='-';
             echo<<< END
                 <div style="display: flex;align-items: center;">
                     <h3 class='data1'>Name: {$user['First_name']} {$user['Last_name']}<br><br>Id: {$user['Off_id']}</h3>
@@ -126,7 +136,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                     <h3 class='data1'>Department: {$user['Dept_name']}<br><br>Branch: {$user['Branch_name']}</h3>
                 </div>
                 <div style="display: flex;align-items: center;">
-                    <h3 class='data1'>CGPA:<br><br>Semester: {$user['Semester']}</h3>
+                    <h3 class='data1'>CGPA:{$CGPA}<br><br>Semester: {$user['Semester']}</h3>
                 </div>
                 <p style="position: absolute;bottom:0;right:0;margin:0;">Administrator</p>
                 END;
@@ -136,7 +146,10 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
         <div class='card'>
             <div class="card-header">
                 <h2>Courses</h2>
-                <button type="submit" style="width: 10%;left:90%;position:relative;cursor:pointer;" id="enrollbut" onclick="myFunction()">Enroll/Add</button>
+                <form method="post" action="dashboard.php">
+            <input hidden="true" name="action" value="enrolloraddcourses">
+                <button style="width: 10%;left:90%;position:relative;cursor:pointer;" id="enrollbut" onclick="myFunction()">Enroll/Add</button>
+                </form>
             </div>
             <div class="card-body">
                 <div class="cardcourses-wrapper">
@@ -181,7 +194,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                                                     </div>
                                                 </th>
                                                 <td>{$data['course_name']}</td>
-                                                <td>{$data['due_date']}</td>
+                                                <td>{$data['due_time']}</td>
                                                 <td><button type="submit" onclick="document.getElementById('submitassign').click()">
                                                 <input type="file" id="submitassign" style="display:none">Submit</button></td>
                                             </tr>
@@ -238,12 +251,6 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
 <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="scripts/dashboardpage.js"></script>
 <script>
-    function myFunction() {
-        document.getElementById("popup").style.display = "flex";
-    }
-    function myFunction1() {
-        document.getElementById("popup").style.display = "none";
-    }
     function myFunction2()
     {
         document.getElementById("registerpopup").style.display="flex";
