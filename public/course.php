@@ -272,7 +272,9 @@ view('header', [
     <div class='dashboard-app'>
         <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
             <h1 style="position: absolute;text-align: center;width: 100%;z-index: -1;color: #443ea2;">College</h1>
+            <?php if ($user_type === 'faculty' || $user_type === 'HOD'): ?>
             <button style="position: absolute;right:0;padding:5px;" onclick="myFunction6()">End Course</button>
+            <?php endif ?>
         </header>
         <div class='dashboard-content'>
 
@@ -289,7 +291,7 @@ view('header', [
                         <h2>
                             Faculty: <?= $course['Fac_fname'] . ' ' . $course['Fac_lname']?>
                         </h2>
-                        <?php if($_SESSION['user_data']['type']==='student'): ?>
+                        <?php if($user_type==='student'): ?>
                         <h2>
                             Grade : <?= $gradecourse['Grade'] ?>
                         </h2>
@@ -301,11 +303,13 @@ view('header', [
                 <div class='card'>
                     <div class="card-header" style="grid-template-columns: none;">
                         <h2>Study Material</h2>
+                        <?php if ($user_type === 'faculty' || $user_type === 'HOD'): ?>
                         <form action='course.php?course_id=<?=$course_id?>' method="post" enctype="multipart/form-data">
                             <input hidden name="action" value="upload_material">
                             <button type="submit" style="width: 10%;left:65%;position:relative;cursor:pointer;" id="uploadbut">Upload</button>
                             <input style="width: 20%;left:70%;position:relative;cursor:pointer;" name="course-material" type="file" id="uploadfile">
                         </form>
+                        <?php endif?>
                     </div>
                     <div class="card-body">
                         <div class="cardcourses-wrapper">
@@ -337,18 +341,31 @@ view('header', [
                     <table class="table align-items-center table-flush" style="border-collapse: collapse;text-align:center">
                             <tbody style="display: block;height: 225px;overflow: auto;">
                                 <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                                <form action='course.php?course_id=<?=$course_id?>' method="post">
-                                <input hidden="true" name="action" value="newassignment">
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Topic<br><input type="text" id="newassignmenttopic" name="newassignmenttopic" style="width: 100px;"></th>
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="datetime-local" id="newassignmentdate" name="newassignmentdate" style="width: 100px;"></th>
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Grade<br><button type="submit">Add</button></th>
+                                <?php
+                                    function ifAllowed($str) {
+                                        global $user_type;
+                                        if ($user_type === 'faculty' || $user_type === 'HOD') {
+                                            echo $str;
+                                        }
+                                    }
+                                ?>
+                                <?= ifAllowed("<form action='course.php?course_id=$course_id' method='post'>") ?>
+                                    <input hidden="true" name="action" value="newassignment">
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Topic<br>
+                                        <?= ifAllowed('<input type="text" id="newassignmenttopic" name="newassignmenttopic" style="width: 100px;">') ?>
+                                    </th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br>
+                                        <?= ifAllowed('<input type="datetime-local" id="newassignmentdate" name="newassignmentdate" style="width: 100px;">') ?>
+                                    </th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Grade<br>
+                                        <?= ifAllowed('<button type="submit">Add</button>') ?>
+                                    </th>
                                     <!-- <th style="text-align: center;">Last Date</th>
                                     <th style="text-align: center;">Submit</th> -->
-                                </form>
+                                <?= ifAllowed('</form>') ?>
                                             </tr>
                                             <?php
                             foreach ($assignments as $ass) {
-                                $grade = $ass['Grade'] ? $ass['Grade'] : 'Submitted';
                                 if ($_SESSION['user_data']['type'] == 'faculty') {
                                     echo <<<END
                                     <tr>
@@ -368,6 +385,7 @@ view('header', [
                                     </tr>
                                     END;
                                 } else if ($ass['Sub_exists']) {
+                                    $grade = $ass['Grade'] ? $ass['Grade'] : 'Submitted';
                                     echo <<<END
                                     <tr>
                                         <input hidden name="assn_id" value="{$ass['Assn_id']}">
@@ -428,11 +446,15 @@ view('header', [
                     <table class="table align-items-center table-flush" style="border-collapse: collapse;text-align:center;">
                             <tbody style="display: block;height: 225px;overflow: auto;">
                             <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                            <form action='course.php?course_id=<?=$course_id?>' method="post">
-                            <input hidden="true" name="action" value="new_attendance">
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="date" id="newattendance" name="newattendance" style="width: 100px;"></th>
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Edit<br><button type="submit">Add</button></th>
+                            <?php ifAllowed("<form action='course.php?course_id=$course_id' method='post'>
+                                             <input hidden='true' name='action' value='new_attendance'>"); ?>
+                                
+                                <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br>
+                                <?php ifAllowed('<input type="date" id="newattendance" name="newattendance" style="width: 100px;"></th>'); ?>
+                                <th style="text-align: center;padding-left:5px;padding-right:5px;">Status<br>
+                                <?php ifAllowed('<button type="submit">Add</button></th>'); ?>
                             </form>
+                            <?php ifAllowed('</form>') ?>
                                 </tr>
                                 <?php
                                 foreach ($attendance as $att) {
@@ -486,15 +508,8 @@ view('header', [
                             <tbody style="display: block;height: 225px;overflow: auto;">
                             <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
                                     <th style="text-align: center;padding-left:5px;padding-right:5px;">Exam</th>
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Edit</th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Marks</th>
                                 </tr>
-                <tr>
-                    <th>Exam</th>
-                    <td>
-                        Marks if student
-                        <!-- <button type="submit" onclick="myFunction4()">Edit</button> -->
-                    </td>
-                </tr>
                 <?php
                 $mark_names = ['Sessional 1', 'Sessional 2', 'Endsem'];
                 $column_names = ['Marks_s1', 'Marks_s2', 'Marks_endsem'];

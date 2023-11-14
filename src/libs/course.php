@@ -2,7 +2,7 @@
 
 function getCourse($course_id) {
     $sql = '
-        SELECT Course_id, Course_name, Fac_id, Credits, First_name as Fac_fname, Last_name as Fac_lname, user.Dept_name
+        SELECT Course_id, Course_name, Fac_id, Credits, First_name as Fac_fname, Last_name as Fac_lname, course.Dept_name
         FROM course
         INNER JOIN user
         ON user.User_id = course.Fac_id;
@@ -289,6 +289,7 @@ switch($user_type) {
         $assignments = getAssignmentsForStudent($user_id, $course_id);
         $attendance = getStudentAttendance($user_id, $course_id);
         $stu_marks = getStudentMarks($user_id, $course_id);
+        $gradecourse=make_query('Select Grade from stucourse where Course_id=:course_id and Stu_id=:stu_id',[':course_id'=>$course['Course_id'],':stu_id'=>$_SESSION['user_data']['User_id']],true,true);
 }
 
 // this updates notification in stunotification and notification table.
@@ -316,4 +317,3 @@ function update_notification(string $message)
 
     make_query($sql,[":not_id"=>$not_id,":course_id"=>$course_id],false);
 }
-$gradecourse=make_query('Select Grade from stucourse where Course_id=:course_id and Stu_id=:stu_id',[':course_id'=>$course['Course_id'],':stu_id'=>$_SESSION['user_data']['User_id']],true,true);
