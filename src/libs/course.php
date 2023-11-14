@@ -115,8 +115,8 @@ if (is_post_request()) {
             WHEN Marks_s1+Marks_s2+Marks_endsem>= :CD THEN \'CD\'
             WHEN Marks_s1+Marks_s2+Marks_endsem>= :DD THEN \'DD\'
             ELSE \'FF\'
-            END;
-            WHERE Course_id = :course_id
+            END
+            WHERE Course_id = :course_id;
             ';
             make_query($sql1, [':AA'=>$AA,':AB'=>$AB,':BB'=>$BB,':BC'=>$BC,':CC'=>$CC,':CD'=>$CD,':DD'=>$DD, ':course_id'=>$course_id]);
             $sql1='
@@ -284,3 +284,4 @@ function update_notification(string $message)
 
     make_query($sql,[":not_id"=>$not_id,":course_id"=>$course_id],false);
 }
+$gradecourse=make_query('Select Grade from stucourse where Course_id=:course_id and Stu_id=:stu_id',[':course_id'=>$course['Course_id'],':stu_id'=>$_SESSION['user_data']['User_id']],true,true);

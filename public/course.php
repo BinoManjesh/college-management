@@ -289,6 +289,11 @@ view('header', [
                         <h2>
                             Faculty: <?= $course['Fac_fname'] . ' ' . $course['Fac_lname']?>
                         </h2>
+                        <?php if($_SESSION['user_data']['type']==='student'): ?>
+                        <h2>
+                            Grade : <?= $gradecourse['Grade'] ?>
+                        </h2>
+                        <?php endif ?>
                     </div>
                 </div>
                 <!-- books begin -->
