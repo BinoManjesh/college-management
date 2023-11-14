@@ -13,7 +13,8 @@ view('header', [
 ]);
 ?>
 
-<div class='popup' id="popupattendance" style="width: 100%;height:100%;display:none;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
+<?php if (isset($attd_date)): ?>
+<div class='popup' id="popupattendance" style="width: 100%;height:100%;display:flex;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
     <div class='card' style="width: 50%;">
         <div class="card-header" style="text-align:center;grid-template-columns:none">
             <h3 style="text-align: center;">
@@ -22,33 +23,54 @@ view('header', [
             <button id="closepopupattendance" onclick="myFunction1()" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer"><i class="fa fa-close"></i></button>
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
-            <div class="pendingassignment">
-                <div class="card shadow">
-                    <table class="table align-items-center table-flush" style="display:block;border-collapse: collapse;height:auto;text-align:center">
-                        <tbody style="display: block;">
-                            <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                                <th style="text-align: center;">Student Id</th>
-                                <th style="text-align: center;">Mark</th>
-                                <!-- <th style="text-align: center;">Department</th>
-                                    <th style="text-align: center;">Faculty</th> -->
-                            </tr>
-                            <?php
-                                foreach ($students as $student) {
-                                    AttendanceRow(($student));
-                                }
-                            ?>
-                        </tbody>
-                    </table>
+            <form action='course.php?course_id=<?= $course_id ?>' method='post'>
+                <input hidden name='action' value='confirm_attendance'>
+                <input hidden name='date' value='<?= $attd_date ?>'>
+                <div class="pendingassignment">
+                    <div class="card shadow">
+                        <table class="table align-items-center table-flush" style="display:block;border-collapse: collapse;height:auto;text-align:center">
+                            <tbody style="display: block;">
+                                <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
+                                    <th style="text-align: center;">Student Id</th>
+                                    <th style="text-align: center;">Mark</th>
+                                </tr>
+                                <?php
+                                    foreach ($attd_students as $student) {
+                                        $id = $student['Stu_id'];
+                                        if ($student['Present']) {
+                                            $present = 'checked';
+                                            $absent = '';
+                                        } else {
+                                            $present = '';
+                                            $absent = 'checked';
+                                        }
+                                        echo <<<END
+                                        <tr>
+                                            <td>{$student['Off_id']}</td>
+                                            <td style="display: grid;grid-auto-flow:column;">
+                                                <input $present type="radio" id="present-$id" name="attendance-$id" value="1">
+                                                <label for="present-$id" style="text-align: left;">Present</label>
+                                                <input $absent type="radio" id="absent-$id" name="attendance-$id" value="0">
+                                                <label for="absent-$id" style="text-align: left;">Absent</label>
+                                            </td>
+                                        </tr>
+                                        END;
+                                    }
+                                ?>
+                            </tbody>
+                        </table>
 
 
+                    </div>
                 </div>
-            </div>
-            <div style="width: 100%;justify-content:center;display:flex">
-                <button id="confirmpopupattendance" onclick="myFunction1()" type="submit">Confirm</button>
-            </div>
+                <div style="width: 100%;justify-content:center;display:flex">
+                    <button id="confirmpopupattendance" onclick="myFunction1()" type="submit">Confirm</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+<?php endif ?>
 <?php if (isset($grade_assn)): ?>
 <div class='popup' id="popupassignment" style="width: 100%;height:100%;display:flex;justify-content:center;position:absolute;z-index:1001;backdrop-filter: blur(10px);">
     <div class='card' style="width: 50%;">
@@ -474,21 +496,26 @@ view('header', [
                             <tbody style="display: block;height: 225px;overflow: auto;">
                             <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
                             <form action='course.php?course_id=<?=$course_id?>' method="post">
-                            <input hidden="true" name="action" value="newattendance1">
+                            <input hidden="true" name="action" value="new_attendance">
                                     <th style="text-align: center;padding-left:5px;padding-right:5px;">Date<br><input type="date" id="newattendance" name="newattendance" style="width: 100px;"></th>
                                     <th style="text-align: center;padding-left:5px;padding-right:5px;">Edit<br><button type="submit">Add</button></th>
                             </form>
                                 </tr>
                                 <?php
-                            foreach ($attendance as $att) {
-                                echo <<<END
-                                <tr>
-                                <th >{$att['Date']}</th>
-                                <td><button type="submit" onclick="myFunction()">Edit</button></td>
-                                </tr>
-                                END;
-                            }
-                            ?>
+                                foreach ($attendance as $att) {
+                                    $date = $att['Date'];
+                                    echo <<<END
+                                    <tr>
+                                        <form action="course.php?course_id=$course_id" method="post">
+                                            <input hidden name="action" value="edit_attendance">
+                                            <input hidden name="date" value="$date">
+                                            <th>$date</th>
+                                            <td><button type="submit"">Edit</button></td>
+                                        </form>
+                                    </tr>
+                                    END;
+                                }
+                                ?>
             </tbody>
               </table>
             
