@@ -501,46 +501,39 @@ view('header', [
                 for ($i = 0; $i < sizeof($mark_names); ++$i) {
                     $mark_name = $mark_names[$i];
                     $column_name = $column_names[$i];
-                    echo <<<END
-                    <tr>
-                        <form action="course.php?course_id=$course_id" method="post">
-                            <input hidden name='action' value='edit_marks'>
-                            <input hidden name='type' value='$mark_name'>
-                            <input hidden name='column' value='$column_name'>
-                            <th>$mark_name</th>
-                            <td><button type="submit">Edit</button></td>
-                        </form>
-                    </tr> 
-                    END;
+                    switch ($user_type) {
+                        case 'faculty':
+                        case 'HOD':
+                            echo <<<END
+                            <tr>
+                                <form action="course.php?course_id=$course_id" method="post">
+                                    <input hidden name='action' value='edit_marks'>
+                                    <input hidden name='type' value='$mark_name'>
+                                    <input hidden name='column' value='$column_name'>
+                                    <th>$mark_name</th>
+                                    <td><button type="submit">Edit</button></td>
+                                </form>
+                            </tr> 
+                            END;
+                            break;
+                        case 'student':
+                            $marks = $stu_marks[$column_name];
+                            $marks = $marks ? $marks : ' - ';
+                            echo <<<END
+                            <tr>
+                                <form action="course.php?course_id=$course_id" method="post">
+                                    <input hidden name='action' value='edit_marks'>
+                                    <input hidden name='type' value='$mark_name'>
+                                    <input hidden name='column' value='$column_name'>
+                                    <th>$mark_name</th>
+                                    <td>$marks</td>
+                                </form>
+                            </tr> 
+                            END;
+                    }
+                    
                 }
                 ?>
-                <tr>
-                    <form action="course.php?course_id=<?= $course_id ?>" method="post">
-                        <input hidden name='action' value='edit_marks'>
-                        <input hidden name='type' value='Sessional 1'>
-                        <input hidden name='column' value='Marks_s1'>
-                        <th>Sessional 1</th>
-                        <td><button type="submit">Edit</button></td>
-                    </form>
-                </tr> 
-                <tr>
-                    <form action="course.php?course_id=<?= $course_id ?>" method="post">
-                        <input hidden name='action' value='edit_marks'>
-                        <input hidden name='type' value='Sessional 2'>
-                        <input hidden name='column' value='Marks_s2'>
-                        <th>Sessional 2</th>
-                        <td><button type="submit">Edit</button></td>
-                    </form>
-                </tr> 
-                <tr>
-                    <form action="course.php?course_id=<?= $course_id ?>" method="post">
-                        <input hidden name='action' value='edit_marks'>
-                        <input hidden name='type' value='Endsem'>
-                        <input hidden name='column' value='Marks_endsem'>
-                        <th>Endsem</th>
-                        <td><button type="submit">Edit</button></td>
-                    </form>
-                </tr>
                 
             </tbody>
               </table>

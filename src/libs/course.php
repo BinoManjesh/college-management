@@ -85,9 +85,19 @@ function getStudentAttendance($stu_id, $course_id) {
     $sql = '
         SELECT Date, Present
         FROM attendance
-        WHERE Stu_id = :stu_id
+        WHERE Stu_id = :stu_id AND Course_id = :course_id
     ';
-    return make_query($sql, [':stu_id' => $stu_id], true);
+    return make_query($sql, [':stu_id' => $stu_id, ':course_id' => $course_id], true);
+}
+
+function getStudentMarks($stu_id, $course_id)
+{
+    $sql='
+        SELECT Marks_s1, Marks_s2, Marks_endsem
+        FROM stucourse
+        WHERE Course_id=:course_id and Stu_id=:stu_id
+    ';
+    return make_query($sql, [':stu_id' => $stu_id, ':course_id' => $course_id], true, true);
 }
 
 $user_id = $_SESSION['user_data']['User_id'];
@@ -267,6 +277,7 @@ if (is_post_request()) {
     }
 }
 
+
 $material = getMaterial($course_id);
 echo $user_type === 'student';
 switch($user_type) {
@@ -277,21 +288,7 @@ switch($user_type) {
     case 'student':
         $assignments = getAssignmentsForStudent($user_id, $course_id);
         $attendance = getStudentAttendance($user_id, $course_id);
-}
-
-
-function GradeRow($submission) {
-    echo <<<END
-        <tr>
-            <td>Student Id
-                <a href='uploaded_files/{$submission['Sub_file']}'><i class="fa fa-download"></i></a>
-            </td>
-            <td> Date </td>
-            <td>
-                <input type="number" id="marks-{$submission['Stu_id']}" name="marks-{$submission['Stu_id']}" min="0" max="100">
-            </td>
-        </tr>
-    END;
+        $stu_marks = getStudentMarks($user_id, $course_id);
 }
 
 // this updates notification in stunotification and notification table.
