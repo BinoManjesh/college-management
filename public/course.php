@@ -494,7 +494,26 @@ view('header', [
                         Marks if student
                         <!-- <button type="submit" onclick="myFunction4()">Edit</button> -->
                     </td>
-                </tr> 
+                </tr>
+                <?php
+                $mark_names = ['Sessional 1', 'Sessional 2', 'Endsem'];
+                $column_names = ['Marks_s1', 'Marks_s2', 'Marks_endsem'];
+                for ($i = 0; $i < sizeof($mark_names); ++$i) {
+                    $mark_name = $mark_names[$i];
+                    $column_name = $column_names[$i];
+                    echo <<<END
+                    <tr>
+                        <form action="course.php?course_id=$course_id" method="post">
+                            <input hidden name='action' value='edit_marks'>
+                            <input hidden name='type' value='$mark_name'>
+                            <input hidden name='column' value='$column_name'>
+                            <th>$mark_name</th>
+                            <td><button type="submit">Edit</button></td>
+                        </form>
+                    </tr> 
+                    END;
+                }
+                ?>
                 <tr>
                     <form action="course.php?course_id=<?= $course_id ?>" method="post">
                         <input hidden name='action' value='edit_marks'>
