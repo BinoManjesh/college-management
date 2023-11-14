@@ -187,3 +187,63 @@ else if($user['type']==='student' || 1){
 }
 $assn_query = getpendingassignments($user_id);
 // var_dump($user_courses);
+
+// returns all the students data for dashboard.
+function fetch_user_data ($userid){
+    $sql='
+        SELECT First_name,
+        Last_name,
+        Off_id,
+        Dept_name,
+        Branch_name,
+        Semester
+        From user 
+        Where User_id = :user_id
+    ';
+    $result = make_query($sql, [":user_id" => $userid], true);
+
+    return $result;
+}
+
+//returns all the courses in which the student has enrolled.
+function get_stu_course($user_id)
+{   
+    $sql='
+        SELECT Course_name 
+        From stucourse
+        Where Stu_id= :user_id
+    ';
+
+    return make_query($sql, [":user_id" => $user_id], true);
+}
+
+//return all marks and nottt grades
+function get_marks($stu_id,$course_id)
+{
+    $sql='
+        Select Marks_s1,Marks_s2,Marks_endsem
+        From stucourse
+        Where Course_id= :course_id and Stu_id=:stu_id;
+    ';
+    return make_query($sql, [":course_id" => $course_id,":stu_id" => $stu_id], true);
+}
+
+//returns a pending assignments of a student
+function pend_task($stu_id)
+{
+    $sql='
+        SELECT Assn_id
+        from assignments
+        where Course_id in (Select Course_id 
+        From stucourse
+        where Stu_id= :stu_id)
+        and
+        Assn_id NOT in (Select Assn_id
+        from submission
+        where Stu_id = :stu_id)
+    ';
+
+    return make_query($sql, [":stu_id" => $stu_id], true);       
+}
+
+// notification function is pending!!!!!!
