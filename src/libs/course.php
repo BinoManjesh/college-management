@@ -49,15 +49,27 @@ function getMaterial($course_id) {
     return make_query($sql, [':course_id' => $course_id], true);
 }
 
-function getAttendance($course_id)
+function getAttendanceDates($course_id)
 {
     $sql = '
-        SELECT *
+        SELECT DISTINCT(Date) as Date
         FROM attendance
         WHERE Course_id = :course_id
     ';
     return make_query($sql, [':course_id' => $course_id], true);
 }
+
+function getAttendanceForDate($date, $course_id) {
+    $sql = '
+        SELECT Stu_id, Present, Off_id
+        FROM attendance
+        INNER JOIN user
+        ON User_id = Stu_id
+        WHERE Date = :date AND Course_id = :course_id
+    ';
+    return make_query($sql, [':date' => $date, ':course_id' => $course_id], true);
+}
+
 $students = [
     ['User_id'=>0, 'Off_id'=>'BT21CSE000'],
     ['User_id'=>1, 'Off_id'=>'BT21CSE001'],
@@ -119,7 +131,7 @@ if (is_post_request()) {
                 make_query($sql, [':course_id'=>$course_id, ':asign_name'=>$assignmentname, ':asign_date'=> $assignmentdate]);
             }
             break;
-        case 'newattendance1':
+        case 'new_attendance':
             $attendancedate=$_POST['newattendance'];
             if($attendancedate)
             {
@@ -135,28 +147,32 @@ if (is_post_request()) {
         case 'grade_assignment':
             $assn_id = $_POST['assn_id'];
             $grade_assn = getAssignment($assn_id);
-            var_dump($grade_assn);
             $assn_submissions = getSubmissions($assn_id);
+            break;
+        case 'edit_attendance':
+            $attd_date = $_POST['date'];
+            $attd_students = getAttendanceForDate($attd_date, $course_id);
+            break;
+        case 'confirm_attendance':
+            $date = $_POST['date'];
+            $attd_students = getAttendanceForDate($date, $course_id);
+            $sql = '
+                UPDATE attendance
+                SET Present = :present
+                WHERE Stu_id = :stu_id AND Date = :date AND Course_id = :course_id
+            ';
+            foreach ($attd_students as $student) {
+                $stu_id = $student['Stu_id'];
+                $present = $_POST["attendance-$stu_id"];
+                make_query($sql, [':present' => $present, ':stu_id' => $stu_id,
+                    ':date' => $date, ':course_id' => $course_id]);
+            }
     }
 }
 
 $material = getMaterial($course_id);
 $assignments = getAssignments($course_id);
-$attendance = getAttendance($course_id);
-function AttendanceRow($student) {
-    $id = $student['User_id'];
-    echo <<<END
-        <tr>
-            <td>{$student['Off_id']}</td>
-            <td style="display: grid;grid-auto-flow:column;">
-                <input type="radio" id="present-$id" name="attendance-$id" value="present">
-                <label for="present-$id" style="text-align: left;">Present</label>
-                <input type="radio" id="absent-$id" name="attendance-$id" value="absent">
-                <label for="absent-$id" style="text-align: left;">Absent</label>
-            </td>
-        </tr>
-    END;
-}
+$attendance = getAttendanceDates($course_id);
 
 function GradeRow($submission) {
     echo <<<END
