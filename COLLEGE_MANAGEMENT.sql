@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2023 at 03:13 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Nov 14, 2023 at 06:31 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,16 +33,7 @@ CREATE TABLE `assignments` (
   `Due_time` datetime NOT NULL,
   `Course_id` int(11) NOT NULL,
   `Open` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `assignments`
---
-
-INSERT INTO `assignments` (`Assn_id`, `Assn_name`, `Due_time`, `Course_id`, `Open`) VALUES
-(1, 'hello', '2023-11-29 00:00:00', 1, 0),
-(2, 'hello2', '2023-11-30 00:00:00', 1, 0),
-(4, 'hello', '2023-11-17 19:02:00', 1, 0);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -55,15 +46,7 @@ CREATE TABLE `attendance` (
   `Date` date NOT NULL,
   `Course_id` int(11) NOT NULL,
   `Present` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `attendance`
---
-
-INSERT INTO `attendance` (`Stu_id`, `Date`, `Course_id`, `Present`) VALUES
-(1, '2023-11-22', 1, 0),
-(1, '2023-11-28', 1, 0);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -78,21 +61,7 @@ CREATE TABLE `course` (
   `Fac_id` int(11) NOT NULL,
   `Credits` int(11) NOT NULL,
   `Open` tinyint(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `course`
---
-
-INSERT INTO `course` (`Course_id`, `Course_name`, `Dept_name`, `Fac_id`, `Credits`, `Open`) VALUES
-(1, 'DBMS', 'CSE', 1, 69, 1),
-(2, 'DBMS2', 'CSE', 1, 4, 1),
-(3, 'DBMS3', 'CSE', 1, 4, 1),
-(4, 'DBMS4', 'CSE', 1, 5, 1),
-(5, 'DBMS5', 'CSE', 1, 6, 1),
-(6, 'DBMS6', 'CSE', 1, 7, 1),
-(7, 'EMBB', 'ECE', 2, 6, 1),
-(8, 'abcd', 'abcd', 9, 5, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -104,16 +73,7 @@ CREATE TABLE `coursematerial` (
   `Course_id` int(11) NOT NULL,
   `Mat_file` varchar(50) NOT NULL,
   `Mat_name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `coursematerial`
---
-
-INSERT INTO `coursematerial` (`Course_id`, `Mat_file`, `Mat_name`) VALUES
-(1, '1699899391-Resume.pdf', 'Resume.pdf'),
-(1, '1699900840-Smit Aghera_IIITN.pdf', 'Smit Aghera_IIITN.pdf'),
-(1, '1699903706-Referall text.txt', 'Referall text.txt');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -123,8 +83,8 @@ INSERT INTO `coursematerial` (`Course_id`, `Mat_file`, `Mat_name`) VALUES
 
 CREATE TABLE `department` (
   `Dept_name` varchar(20) NOT NULL,
-  `Head_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Head_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -136,7 +96,7 @@ CREATE TABLE `notification` (
   `Announcement` varchar(255) NOT NULL,
   `Course_id` int(11) NOT NULL,
   `Not_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -151,17 +111,7 @@ CREATE TABLE `stucourse` (
   `Marks_s2` int(11) DEFAULT NULL,
   `Marks_endsem` int(11) DEFAULT NULL,
   `Grade` varchar(2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `stucourse`
---
-
-INSERT INTO `stucourse` (`Stu_id`, `Course_id`, `Marks_s1`, `Marks_s2`, `Marks_endsem`, `Grade`) VALUES
-(1, 1, NULL, NULL, NULL, 'AA'),
-(1, 2, NULL, NULL, NULL, NULL),
-(1, 3, NULL, NULL, NULL, NULL),
-(1, 6, NULL, NULL, NULL, NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -172,7 +122,7 @@ INSERT INTO `stucourse` (`Stu_id`, `Course_id`, `Marks_s1`, `Marks_s2`, `Marks_e
 CREATE TABLE `stunotification` (
   `Not_id` int(11) NOT NULL,
   `Stu_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -186,14 +136,7 @@ CREATE TABLE `submission` (
   `Sub_time` datetime DEFAULT current_timestamp(),
   `Sub_file` varchar(20) DEFAULT NULL,
   `Grade` varchar(2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `submission`
---
-
-INSERT INTO `submission` (`Assn_id`, `Stu_id`, `Sub_time`, `Sub_file`, `Grade`) VALUES
-(1, 1, '2023-11-14 16:05:40', '1699958140-Resume.pd', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -212,16 +155,7 @@ CREATE TABLE `user` (
   `Branch_name` varchar(20) DEFAULT NULL,
   `type` varchar(20) NOT NULL,
   `Semester` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`User_id`, `Username`, `Password`, `First_name`, `Last_name`, `Off_id`, `Dept_name`, `Branch_name`, `type`, `Semester`) VALUES
-(1, 'bino', 'heheboi', 'Bino', 'Manjesh', 'BT21CSE098', 'CSE', 'CSE Core', 'student', 5),
-(2, 'smit007', '456123', 'smit', 'aghera', 'bt21cse086', 'CSE', 'CORE CSE', 'HOD', 5),
-(9, 'root', 'root', 'admin', 'admin', 'admin', 'admin', 'admin', 'admin', 0);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -231,19 +165,23 @@ INSERT INTO `user` (`User_id`, `Username`, `Password`, `First_name`, `Last_name`
 -- Indexes for table `assignments`
 --
 ALTER TABLE `assignments`
-  ADD PRIMARY KEY (`Assn_id`);
+  ADD PRIMARY KEY (`Assn_id`),
+  ADD KEY `assn_cid` (`Course_id`);
 
 --
 -- Indexes for table `attendance`
 --
 ALTER TABLE `attendance`
-  ADD PRIMARY KEY (`Stu_id`,`Course_id`,`Date`) USING BTREE;
+  ADD PRIMARY KEY (`Stu_id`,`Course_id`,`Date`) USING BTREE,
+  ADD KEY `att_cid` (`Course_id`);
 
 --
 -- Indexes for table `course`
 --
 ALTER TABLE `course`
-  ADD PRIMARY KEY (`Course_id`);
+  ADD PRIMARY KEY (`Course_id`),
+  ADD KEY `cou_dname` (`Dept_name`),
+  ADD KEY `cou_fid` (`Fac_id`);
 
 --
 -- Indexes for table `coursematerial`
@@ -255,31 +193,43 @@ ALTER TABLE `coursematerial`
 -- Indexes for table `department`
 --
 ALTER TABLE `department`
-  ADD PRIMARY KEY (`Dept_name`);
+  ADD PRIMARY KEY (`Dept_name`),
+  ADD KEY `dep_hid` (`Head_id`);
 
 --
 -- Indexes for table `notification`
 --
 ALTER TABLE `notification`
-  ADD PRIMARY KEY (`Not_id`);
+  ADD PRIMARY KEY (`Not_id`),
+  ADD KEY `not_cid` (`Course_id`);
 
 --
 -- Indexes for table `stucourse`
 --
 ALTER TABLE `stucourse`
-  ADD PRIMARY KEY (`Stu_id`,`Course_id`);
+  ADD PRIMARY KEY (`Stu_id`,`Course_id`),
+  ADD KEY `stc_cid` (`Course_id`);
+
+--
+-- Indexes for table `stunotification`
+--
+ALTER TABLE `stunotification`
+  ADD PRIMARY KEY (`Not_id`,`Stu_id`),
+  ADD KEY `stn_sid` (`Stu_id`);
 
 --
 -- Indexes for table `submission`
 --
 ALTER TABLE `submission`
-  ADD PRIMARY KEY (`Assn_id`,`Stu_id`);
+  ADD PRIMARY KEY (`Assn_id`,`Stu_id`),
+  ADD KEY `sub_sid` (`Stu_id`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`User_id`);
+  ADD PRIMARY KEY (`User_id`),
+  ADD KEY `user_dname` (`Dept_name`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -308,6 +258,75 @@ ALTER TABLE `notification`
 --
 ALTER TABLE `user`
   MODIFY `User_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `assignments`
+--
+ALTER TABLE `assignments`
+  ADD CONSTRAINT `assn_cid` FOREIGN KEY (`Course_id`) REFERENCES `course` (`Course_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD CONSTRAINT `att_cid` FOREIGN KEY (`Course_id`) REFERENCES `course` (`Course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `att_sid` FOREIGN KEY (`Stu_id`) REFERENCES `user` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `course`
+--
+ALTER TABLE `course`
+  ADD CONSTRAINT `cou_dname` FOREIGN KEY (`Dept_name`) REFERENCES `department` (`Dept_name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cou_fid` FOREIGN KEY (`Fac_id`) REFERENCES `user` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `coursematerial`
+--
+ALTER TABLE `coursematerial`
+  ADD CONSTRAINT `mat_cid` FOREIGN KEY (`Course_id`) REFERENCES `course` (`Course_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `department`
+--
+ALTER TABLE `department`
+  ADD CONSTRAINT `dep_hid` FOREIGN KEY (`Head_id`) REFERENCES `user` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `notification`
+--
+ALTER TABLE `notification`
+  ADD CONSTRAINT `not_cid` FOREIGN KEY (`Course_id`) REFERENCES `course` (`Course_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `stucourse`
+--
+ALTER TABLE `stucourse`
+  ADD CONSTRAINT `stc_cid` FOREIGN KEY (`Course_id`) REFERENCES `course` (`Course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `stc_sid` FOREIGN KEY (`Stu_id`) REFERENCES `user` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `stunotification`
+--
+ALTER TABLE `stunotification`
+  ADD CONSTRAINT `stn_nid` FOREIGN KEY (`Not_id`) REFERENCES `notification` (`Not_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `stn_sid` FOREIGN KEY (`Stu_id`) REFERENCES `user` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `submission`
+--
+ALTER TABLE `submission`
+  ADD CONSTRAINT `sub_aid` FOREIGN KEY (`Assn_id`) REFERENCES `assignments` (`Assn_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sub_sid` FOREIGN KEY (`Stu_id`) REFERENCES `user` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_dname` FOREIGN KEY (`Dept_name`) REFERENCES `department` (`Dept_name`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
