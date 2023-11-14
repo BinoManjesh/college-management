@@ -13,6 +13,6 @@
                 ?>
             </div>
         </div>
-        <a href="#" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
+        <a href="http://localhost/College-management/college-management/login.php" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
     </nav>
 </div>

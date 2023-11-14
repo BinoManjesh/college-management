@@ -23,6 +23,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             </form>
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
+        <?php if($_SESSION['user_data']['type']==='admin'): ?>
         <form method="post" action="dashboard.php">
             <input hidden="true" name="action" value="addcourse">
             <div class="addcourse" style="display: grid;grid-auto-flow: column">
@@ -38,6 +39,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <!-- coursename,facultyid,credits,department -->
         </div>
     </form>
+    <?php endif ?>
         <form method="post" action="dashboard.php">
             <div class="pendingassignment">
                     <div class="card shadow">
@@ -127,7 +129,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
     <div class='dashboard-app'>
         <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
             <h1 style="position: absolute;text-align: center;width: 100%;z-index: -1;color: #443ea2;">College</h1>
-            <button style="position: absolute;right:0;padding:5px;" onclick="myFunction2()">Register User</button>
+            <?php if($_SESSION['user_data']['type']==='admin'): ?><button style="position: absolute;right:0;padding:5px;" onclick="myFunction2()">Register User</button><?php endif ?>
         </header>
         <div class='card'>
             <div class='card-header' style="grid-template-columns: none;">
@@ -155,7 +157,8 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                 <h2>Courses</h2>
                 <form method="post" action="dashboard.php">
             <input hidden="true" name="action" value="enrolloraddcourses">
-                <button style="width: 10%;left:90%;position:relative;cursor:pointer;" id="enrollbut" onclick="myFunction()">Enroll/Add</button>
+            <?php if($_SESSION['user_data']['type']==='admin'): ?><button style="width: 10%;left:90%;position:relative;cursor:pointer;" id="enrollbut" onclick="myFunction()">Add Courses</button><?php endif ?>
+                <?php if($_SESSION['user_data']['type']==='student'): ?><button style="width: 10%;left:90%;position:relative;cursor:pointer;" id="enrollbut" onclick="myFunction()">Enroll for Courses</button><?php endif ?>
                 </form>
             </div>
             <div class="card-body">
@@ -173,6 +176,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                 </div>
             </div>
         </div>
+        <?php if($_SESSION['user_data']['type']==='student'): ?>
         <div class="container2">
             <div class="card">
                 <div class="card-header">
@@ -257,6 +261,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                 </div>
             </div>
         </div>
+        <?php endif ?>
     </div>
 </div>
 </div>
