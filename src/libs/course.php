@@ -22,7 +22,7 @@ function getAssignment($assn_id) {
 
 function getAssignments($course_id) {
     $sql = '
-        SELECT Assn_name, Due_date, Assn_id
+        SELECT Assn_name, Due_time, Assn_id
         FROM assignments
         WHERE Course_id = :course_id
     ';
@@ -37,7 +37,7 @@ function getSubmissions($assn_id) {
         ON User_id = Stu_id
         WHERE Assn_id = :assn_id
     ';
-    return make_query($sql, [':assn_id' => $assn_id]);
+    return make_query($sql, [':assn_id' => $assn_id], true);
 }
 
 function getMaterial($course_id) {
@@ -125,7 +125,7 @@ if (is_post_request()) {
             if($assignmentname && $assignmentdate)
             {
                 $sql = '
-                        INSERT INTO assignments(Assn_name, Due_date, Course_id)
+                        INSERT INTO assignments(Assn_name, Due_time, Course_id)
                         VALUES (:asign_name, :asign_date, :course_id);
                     ';
                 make_query($sql, [':course_id'=>$course_id, ':asign_name'=>$assignmentname, ':asign_date'=> $assignmentdate]);
@@ -148,6 +148,30 @@ if (is_post_request()) {
             $assn_id = $_POST['assn_id'];
             $grade_assn = getAssignment($assn_id);
             $assn_submissions = getSubmissions($assn_id);
+            break;
+        case 'confirm_grade_assignment':
+            echo "HMM";
+            $assn_id = $_POST['assn_id'];
+            $get_students = '
+                SELECT Stu_id
+                FROM submission
+                JOIN user
+                ON User_id = Stu_id
+                WHERE Assn_id = :assn_id
+            ';
+            $stu_ids = make_query($get_students, [':assn_id' => $assn_id], true);
+            var_dump($stu_ids);
+            $update_assn_grade = '
+                UPDATE submission
+                SET Grade = :grade
+                WHERE Stu_id = :stu_id AND Assn_id = :assn_id
+            ';
+            foreach ($stu_ids as $stu) {
+                $id = $stu['Stu_id'];
+                $grade = $_POST[$id];
+                make_query($update_assn_grade, [':grade' => $grade,
+                    ':stu_id' => $id, ':assn_id' => $assn_id]);
+            }
             break;
         case 'edit_attendance':
             $attd_date = $_POST['date'];

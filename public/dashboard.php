@@ -23,6 +23,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             </form>
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
+        <?php if($_SESSION['user_data']['type']==='admin'): ?>
         <form method="post" action="dashboard.php">
             <input hidden="true" name="action" value="addcourse">
             <div class="addcourse" style="display: grid;grid-auto-flow: column">
@@ -38,6 +39,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <!-- coursename,facultyid,credits,department -->
         </div>
     </form>
+    <?php endif ?>
         <form method="post" action="dashboard.php">
             <div class="pendingassignment">
                     <div class="card shadow">
@@ -87,24 +89,31 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
             <form method="post" action="dashboard.php">
-                <input hidden="true" name="action" value="enroll">
+                <input hidden="true" name="action" value="enrolluser">
             <div class="adduser" style="display: grid;grid-auto-flow: row">
-            <label for="Officialid">Official Id:</label>
-            <input type="text" id="Officialid" style="width: 100%;">
+            <label for="Officialidregister">Official Id:</label>
+            <input type="text" id="Officialidregister" name="Officialidregister" style="width: 100%;">
+            <label for="Usernameregister">Username:</label>
+            <input type="text" id="Usernameregister" name="Usernameregister" style="width: 100%;">
             <label for="passwordregister">Password:</label>
-            <input type="text" id="passwordregister" style="width: 100%;">
+            <input type="text" id="passwordregister" name="passwordregister" style="width: 100%;">
             <label for="firstnameregister">First Name:</label>
-            <input type="text" id="firstnameregister" style="width: 100%;">
+            <input type="text" id="firstnameregister" name="firstnameregister" style="width: 100%;">
             <label for="lastnameregister">Last Name:</label>
-            <input type="text" id="lastnameregister" style="width: 100%;">
+            <input type="text" id="lastnameregister" name="lastnameregister" style="width: 100%;">
             <label for="departmentregister">Department Name:</label>
-            <input type="text" id="departmentregister" style="width: 100%;">
+            <input type="text" id="departmentregister" name="departmentregister" style="width: 100%;">
             <label for="branchregister">Branch Name:</label>
-            <input type="text" id="branchregister" style="width: 100%;">
+            <input type="text" id="branchregister" name="branchregister" style="width: 100%;">
             <label for="Typeregister">Type:</label>
-            <input type="text" id="Typeregister" style="width: 100%;">
+            <select name="Typeregister" id="Typeregister">
+                <option value="student">Student</option>
+                <option value="faculty">Faculty</option>
+                <option value="HOD">HOD</option>
+            </select>
+            <!-- <input type="text" id="Typeregister" name="Typeregister" style="width: 100%;"> -->
             <label for="Semesterregister">Semester:</label>
-            <input type="number" id="Semesterregister" style="width: 100%;">            
+            <input type="number" id="Semesterregister" name="Semesterregister" style="width: 100%;">            
             <!-- coursename,facultyid,credits,department -->
         </div>
         <br>
@@ -120,7 +129,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
     <div class='dashboard-app'>
         <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
             <h1 style="position: absolute;text-align: center;width: 100%;z-index: -1;color: #443ea2;">College</h1>
-            <button style="position: absolute;right:0;padding:5px;" onclick="myFunction2()">Register User</button>
+            <?php if($_SESSION['user_data']['type']==='admin'): ?><button style="position: absolute;right:0;padding:5px;" onclick="myFunction2()">Register User</button><?php endif ?>
         </header>
         <div class='card'>
             <div class='card-header' style="grid-template-columns: none;">
@@ -138,7 +147,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                 <div style="display: flex;align-items: center;">
                     <h3 class='data1'>CGPA:{$CGPA}<br><br>Semester: {$user['Semester']}</h3>
                 </div>
-                <p style="position: absolute;bottom:0;right:0;margin:0;">Administrator</p>
+                <p style="position: absolute;bottom:0;right:0;margin:0;">{$user['type']}</p>
                 END;
             ?>
             </div>
@@ -148,7 +157,8 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                 <h2>Courses</h2>
                 <form method="post" action="dashboard.php">
             <input hidden="true" name="action" value="enrolloraddcourses">
-                <button style="width: 10%;left:90%;position:relative;cursor:pointer;" id="enrollbut" onclick="myFunction()">Enroll/Add</button>
+            <?php if($_SESSION['user_data']['type']==='admin'): ?><button style="width: 10%;left:90%;position:relative;cursor:pointer;" id="enrollbut" onclick="myFunction()">Add Courses</button><?php endif ?>
+                <?php if($_SESSION['user_data']['type']==='student'): ?><button style="width: 10%;left:90%;position:relative;cursor:pointer;" id="enrollbut" onclick="myFunction()">Enroll for Courses</button><?php endif ?>
                 </form>
             </div>
             <div class="card-body">
@@ -166,6 +176,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                 </div>
             </div>
         </div>
+        <?php if($_SESSION['user_data']['type']==='student'): ?>
         <div class="container2">
             <div class="card">
                 <div class="card-header">
@@ -181,11 +192,15 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                                         <th style="text-align: center;">Course</th>
                                         <th style="text-align: center;">Last Date</th>
                                         <th style="text-align: center;">Submit</th>
+                                        
                                     </tr>
                                     <?php
                                         foreach($assn_query as $data) {
                                             echo <<<EOS
                                             <tr>
+                                            <form method="post" action="dashboard.php" enctype="multipart/form-data">
+                                                <input hidden="true" name="action" value="submitassgndash">
+                                                <input hidden="true" name="assgn_id" value="{$data['assn_id']}">
                                                 <th scope="row">
                                                     <div class="media align-items-center">
                                                         <div class="media-body">
@@ -195,8 +210,12 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                                                 </th>
                                                 <td>{$data['course_name']}</td>
                                                 <td>{$data['due_time']}</td>
-                                                <td><button type="submit" onclick="document.getElementById('submitassign').click()">
-                                                <input type="file" id="submitassign" style="display:none">Submit</button></td>
+                                                <td><button type="submit" name="assgnsubmit">Submit
+                                                <input type="file" id="submitassign{$data['assn_id']}" name="submitassign{$data['assn_id']}" style="display:none" onchange="document.getElementById('assign{$data['assn_id']}file').innerHTML=document.getElementById('submitassign{$data['assn_id']}').files[0].name"></button>
+                                                <span style="width:min-content;" onclick="document.getElementById('submitassign{$data['assn_id']}').click()"><i class="fa fa-upload" style="cursor:pointer"></i></span>
+                                                <div><p id="assign{$data['assn_id']}file" style="margin:0px;">No File</p></div>
+                                                </td>
+                                            </form>
                                             </tr>
                                         EOS;
                                         }
@@ -242,6 +261,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                 </div>
             </div>
         </div>
+        <?php endif ?>
     </div>
 </div>
 </div>

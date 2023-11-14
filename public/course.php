@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../src/bootstrap.php';
 require_once __DIR__ . '/../src/libs/course.php';
+require_once __DIR__ . '/../src/libs/dashboard.php';
 ?>
 
 <?php
@@ -81,45 +82,48 @@ view('header', [
             <button id="closepopupassignment" onclick="myFunction3()" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer"><i class="fa fa-close"></i></button>
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
-            <div class="pendingassignment">
-                <div class="card shadow">
-                    <table class="table align-items-center table-flush" style="display:block;border-collapse: collapse;height:auto;text-align:center">
-                        <tbody style="display: block;">
-                            <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                                <th style="text-align: center;">Student Id</th>
-                                <th style="text-align: center;">Submission Date</th>
-                                <th style="text-align: center;">Marks</th>
-                            </tr>
-                            
-                            <?php
-                                if ($assn_submissions) {
-                                    foreach ($assn_submissions as $submission) {
-                                        $name = "grade-{$submission['User_id']}";
-                                        echo <<<END
-                                        <tr>
-                                            <td>{$submission['Off_id']}
-                                                <a href="uploaded_files/{$submission['Sub_file']}" download><i class="fa fa-download"></i></a>
-                                            </td>
-                                            <td>{$submission['Sub_date']}</td>
-                                            <td>
-                                                <input type="number" id="$name" name="$name" value="{$submission['Grade']}" min="0" max="100">
-                                            </td>
-                                        </tr>
-                                        END;
+            <form action="course.php?course_id=<?=$course_id?>" method="post">
+                <input hidden name='action' value='confirm_grade_assignment'>
+                <input hidden name='assn_id' value='<?= $assn_id ?>'>
+                <div class="pendingassignment">
+                    <div class="card shadow">
+                        <table class="table align-items-center table-flush" style="display:block;border-collapse: collapse;height:auto;text-align:center">
+                            <tbody style="display: block;">
+                                <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
+                                    <th style="text-align: center;">Student Id</th>
+                                    <th style="text-align: center;">Submission Date</th>
+                                    <th style="text-align: center;">Marks</th>
+                                </tr>   
+                                <?php
+                                    if ($assn_submissions) {
+                                        foreach ($assn_submissions as $submission) {
+                                            $name = "{$submission['User_id']}";
+                                            echo <<<END
+                                            <tr>
+                                                <td>{$submission['Off_id']}
+                                                    <a href="uploaded_files/{$submission['Sub_file']}" download><i class="fa fa-download"></i></a>
+                                                </td>
+                                                <td>{$submission['Sub_time']}</td>
+                                                <td>
+                                                    <input type="number" id="grade-$name" name="$name" value="{$submission['Grade']}" min="0" max="100">
+                                                </td>
+                                            </tr>
+                                            END;
+                                        }
+                                    } else {
+                                        echo "<tr><td>No submissions</td></tr>";
                                     }
-                                } else {
-                                    echo "<tr><td>No submissions</td></tr>";
-                                }
-                            ?>
-                        </tbody>
-                    </table>
+                                ?>
+                            </tbody>
+                        </table>
 
 
+                    </div>
                 </div>
-            </div>
-            <div style="width: 100%;justify-content:center;display:flex">
-                <button id="confirmpopupassignment" onclick="myFunction3()" type="submit">Confirm</button>
-            </div>
+                <div style="width: 100%;justify-content:center;display:flex">
+                    <button id="confirmpopupassignment" type="submit">Confirm</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -351,7 +355,7 @@ view('header', [
                                                 </div>
                                             </div>
                                         </th>
-                                        <td style="padding-left:0px;padding-right:0px;">{$ass['Due_date']}</td>
+                                        <td style="padding-left:0px;padding-right:0px;">{$ass['Due_time']}</td>
                                         <td style="padding-left:0px;padding-right:0px;"><button type="submit">Grade</button></td>
                                     </form>
                                 </tr>

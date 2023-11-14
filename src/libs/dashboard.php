@@ -67,6 +67,23 @@ function getcoursesfaculty($user_id)
     ';
     return make_query($sql,[':user_id'=>$user_id],true);
 }
+function getcoursesHOD()
+{
+    $sql = '
+    Select course.Course_id as course_id, course.Course_name as course_name, CONCAT(user.First_name,\' \',user.Last_name) as faculty_name
+    From course inner join user on course.Fac_id=user.User_id
+    where course.Dept_name= :dept_name;
+    ';
+    return make_query($sql,[':dept_name'=>$_SESSION['user_data']['Dept_name']],true);
+}
+function getcoursesadmin()
+{
+    $sql = '
+    Select course.Course_id as course_id, course.Course_name as course_name, CONCAT(user.First_name,\' \',user.Last_name) as faculty_name
+    From course inner join user on course.Fac_id=user.User_id
+    ';
+    return make_query($sql,[],true);
+}
 function getcoursesenroll($user_id)
 {
     $sql = '
@@ -84,23 +101,12 @@ function getcoursesenroll($user_id)
 }
 function getpendingassignments($user_id)
 {
-    if($_SESSION['user_data']['type']==='student')
-    $sql='Select assignments.Assn_name as assn_name, course.Course_name as course_name, assignments.Due_time as due_time
+    $sql='Select assignments.Assn_id as assn_id,assignments.Assn_name as assn_name, course.Course_name as course_name, assignments.Due_time as due_time
     from assignments inner join course on assignments.Course_id=course.Course_id
     where assignments.Course_id in (
         Select stucourse.Course_id as course_id
     From stucourse inner join course on stucourse.Course_id=course.Course_id inner join user on course.Fac_id=user.User_id
     where stucourse.Stu_id= :user_id
-    )
-     and assignments.Assn_id not in (select Assn_id from submission where Stu_id= :user_id);
-    ';
-    else if($_SESSION['user_data']['type']==='faculty')
-    $sql='Select assignments.Assn_name as assn_name, course.Course_name as course_name, assignments.Due_time as due_time
-    from assignments inner join course on assignments.Course_id=course.Course_id
-    where assignments.Course_id in (
-        Select course.Course_id as course_id
-        From course inner join user on course.Fac_id=user.User_id
-        where user.User_id= :user_id
     )
      and assignments.Assn_id not in (select Assn_id from submission where Stu_id= :user_id);
     ';
@@ -137,6 +143,37 @@ if (is_post_request()) {
         $enroll_courses = getcoursesenroll($user_id);
         $showenroll=1;
     }
+    else if($_POST['action']==='submitassgndash')
+    {
+        $assgnid=$_POST['assgn_id'];
+        $assgnfilename = $_FILES['submitassign'.$assgnid]['name'];
+        if($assgnfilename)
+        {
+            $file = upload_file('submitassign'.$assgnid);
+            $sql = '
+                    INSERT INTO submission(Assn_id, Stu_id, Sub_file)
+                    VALUES (:assgn_id, :stu_id, :sub_file);
+                ';
+            make_query($sql,[':assgn_id'=>$assgnid,':stu_id'=>$user_id,':sub_file'=>$file]);
+        }
+    }
+    else if($_POST['action']==='enrolluser')
+    {
+        $sql = '
+        INSERT INTO user(Username,Password,First_name,Last_name,Off_id,Dept_name,Branch_name,type,Semester)
+        values (:username,:pass,:fname,:lname,:offid,:deptname,:branchname,:type,:sem);
+        ';
+        make_query($sql,[':username'=>$_POST['Usernameregister'],':pass'=>$_POST['passwordregister'],':fname'=>$_POST['firstnameregister'],':lname'=>$_POST['lastnameregister'],':offid'=>$_POST['Officialidregister'],
+        ':deptname'=>$_POST['departmentregister'],':branchname'=>$_POST['branchregister'],':type'=>$_POST['Typeregister'],':sem'=>$_POST['Semesterregister']]);
+        if($_POST['Typeregister']==='HOD')
+        {
+            $sql = '
+                INSERT INTO Department(Dept_name,Head_id)
+                values (:deptname,:offid);
+                ';
+            make_query($sql,[':deptname'=>$_POST['departmentregister'],':offid'=>$_POST['Officialidregister']]);
+        }
+    }
 }
 function updateEnrollment($stu_id) {
     global $enroll_courses;
@@ -168,8 +205,14 @@ function updateEnrollment($stu_id) {
 if($user['type']==='faculty'){
     $user_courses = getcoursesfaculty($user_id);
 }
-else if($user['type']==='student' || 1){
+else if($user['type']==='student'){
     $user_courses = getcoursesstudent($user_id);
+}
+else if($user['type']==='HOD'){
+    $user_courses = getcoursesHOD();
+}
+else if($user['type']==='admin'){
+    $user_courses = getcoursesadmin();
 }
 $assn_query = getpendingassignments($user_id);
 // var_dump($user_courses);
