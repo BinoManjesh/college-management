@@ -20,9 +20,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <button id="closepopup" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer" onclick="myFunction1()"><i class="fa fa-close"></i></button>
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
-            <form method="post" action="dashboard.php">
-                <input hidden="true" name="action" value="enroll">
-            <div class="addcourse" style="display: none;grid-auto-flow: column">
+            <div class="addcourse" style="display: grid;grid-auto-flow: column">
             <label for="coursename">Course-Name:</label>
             <input type="text" id="coursename" style="width: 100px;">
             <label for="Departmentname">Department:</label>
@@ -44,9 +42,21 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                                     <th style="text-align: center;">Department</th>
                                     <th style="text-align: center;">Faculty</th>
                                 </tr>
+                                <form method="post" action="dashboard.php">
+                                <input hidden="true" name="action" value="enroll">
                                 <?php
                                     foreach ($enroll_courses as $course) {
-                                        EnrollCourseRow($course);
+                                        $checked = $course['enrolled'] ? 'checked' : '';
+                                        echo <<<EOS
+                                            <tr>
+                                                <th scope="row">
+                                                    <input name="course{$course['course_id']}" $checked value="{$course['course_id']}" type="checkbox">
+                                                </th>
+                                                <td>{$course['course_name']}</td>
+                                                <td>{$course['department_name']}</td>
+                                                <td>{$course['faculty_name']}</td>
+                                            </tr>
+                                        EOS;
                                     }
                                 ?>
                             </tbody>
@@ -107,17 +117,20 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
         </header>
         <div class='card'>
             <div class='card-header' style="grid-template-columns: none;">
-                <!-- <div class="profile-img"><button type='submit' id="profilepic" style="background:white;opacity:0.5;width:100%;overflow:hidden;height:25%;border:none;z-index:10;cursor:pointer;position:relative;top:75%">Edit</button></div> -->
+            <?php
+            echo<<< END
                 <div style="display: flex;align-items: center;">
-                    <h3 class='data1'>Name:<br><br>Id:</h3>
+                    <h3 class='data1'>Name: {$user['First_name']} {$user['Last_name']}<br><br>Id: {$user['Off_id']}</h3>
                 </div>
                 <div style="display: flex;align-items: center;">
-                    <h3 class='data1'>Department:<br><br>Credits:</h3>
+                    <h3 class='data1'>Department: {$user['Dept_name']}<br><br>Branch: {$user['Branch_name']}</h3>
                 </div>
                 <div style="display: flex;align-items: center;">
-                    <h3 class='data1'>CGPA/Salary:<br><br>Semester:</h3>
+                    <h3 class='data1'>CGPA:<br><br>Semester: {$user['Semester']}</h3>
                 </div>
                 <p style="position: absolute;bottom:0;right:0;margin:0;">Administrator</p>
+                END;
+            ?>
             </div>
         </div>
         <div class='card'>
@@ -129,7 +142,12 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                 <div class="cardcourses-wrapper">
                     <?php
                         foreach($user_courses as $course) {
-                            CardCourse($course);
+                            echo <<<EOS
+                            <div class="cardcourses">
+                                <h3><a href="course.php?course_id={$course['course_id']}">{$course['course_name']}</a></h3>
+                                <p>{$course['faculty_name']}</p>
+                            </div>
+                        EOS;
                         }
                     ?>
                 </div>
@@ -153,7 +171,21 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                                     </tr>
                                     <?php
                                         foreach($assn_query as $data) {
-                                            AssignmentRow($data);
+                                            echo <<<EOS
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="media align-items-center">
+                                                        <div class="media-body">
+                                                            <span class="mb-0 text-sm">{$data['assn_name']}</span>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <td>{$data['course_name']}</td>
+                                                <td>{$data['due_date']}</td>
+                                                <td><button type="submit" onclick="document.getElementById('submitassign').click()">
+                                                <input type="file" id="submitassign" style="display:none">Submit</button></td>
+                                            </tr>
+                                        EOS;
                                         }
                                     ?>
                                 </tbody>
@@ -179,7 +211,13 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                                     </tr>
                                     <?php
                                         foreach ($notifications as $notification) {
-                                            Notification($notification);
+                                            echo <<<EOS
+                                            <tr>
+                                                <th>{$notification['course_name']}</th>
+                                                <td style="width:70%;text-align:left;">{$notification['content']}</td>
+                                                <td style="width:10%"><button><i class="fa fa-trash"></i></button></td>
+                                            </tr>
+                                        EOS;
                                         }
                                     ?>
                                 </tbody>

@@ -1,16 +1,4 @@
 <?php
-
-$user_courses = [
-    ['course_id'=>0, 'course_name'=>'CName1', 'faculty_name'=>'fName'],
-    ['course_id'=>1, 'course_name'=>'CName2', 'faculty_name'=>'fName'],
-    ['course_id'=>2, 'course_name'=>'CName3', 'faculty_name'=>'fName'],
-    ['course_id'=>3, 'course_name'=>'CName4', 'faculty_name'=>'fName'],
-    ['course_id'=>4, 'course_name'=>'CName5', 'faculty_name'=>'fName'],
-    ['course_id'=>5, 'course_name'=>'CName6', 'faculty_name'=>'fName'],
-    ['course_id'=>6, 'course_name'=>'CName7', 'faculty_name'=>'fName'],
-    ['course_id'=>7, 'course_name'=>'CName8', 'faculty_name'=>'fName'],
-    ['course_id'=>8, 'course_name'=>'CName9', 'faculty_name'=>'fName'],
-];
 $assn_query = [
     ['assn_name'=>'A1', 'course_name'=>'C1', 'due_date'=>'1/2/3'],
     ['assn_name'=>'A2', 'course_name'=>'C1', 'due_date'=>'1/2/3'],
@@ -26,97 +14,91 @@ $notifications = [
     ['course_name' => 'c2', 'content'=>'blah blah blah'],
     ['course_name' => 'c3', 'content'=>'blah blah blah']
 ];
-$enroll_courses = [
-    ['course_id' => 0, 'enrolled' => 0, 'course_name' => 'c1', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-    ['course_id' => 1, 'enrolled' => 0, 'course_name' => 'c2', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-    ['course_id' => 2, 'enrolled' => 0, 'course_name' => 'c3', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-    ['course_id' => 3, 'enrolled' => 0, 'course_name' => 'c4', 'department_name'=>'D1', 'faculty_name'=>'F1'],
-];
-
+function getuser($user_id)
+{
+    $sql='
+    SELECT *
+    FROM user
+    Where User_id= :user_id;
+    ';
+    return make_query($sql,[':user_id'=>$user_id],true,true);
+}
+function getcoursesstudent($user_id)
+{
+    $sql = '
+    Select stucourse.Course_id as course_id, course.Course_name as course_name, CONCAT(user.First_name,\' \',user.Last_name) as faculty_name
+    From stucourse inner join course on stucourse.Course_id=course.Course_id inner join user on course.Fac_id=user.User_id
+    where stucourse.Stu_id= :user_id;
+    ';
+    return make_query($sql,[':user_id'=>$user_id],true);
+}
+function getcoursesfaculty($user_id)
+{
+    $sql = '
+    Select course.Course_id as course_id, course.Course_name as course_name, CONCAT(user.First_name,\' \',user.Last_name) as faculty_name
+    From course inner join user on course.Fac_id=user.User_id
+    where user.User_id= :user_id;
+    ';
+    return make_query($sql,[':user_id'=>$user_id],true);
+}
+function getcoursesenroll($user_id)
+{
+    $sql = '
+    Select course.Course_id as course_id,
+    CASE when course.Course_id in (
+        SELECT Course_id
+        FROM stucourse
+        WHERE Stu_id = :user_id
+    ) then 1
+    else 0
+    END AS enrolled,course.Course_name as course_name,course.Dept_name as department_name, CONCAT(user.First_name,\' \',user.Last_name) as faculty_name
+    from course inner join user on course.Fac_id=user.User_id
+    ';
+    return make_query($sql,[':user_id'=>$user_id],true);
+}
+$user_id = $_SESSION['user_data']['User_id'];
+$user = getuser($user_id);
+$enroll_courses = getcoursesenroll($user_id);
+// var_dump($enroll_courses);
 if (is_post_request()) {
     if ($_POST['action'] === 'enroll') {
-        var_dump($_POST);
-        if (!isset($_POST['course'])) {
-            $_POST['course'] = [];
-        }
-        updateEnrollment($_SESSION['user_data']['User_id'], $enroll_courses, $_POST['course']);
+        // if (!isset($_POST['course'])) {
+        //     $_POST['course'] = [];
+        // }
+        // var_dump($_POST);
+        updateEnrollment($_SESSION['user_data']['User_id']);
     }
 }
-
-function updateEnrollment($stu_id, $enroll_courses, $choice) {
+function updateEnrollment($stu_id) {
+    global $enroll_courses;
+    // var_dump($choice);
     $add_course = '
         INSERT INTO stucourse(Stu_id, Course_id)
         VALUES (:Stu_id, :Course_id)
     ';
     $remove_course = '
-        DELET FROM stucourse
+        DELETE FROM stucourse
         WHERE Stu_id = :Stu_id AND Course_id = :Course_id
     ';
     foreach ($enroll_courses as $course) {
         $current = $course['enrolled'];
-        $new = isset($choice[$course['course_id']]);
+        $new = isset($_POST['course'.$course['course_id']]);
+        var_dump($current);
+        var_dump($new);
         if ($new != $current) {
-            try {
-                $data = [':Stu_id' => $stu_id, ':Course_id' => $course['course_id']];
-                if ($new) {
-                    make_query($add_course, $data);
-                } else {
-                    make_query($remove_course, $data);
-                }
-            } catch (PDOException $e) {
-                
+            $data = [':Stu_id' => $stu_id, ':Course_id' => $course['course_id']];
+            if ($new) {
+                make_query($add_course, $data);
+            } else {
+                make_query($remove_course, $data);
             }
         }
     }
+    $enroll_courses = getcoursesenroll($stu_id);
 }
-
-function CardCourse(array $course) {
-    echo <<<EOS
-        <div class="cardcourses">
-            <h3><a href="course.php?course_id={$course['course_id']}">{$course['course_name']}</a></h3>
-            <p>{$course['faculty_name']}</p>
-        </div>
-    EOS;
+if($user['type']==='student'){
+    $user_courses = getcoursesstudent($user_id);
 }
-
-function AssignmentRow(array $data) {
-    echo <<<EOS
-        <tr>
-            <th scope="row">
-                <div class="media align-items-center">
-                    <div class="media-body">
-                        <span class="mb-0 text-sm">{$data['assn_name']}</span>
-                    </div>
-                </div>
-            </th>
-            <td>{$data['course_name']}</td>
-            <td>{$data['due_date']}</td>
-            <td><button type="submit" onclick="document.getElementById('submitassign').click()">
-            <input type="file" id="submitassign" style="display:none">Submit</button></td>
-        </tr>
-    EOS;
-}
-
-function Notification(array $notification) {
-    echo <<<EOS
-        <tr>
-            <th>{$notification['course_name']}</th>
-            <td style="width:70%;text-align:left;">{$notification['content']}</td>
-            <td style="width:10%"><button><i class="fa fa-trash"></i></button></td>
-        </tr>
-    EOS;
-}
-
-function EnrollCourseRow(array $course) {
-    $checked = $course['enrolled'] ? 'checked' : '';
-    echo <<<EOS
-        <tr>
-            <th scope="row">
-                <input name="course[]" $checked value="{$course['course_id']}" type="checkbox">
-            </th>
-            <td>{$course['course_name']}</td>
-            <td>{$course['department_name']}</td>
-            <td>{$course['faculty_name']}</td>
-        </tr>
-    EOS;
+else if($user['type']==='faculty'){
+    $user_courses = getcoursesfaculty($user_id);
 }

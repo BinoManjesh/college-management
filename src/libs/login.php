@@ -9,7 +9,7 @@ if (is_post_request()) {
         FROM user
         WHERE Username = :username
     ';
-    $result = make_query($sql, [":username" => $username], true);
+    $result = make_query($sql, [":username" => $username], true,true);
     $actual_pwd = $result ? $result['Password'] : null;
     if ($actual_pwd === $password) {
         session_regenerate_id();

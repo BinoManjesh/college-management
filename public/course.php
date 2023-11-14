@@ -537,8 +537,8 @@ view('header', [
                     <table class="table align-items-center table-flush" style="border-collapse: collapse;text-align:center;">
                             <tbody style="display: block;height: 225px;overflow: auto;">
                             <tr style="color: #443ea2;background-color: #5e9ad9;text-transform:uppercase;">
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Exam<br><input type="text" style="width: 100px;"></th>
-                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Edit<br><button>Add</button></th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Exam</th>
+                                    <th style="text-align: center;padding-left:5px;padding-right:5px;">Edit</th>
                                 </tr>
                 <tr>
                     <th >Exam</th>
@@ -629,7 +629,7 @@ sidebarBtn.onclick = function() {
     }
     function myFunction7()
     {
-        // document.getElementById("endcoursepopup").style.display="none";
+        document.getElementById("endcoursepopup").style.display="none";
         // console.log((document.getElementById('startingmarksAA').value));
     }
 </script>
