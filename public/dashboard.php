@@ -87,24 +87,31 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
             <form method="post" action="dashboard.php">
-                <input hidden="true" name="action" value="enroll">
+                <input hidden="true" name="action" value="enrolluser">
             <div class="adduser" style="display: grid;grid-auto-flow: row">
-            <label for="Officialid">Official Id:</label>
-            <input type="text" id="Officialid" style="width: 100%;">
+            <label for="Officialidregister">Official Id:</label>
+            <input type="text" id="Officialidregister" name="Officialidregister" style="width: 100%;">
+            <label for="Usernameregister">Username:</label>
+            <input type="text" id="Usernameregister" name="Usernameregister" style="width: 100%;">
             <label for="passwordregister">Password:</label>
-            <input type="text" id="passwordregister" style="width: 100%;">
+            <input type="text" id="passwordregister" name="passwordregister" style="width: 100%;">
             <label for="firstnameregister">First Name:</label>
-            <input type="text" id="firstnameregister" style="width: 100%;">
+            <input type="text" id="firstnameregister" name="firstnameregister" style="width: 100%;">
             <label for="lastnameregister">Last Name:</label>
-            <input type="text" id="lastnameregister" style="width: 100%;">
+            <input type="text" id="lastnameregister" name="lastnameregister" style="width: 100%;">
             <label for="departmentregister">Department Name:</label>
-            <input type="text" id="departmentregister" style="width: 100%;">
+            <input type="text" id="departmentregister" name="departmentregister" style="width: 100%;">
             <label for="branchregister">Branch Name:</label>
-            <input type="text" id="branchregister" style="width: 100%;">
+            <input type="text" id="branchregister" name="branchregister" style="width: 100%;">
             <label for="Typeregister">Type:</label>
-            <input type="text" id="Typeregister" style="width: 100%;">
+            <select name="Typeregister" id="Typeregister">
+                <option value="student">Student</option>
+                <option value="faculty">Faculty</option>
+                <option value="HOD">HOD</option>
+            </select>
+            <!-- <input type="text" id="Typeregister" name="Typeregister" style="width: 100%;"> -->
             <label for="Semesterregister">Semester:</label>
-            <input type="number" id="Semesterregister" style="width: 100%;">            
+            <input type="number" id="Semesterregister" name="Semesterregister" style="width: 100%;">            
             <!-- coursename,facultyid,credits,department -->
         </div>
         <br>
@@ -138,7 +145,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                 <div style="display: flex;align-items: center;">
                     <h3 class='data1'>CGPA:{$CGPA}<br><br>Semester: {$user['Semester']}</h3>
                 </div>
-                <p style="position: absolute;bottom:0;right:0;margin:0;">Administrator</p>
+                <p style="position: absolute;bottom:0;right:0;margin:0;">{$user['type']}</p>
                 END;
             ?>
             </div>

@@ -151,6 +151,23 @@ if (is_post_request()) {
             make_query($sql,[':assgn_id'=>$assgnid,':stu_id'=>$user_id,':sub_file'=>$file]);
         }
     }
+    else if($_POST['action']==='enrolluser')
+    {
+        $sql = '
+        INSERT INTO user(Username,Password,First_name,Last_name,Off_id,Dept_name,Branch_name,type,Semester)
+        values (:username,:pass,:fname,:lname,:offid,:deptname,:branchname,:type,:sem);
+        ';
+        make_query($sql,[':username'=>$_POST['Usernameregister'],':pass'=>$_POST['passwordregister'],':fname'=>$_POST['firstnameregister'],':lname'=>$_POST['lastnameregister'],':offid'=>$_POST['Officialidregister'],
+        ':deptname'=>$_POST['departmentregister'],':branchname'=>$_POST['branchregister'],':type'=>$_POST['Typeregister'],':sem'=>$_POST['Semesterregister']]);
+        if($_POST['Typeregister']==='HOD')
+        {
+            $sql = '
+                INSERT INTO Department(Dept_name,Head_id)
+                values (:deptname,:offid);
+                ';
+            make_query($sql,[':deptname'=>$_POST['departmentregister'],':offid'=>$_POST['Officialidregister']]);
+        }
+    }
 }
 function updateEnrollment($stu_id) {
     global $enroll_courses;
