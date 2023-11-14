@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2023 at 06:31 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Nov 14, 2023 at 07:06 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,7 +33,14 @@ CREATE TABLE `assignments` (
   `Due_time` datetime NOT NULL,
   `Course_id` int(11) NOT NULL,
   `Open` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `assignments`
+--
+
+INSERT INTO `assignments` (`Assn_id`, `Assn_name`, `Due_time`, `Course_id`, `Open`) VALUES
+(5, 'test', '2023-11-14 23:33:00', 9, 0);
 
 -- --------------------------------------------------------
 
@@ -46,7 +53,14 @@ CREATE TABLE `attendance` (
   `Date` date NOT NULL,
   `Course_id` int(11) NOT NULL,
   `Present` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `attendance`
+--
+
+INSERT INTO `attendance` (`Stu_id`, `Date`, `Course_id`, `Present`) VALUES
+(12, '2023-11-14', 9, 0);
 
 -- --------------------------------------------------------
 
@@ -61,7 +75,14 @@ CREATE TABLE `course` (
   `Fac_id` int(11) NOT NULL,
   `Credits` int(11) NOT NULL,
   `Open` tinyint(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `course`
+--
+
+INSERT INTO `course` (`Course_id`, `Course_name`, `Dept_name`, `Fac_id`, `Credits`, `Open`) VALUES
+(9, 'DBMS', 'CSE', 11, 5, 0);
 
 -- --------------------------------------------------------
 
@@ -73,7 +94,14 @@ CREATE TABLE `coursematerial` (
   `Course_id` int(11) NOT NULL,
   `Mat_file` varchar(50) NOT NULL,
   `Mat_name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `coursematerial`
+--
+
+INSERT INTO `coursematerial` (`Course_id`, `Mat_file`, `Mat_name`) VALUES
+(9, '1699985010-Resume.pdf', 'Resume.pdf');
 
 -- --------------------------------------------------------
 
@@ -84,7 +112,15 @@ CREATE TABLE `coursematerial` (
 CREATE TABLE `department` (
   `Dept_name` varchar(20) NOT NULL,
   `Head_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `department`
+--
+
+INSERT INTO `department` (`Dept_name`, `Head_id`) VALUES
+('admin', 10),
+('CSE', 11);
 
 -- --------------------------------------------------------
 
@@ -96,7 +132,18 @@ CREATE TABLE `notification` (
   `Announcement` varchar(255) NOT NULL,
   `Course_id` int(11) NOT NULL,
   `Not_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `notification`
+--
+
+INSERT INTO `notification` (`Announcement`, `Course_id`, `Not_id`) VALUES
+('Sutdy Material Uploaded - Resume.pdf', 9, 1),
+('New Assignment Added - test', 9, 2),
+('New Attendance Added - 2023-11-14', 9, 3),
+('Marks of - Marks_s1 Edited', 9, 4),
+('Course Ended', 9, 5);
 
 -- --------------------------------------------------------
 
@@ -107,11 +154,18 @@ CREATE TABLE `notification` (
 CREATE TABLE `stucourse` (
   `Stu_id` int(11) NOT NULL,
   `Course_id` int(11) NOT NULL,
-  `Marks_s1` int(11) DEFAULT NULL,
-  `Marks_s2` int(11) DEFAULT NULL,
-  `Marks_endsem` int(11) DEFAULT NULL,
+  `Marks_s1` int(11) DEFAULT 0,
+  `Marks_s2` int(11) DEFAULT 0,
+  `Marks_endsem` int(11) DEFAULT 0,
   `Grade` varchar(2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stucourse`
+--
+
+INSERT INTO `stucourse` (`Stu_id`, `Course_id`, `Marks_s1`, `Marks_s2`, `Marks_endsem`, `Grade`) VALUES
+(12, 9, 10, 0, 0, 'FF');
 
 -- --------------------------------------------------------
 
@@ -122,7 +176,18 @@ CREATE TABLE `stucourse` (
 CREATE TABLE `stunotification` (
   `Not_id` int(11) NOT NULL,
   `Stu_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stunotification`
+--
+
+INSERT INTO `stunotification` (`Not_id`, `Stu_id`) VALUES
+(1, 12),
+(2, 12),
+(3, 12),
+(4, 12),
+(5, 12);
 
 -- --------------------------------------------------------
 
@@ -136,7 +201,14 @@ CREATE TABLE `submission` (
   `Sub_time` datetime DEFAULT current_timestamp(),
   `Sub_file` varchar(20) DEFAULT NULL,
   `Grade` varchar(2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `submission`
+--
+
+INSERT INTO `submission` (`Assn_id`, `Stu_id`, `Sub_time`, `Sub_file`, `Grade`) VALUES
+(5, 12, '2023-11-14 23:35:52', '1699985152-Smit Aghe', NULL);
 
 -- --------------------------------------------------------
 
@@ -155,7 +227,16 @@ CREATE TABLE `user` (
   `Branch_name` varchar(20) DEFAULT NULL,
   `type` varchar(20) NOT NULL,
   `Semester` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`User_id`, `Username`, `Password`, `First_name`, `Last_name`, `Off_id`, `Dept_name`, `Branch_name`, `type`, `Semester`) VALUES
+(10, 'admin', 'admin', 'Admin', ' ', 'Admin', 'admin', NULL, 'admin', NULL),
+(11, 'SmitAghera', '123', 'Smit', 'Aghera', 'emp2101', 'CSE', '', 'HOD', 0),
+(12, 'bino', '123', 'Bino', 'Manjesh', 'bt21cse098', 'CSE', 'CORE', 'student', 1);
 
 --
 -- Indexes for dumped tables
@@ -239,25 +320,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `assignments`
 --
 ALTER TABLE `assignments`
-  MODIFY `Assn_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Assn_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `Course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `Course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `Not_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `User_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `User_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
