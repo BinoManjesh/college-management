@@ -245,9 +245,13 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                                         foreach ($notifications as $notification) {
                                             echo <<<EOS
                                             <tr>
+                                            <form method="post" action="dashboard.php">
+                                                <input hidden="true" name="action" value="deletenotification">
+                                                <input hidden="true" name="notificationdel" value="{$notification['not_id']}">
                                                 <th>{$notification['course_name']}</th>
                                                 <td style="width:70%;text-align:left;">{$notification['content']}</td>
-                                                <td style="width:10%"><button><i class="fa fa-trash"></i></button></td>
+                                                <td style="width:10%"><button type="submit"><i class="fa fa-trash"></i></button></td>
+                                            </form>
                                             </tr>
                                         EOS;
                                         }

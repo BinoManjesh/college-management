@@ -5,8 +5,6 @@
 //     ['course_name' => 'c3', 'content'=>'blah blah blah']
 // ];
 
-$notifications = read_notification(1);
-
 function calculateCGPA() {
     $stu_id = $_SESSION['user_data']['User_id'];
     $sql='
@@ -118,6 +116,7 @@ function getpendingassignments($user_id)
 }
 $user_id = $_SESSION['user_data']['User_id'];
 $user = getuser($user_id);
+$notifications = read_notification($user_id);
 $showenroll=NULL;
 if (is_post_request()) {
     if ($_POST['action'] === 'enroll') {
@@ -177,6 +176,11 @@ if (is_post_request()) {
                 ';
             make_query($sql,[':deptname'=>$_POST['departmentregister'],':offid'=>$_POST['Officialidregister']]);
         }
+    }
+    else if($_POST['action']==='deletenotification')
+    {
+        delete_notification($_POST['notificationdel']);
+        $notifications = read_notification($user_id);
     }
 }
 function updateEnrollment($stu_id) {
@@ -283,8 +287,7 @@ function pend_task($stu_id)
 function read_notification($stu_id)
 {
     $sql='
-        Select course.course_name, notification.Announcement as content,
-        stunotification.stu_id,notification.not_id
+        Select course.course_name, notification.Announcement as content,notification.not_id as not_id
         From stunotification, notification, course
         where stunotification.not_id = notification.not_id
         and stunotification.stu_id=:stu_id 
@@ -297,11 +300,12 @@ function read_notification($stu_id)
 }
 
 //delete notification
-function delete_notification($stu_id,$not_id)
+function delete_notification($not_id)
 {
+    global $user_id;
     $sql='
         Delete from stunotification
         where stu_id=:stu_id and not_id=:not_id;
     ';
-    make_query($sql,[":stu_id"=>$stu_id,":not_id"=>$not_id]);
+    make_query($sql,[":stu_id"=>$user_id,":not_id"=>$not_id]);
 }
