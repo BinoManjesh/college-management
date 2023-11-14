@@ -181,11 +181,15 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                                         <th style="text-align: center;">Course</th>
                                         <th style="text-align: center;">Last Date</th>
                                         <th style="text-align: center;">Submit</th>
+                                        
                                     </tr>
                                     <?php
                                         foreach($assn_query as $data) {
                                             echo <<<EOS
                                             <tr>
+                                            <form method="post" action="dashboard.php" enctype="multipart/form-data">
+                                                <input hidden="true" name="action" value="submitassgndash">
+                                                <input hidden="true" name="assgn_id" value="{$data['assn_id']}">
                                                 <th scope="row">
                                                     <div class="media align-items-center">
                                                         <div class="media-body">
@@ -195,8 +199,12 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                                                 </th>
                                                 <td>{$data['course_name']}</td>
                                                 <td>{$data['due_time']}</td>
-                                                <td><button type="submit" onclick="document.getElementById('submitassign').click()">
-                                                <input type="file" id="submitassign" style="display:none">Submit</button></td>
+                                                <td><button type="submit" name="assgnsubmit">Submit
+                                                <input type="file" id="submitassign{$data['assn_id']}" name="submitassign{$data['assn_id']}" style="display:none" onchange="document.getElementById('assign{$data['assn_id']}file').innerHTML=document.getElementById('submitassign{$data['assn_id']}').files[0].name"></button>
+                                                <span style="width:min-content;" onclick="document.getElementById('submitassign{$data['assn_id']}').click()"><i class="fa fa-upload" style="cursor:pointer"></i></span>
+                                                <div><p id="assign{$data['assn_id']}file" style="margin:0px;">No File</p></div>
+                                                </td>
+                                            </form>
                                             </tr>
                                         EOS;
                                         }

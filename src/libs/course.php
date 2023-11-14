@@ -22,7 +22,7 @@ function getAssignment($assn_id) {
 
 function getAssignments($course_id) {
     $sql = '
-        SELECT Assn_name, Due_date, Assn_id
+        SELECT Assn_name, Due_time, Assn_id
         FROM assignments
         WHERE Course_id = :course_id
     ';

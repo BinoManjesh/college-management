@@ -85,7 +85,7 @@ function getcoursesenroll($user_id)
 function getpendingassignments($user_id)
 {
     if($_SESSION['user_data']['type']==='student')
-    $sql='Select assignments.Assn_name as assn_name, course.Course_name as course_name, assignments.Due_time as due_time
+    $sql='Select assignments.Assn_id as assn_id,assignments.Assn_name as assn_name, course.Course_name as course_name, assignments.Due_time as due_time
     from assignments inner join course on assignments.Course_id=course.Course_id
     where assignments.Course_id in (
         Select stucourse.Course_id as course_id
@@ -95,7 +95,7 @@ function getpendingassignments($user_id)
      and assignments.Assn_id not in (select Assn_id from submission where Stu_id= :user_id);
     ';
     else if($_SESSION['user_data']['type']==='faculty')
-    $sql='Select assignments.Assn_name as assn_name, course.Course_name as course_name, assignments.Due_time as due_time
+    $sql='Select assignments.Assn_id as assn_id, assignments.Assn_name as assn_name, course.Course_name as course_name, assignments.Due_time as due_time
     from assignments inner join course on assignments.Course_id=course.Course_id
     where assignments.Course_id in (
         Select course.Course_id as course_id
@@ -136,6 +136,20 @@ if (is_post_request()) {
     {
         $enroll_courses = getcoursesenroll($user_id);
         $showenroll=1;
+    }
+    else if($_POST['action']==='submitassgndash')
+    {
+        $assgnid=$_POST['assgn_id'];
+        $assgnfilename = $_FILES['submitassign'.$assgnid]['name'];
+        if($assgnfilename)
+        {
+            $file = upload_file('submitassign'.$assgnid);
+            $sql = '
+                    INSERT INTO submission(Assn_id, Stu_id, Sub_file)
+                    VALUES (:assgn_id, :stu_id, :sub_file);
+                ';
+            make_query($sql,[':assgn_id'=>$assgnid,':stu_id'=>$user_id,':sub_file'=>$file]);
+        }
     }
 }
 function updateEnrollment($stu_id) {

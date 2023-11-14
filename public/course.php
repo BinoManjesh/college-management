@@ -472,7 +472,7 @@ view('header', [
                                                 </div>
                                             </div>
                                         </th>
-                                        <td style="padding-left:0px;padding-right:0px;">{$ass['Due_date']}</td>
+                                        <td style="padding-left:0px;padding-right:0px;">{$ass['Due_time']}</td>
                                         <td style="padding-left:0px;padding-right:0px;"><button type="submit">Grade</button></td>
                                     </form>
                                 </tr>
