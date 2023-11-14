@@ -436,17 +436,35 @@ view('header', [
                                 </tr>
                                 <?php
                                 foreach ($attendance as $att) {
-                                    $date = $att['Date'];
-                                    echo <<<END
-                                    <tr>
-                                        <form action="course.php?course_id=$course_id" method="post">
-                                            <input hidden name="action" value="edit_attendance">
-                                            <input hidden name="date" value="$date">
-                                            <th>$date</th>
-                                            <td><button type="submit"">Edit</button></td>
-                                        </form>
-                                    </tr>
-                                    END;
+                                    switch ($user_type) {
+                                        case 'faculty':
+                                        case 'HOD':
+                                            $date = $att['Date'];
+                                            echo <<<END
+                                            <tr>
+                                                <form action="course.php?course_id=$course_id" method="post">
+                                                    <input hidden name="action" value="edit_attendance">
+                                                    <input hidden name="date" value="$date">
+                                                    <th>$date</th>
+                                                    <td><button type="submit"">Edit</button></td>
+                                                </form>
+                                            </tr>
+                                            END;
+                                        break;
+                                        case 'student':
+                                            $date = $att['Date'];
+                                            $status = $att['Present'] ? 'Present' : 'Absent';
+                                            echo <<<END
+                                            <tr>
+                                                <form action="course.php?course_id=$course_id" method="post">
+                                                    <input hidden name="action" value="edit_attendance">
+                                                    <input hidden name="date" value="$date">
+                                                    <th>$date</th>
+                                                    <td>$status</td>
+                                                </form>
+                                            </tr>
+                                            END;
+                                    }
                                 }
                                 ?>
             </tbody>

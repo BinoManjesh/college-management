@@ -20,7 +20,7 @@ function getAssignment($assn_id) {
     return make_query($sql, [':assn_id' => $assn_id], true, true);
 }
 
-function getAssignments($course_id) {
+function getAssignmentsForFaculty($course_id) {
     $sql = '
         SELECT Assn_name, Due_time, Assn_id
         FROM assignments
@@ -81,15 +81,17 @@ function getAssignmentsForStudent($stu_id, $course_id) {
     return make_query($sql, [':stu_id' => $stu_id, ':course_id' => $course_id], true);
 }
 
-$students = [
-    ['User_id'=>0, 'Off_id'=>'BT21CSE000'],
-    ['User_id'=>1, 'Off_id'=>'BT21CSE001'],
-    ['User_id'=>2, 'Off_id'=>'BT21CSE002'],
-    ['User_id'=>3, 'Off_id'=>'BT21CSE003'],
-    ['User_id'=>4, 'Off_id'=>'BT21CSE004'],
-    ['User_id'=>5, 'Off_id'=>'BT21CSE005']
-];
+function getStudentAttendance($stu_id, $course_id) {
+    $sql = '
+        SELECT Date, Present
+        FROM attendance
+        WHERE Stu_id = :stu_id
+    ';
+    return make_query($sql, [':stu_id' => $stu_id], true);
+}
+
 $user_id = $_SESSION['user_data']['User_id'];
+$user_type = $_SESSION['user_data']['type'];
 $course_id = $_GET['course_id'];
 $course = getCourse($course_id);
 
@@ -266,10 +268,17 @@ if (is_post_request()) {
 }
 
 $material = getMaterial($course_id);
-$assignments = getAssignments($course_id);
-$attendance = getAttendanceDates($course_id);
+echo $user_type === 'student';
+switch($user_type) {
+    case 'faculty':
+        $assignments = getAssignmentsForFaculty($course_id);
+        $attendance = getAttendanceDates($course_id);
+        break;
+    case 'student':
+        $assignments = getAssignmentsForStudent($user_id, $course_id);
+        $attendance = getStudentAttendance($user_id, $course_id);
+}
 
-$assignments = getAssignmentsForStudent($user_id, $course_id);
 
 function GradeRow($submission) {
     echo <<<END
