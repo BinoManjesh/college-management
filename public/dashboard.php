@@ -16,11 +16,11 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
         <div class="card-header" style="text-align:center;grid-template-columns:none">
             <h3 style="text-align: center;">
                 Courses
+                <form method="post" action="dashboard.php">
+                <input hidden="true" name="action" value="enrollclose">
+                <button id="closepopup" name="closepopup" style="width:auto;position:absolute;right:0;top:0;border:none;background:none;cursor:pointer"><i class="fa fa-close"></i></button>
+                </form>
             </h3>
-            <form method="post" action="dashboard.php">
-            <input hidden="true" name="action" value="enrollclose">
-            <button id="closepopup" name="closepopup" style="width:auto;position:absolute;right:0;border:none;background:none;cursor:pointer"><i class="fa fa-close"></i></button>
-            </form>
         </div>
         <div class="card-body" style="grid-template-columns:none;justify-content:center;overflow: scroll;">
         <?php if($_SESSION['user_data']['type']==='admin'): ?>
@@ -30,7 +30,20 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <label for="coursename">Course-Name:</label>
             <input type="text" id="coursename" name="coursename" style="width: 100px;">
             <label for="Departmentname">Department:</label>
-            <input type="text" id="Departmentname" name="Departmentname" style="width: 75px;">
+            <select name="Departmentname" id="Departmentname">
+                <?php 
+                $dept=make_query('Select Dept_name from department',[],true);
+                foreach($dept as $dept1)
+                {
+                    if($dept1['Dept_name']!=='admin')
+                    {
+                    echo <<< END
+                    <option value="{$dept1['Dept_name']}">{$dept1['Dept_name']}</option>
+                END;
+                    }    
+                }
+                ?>
+            </select>
             <label for="FacultyIdname">Faculty-Id:</label>
             <input type="text" id="FacultyIdname" name="FacultyIdname" style="width: 75px;">
             <label for="Creditsname">Credits:</label>
@@ -130,9 +143,12 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                 $dept=make_query('Select Dept_name from department',[],true);
                 foreach($dept as $dept1)
                 {
+                    if($dept1['Dept_name']!=='admin')
+                    {
                     echo <<< END
                     <option value="{$dept1['Dept_name']}">{$dept1['Dept_name']}</option>
-                END;    
+                END;
+                    }     
                 }
                 ?>
             </select>
