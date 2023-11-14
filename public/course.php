@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../src/bootstrap.php';
 require_once __DIR__ . '/../src/libs/course.php';
+require_once __DIR__ . '/../src/libs/dashboard.php';
 ?>
 
 <?php
