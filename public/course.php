@@ -272,7 +272,7 @@ view('header', [
     <div class='dashboard-app'>
         <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
             <h1 style="position: absolute;text-align: center;width: 100%;z-index: -1;color: #443ea2;">College</h1>
-            <?php if ($user_type === 'faculty' || $user_type === 'HOD'): ?>
+            <?php if ($user_type !== 'student'): ?>
             <button style="position: absolute;right:0;padding:5px;" onclick="myFunction6()">End Course</button>
             <?php endif ?>
         </header>
@@ -303,7 +303,7 @@ view('header', [
                 <div class='card'>
                     <div class="card-header" style="grid-template-columns: none;">
                         <h2>Study Material</h2>
-                        <?php if ($user_type === 'faculty' || $user_type === 'HOD'): ?>
+                        <?php if ($user_type !== 'student'): ?>
                         <form action='course.php?course_id=<?=$course_id?>' method="post" enctype="multipart/form-data">
                             <input hidden name="action" value="upload_material">
                             <button type="submit" style="width: 10%;left:65%;position:relative;cursor:pointer;" id="uploadbut">Upload</button>
@@ -344,7 +344,7 @@ view('header', [
                                 <?php
                                     function ifAllowed($str) {
                                         global $user_type;
-                                        if ($user_type === 'faculty' || $user_type === 'HOD') {
+                                        if ($user_type !== 'student') {
                                             echo $str;
                                         }
                                     }
@@ -366,7 +366,7 @@ view('header', [
                                             </tr>
                                             <?php
                             foreach ($assignments as $ass) {
-                                if ($_SESSION['user_data']['type'] == 'faculty') {
+                                if ($user_type !== 'student') {
                                     echo <<<END
                                     <tr>
                                         <form action="course.php?course_id=$course_id" method="post">
@@ -461,6 +461,7 @@ view('header', [
                                     switch ($user_type) {
                                         case 'faculty':
                                         case 'HOD':
+                                        case 'admin':
                                             $date = $att['Date'];
                                             echo <<<END
                                             <tr>
@@ -519,6 +520,7 @@ view('header', [
                     switch ($user_type) {
                         case 'faculty':
                         case 'HOD':
+                        case 'admin':
                             echo <<<END
                             <tr>
                                 <form action="course.php?course_id=$course_id" method="post">

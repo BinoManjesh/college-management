@@ -296,6 +296,7 @@ switch($user_type) {
             denyRequest();
         }
     case 'HOD':
+    case 'admin':
         $assignments = getAssignmentsForFaculty($course_id);
         $attendance = getAttendanceDates($course_id);
         break;
