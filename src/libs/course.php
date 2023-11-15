@@ -5,7 +5,7 @@ function getCourse($course_id) {
         SELECT Course_id, Course_name, Fac_id, Credits, First_name as Fac_fname, Last_name as Fac_lname, course.Dept_name
         FROM course
         INNER JOIN user
-        ON user.User_id = course.Fac_id;
+        ON user.User_id = course.Fac_id
         WHERE Course_id = :course_id
     ';
     return make_query($sql, [':course_id' => $course_id], true, true);
@@ -100,10 +100,17 @@ function getStudentMarks($stu_id, $course_id)
     return make_query($sql, [':stu_id' => $stu_id, ':course_id' => $course_id], true, true);
 }
 
+ensureLogin();
 $user_id = $_SESSION['user_data']['User_id'];
 $user_type = $_SESSION['user_data']['type'];
-$course_id = $_GET['course_id'];
-$course = getCourse($course_id);
+if (isset($_GET['course_id'])) {
+    $course_id = $_GET['course_id'];
+    $course = getCourse($course_id);
+}
+if (!isset($course) || !$course) {
+    echo "Course not found. Go back to <a href='dashboard.php'>dashboard</a>";
+    exit;
+}
 
 if (is_post_request()) {
     switch($_POST['action']) {

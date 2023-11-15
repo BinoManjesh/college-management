@@ -19,3 +19,10 @@ function redirect_to(string $url): void {
     header('Location:' . $url);
     exit;
 }
+
+function ensureLogin() {
+    if (!isset($_SESSION['user_data'])){
+        redirect_to('login.php');
+        exit();
+    }
+}

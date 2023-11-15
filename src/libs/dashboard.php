@@ -1,9 +1,5 @@
 <?php
-// $notifications = [
-//     ['course_name' => 'c1', 'content'=>'blah blah blah'],
-//     ['course_name' => 'c2', 'content'=>'blah blah blah'],
-//     ['course_name' => 'c3', 'content'=>'blah blah blah']
-// ];
+ensureLogin();
 
 function calculateCGPA() {
     $stu_id = $_SESSION['user_data']['User_id'];
