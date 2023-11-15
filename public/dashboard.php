@@ -186,8 +186,9 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
             <div class='card-header' style="grid-template-columns: none;">
             <?php
             $CGPA=calculateCGPA();
-            if(!isset($CGPA))
-            $CGPA='-';
+            $student_info = '';
+            if(isset($CGPA))
+                $student_info = "<h3 class='data1'>CGPA:{$CGPA}<br><br>Semester: {$user['Semester']}</h3>";
             echo<<< END
                 <div style="display: flex;align-items: center;">
                     <h3 class='data1'>Name: {$user['First_name']} {$user['Last_name']}<br><br>Id: {$user['Off_id']}</h3>
@@ -196,7 +197,7 @@ view('header', ['title' => 'Dashboard', 'stylesheets'=>[
                     <h3 class='data1'>Department: {$user['Dept_name']}<br><br>Branch: {$user['Branch_name']}</h3>
                 </div>
                 <div style="display: flex;align-items: center;">
-                    <h3 class='data1'>CGPA:{$CGPA}<br><br>Semester: {$user['Semester']}</h3>
+                    $student_info
                 </div>
                 <p style="position: absolute;bottom:0;right:0;margin:0;">{$user['type']}</p>
                 END;
