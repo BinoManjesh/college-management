@@ -13,6 +13,6 @@
                 ?>
             </div>
         </div>
-        <a href="login.php" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
+        <a href="login.php?logout" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
     </nav>
 </div>
