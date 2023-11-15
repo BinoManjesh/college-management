@@ -23,7 +23,6 @@ function calculateCGPA() {
 
     $totalCreditPoints = 0;
     $totalGradePoints = 0;
-    // var_dump($subject1);
     foreach($subject1 as $subject) {
      
         $grades = $subject['Grade'];
@@ -31,7 +30,6 @@ function calculateCGPA() {
         $totalGradePoints += isset($gradePoints[$grades]) ? $gradePoints[$grades]*$subjectCredits : 0;
         $totalCreditPoints += isset($gradePoints[$grades]) ? $subjectCredits : 0;
     }
-    // $num += $gradePoint * $subjectCredits;
     $cgpa=NULL;
     if($totalCreditPoints!==0)
     $cgpa = $totalGradePoints/$totalCreditPoints;
@@ -192,7 +190,6 @@ if (is_post_request()) {
 }
 function updateEnrollment($stu_id) {
     global $enroll_courses;
-    // var_dump($choice);
     $add_course = '
         INSERT INTO stucourse(Stu_id, Course_id)
         VALUES (:Stu_id, :Course_id)
@@ -204,8 +201,6 @@ function updateEnrollment($stu_id) {
     foreach ($enroll_courses as $course) {
         $current = $course['enrolled'];
         $new = isset($_POST['course'.$course['course_id']]);
-        // var_dump($current);
-        // var_dump($new);
         if ($new != $current) {
             $data = [':Stu_id' => $stu_id, ':Course_id' => $course['course_id']];
             if ($new) {
@@ -230,7 +225,6 @@ else if($user['type']==='admin'){
     $user_courses = getcoursesadmin();
 }
 $assn_query = getpendingassignments($user_id);
-// var_dump($user_courses);
 
 // returns all the students data for dashboard.
 function fetch_user_data ($userid){
@@ -303,7 +297,6 @@ function read_notification($stu_id)
     
     return make_query($sql,[":stu_id"=>$stu_id],true);
 
-    // var_dump($result);
 }
 
 //delete notification

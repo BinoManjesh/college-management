@@ -191,7 +191,6 @@ if (is_post_request()) {
             $assn_submissions = getSubmissions($assn_id);
             break;
         case 'confirm_grade_assignment':
-            echo "HMM";
             $assn_id = $_POST['assn_id'];
             $get_students = '
                 SELECT Stu_id
@@ -201,7 +200,6 @@ if (is_post_request()) {
                 WHERE Assn_id = :assn_id
             ';
             $stu_ids = make_query($get_students, [':assn_id' => $assn_id], true);
-            var_dump($stu_ids);
             $update_assn_grade = '
                 UPDATE submission
                 SET Grade = :grade
@@ -247,7 +245,6 @@ if (is_post_request()) {
             $stu_marks = make_query($sql, [':course_id' => $course_id], true);
             break;
         case 'confirm_marks':
-            echo "CONFIRM";
             $marks_column = $_POST['column'];
             $get_students = '
                 SELECT Stu_id
