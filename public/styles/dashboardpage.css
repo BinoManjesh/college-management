@@ -417,7 +417,7 @@ h1, .h1 {
 @media (max-width: 992px) {
     .dashboard-nav {
         display: none;
-        position: fixed;
+        /* position: fixed; */
         top: 0;
         right: 0;
         left: 0;
