@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2023 at 07:06 PM
+-- Generation Time: Nov 15, 2023 at 05:12 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -35,13 +35,6 @@ CREATE TABLE `assignments` (
   `Open` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `assignments`
---
-
-INSERT INTO `assignments` (`Assn_id`, `Assn_name`, `Due_time`, `Course_id`, `Open`) VALUES
-(5, 'test', '2023-11-14 23:33:00', 9, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -54,13 +47,6 @@ CREATE TABLE `attendance` (
   `Course_id` int(11) NOT NULL,
   `Present` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `attendance`
---
-
-INSERT INTO `attendance` (`Stu_id`, `Date`, `Course_id`, `Present`) VALUES
-(12, '2023-11-14', 9, 0);
 
 -- --------------------------------------------------------
 
@@ -82,7 +68,16 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`Course_id`, `Course_name`, `Dept_name`, `Fac_id`, `Credits`, `Open`) VALUES
-(9, 'DBMS', 'CSE', 11, 5, 0);
+(11, 'DBMS', 'CSE', 13, 4, 1),
+(12, 'TOC', 'BASIC SCIENCES', 16, 4, 1),
+(13, 'Computer Networks', 'CSE', 14, 4, 1),
+(14, 'Embedded System', 'ECE', 15, 4, 1),
+(15, 'Technical Communication', 'BASIC SCIENCES', 16, 3, 1),
+(16, 'Electrionic Digital Communication', 'ECE', 15, 4, 1),
+(17, 'Engineering Drawing', 'CIVIL', 18, 4, 1),
+(18, 'Wind engineering', 'CIVIL', 18, 3, 1),
+(19, 'Thermodynamics and fluid mechanics', 'MECH', 17, 5, 1),
+(20, 'Control systems and robotics', 'MECH', 17, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -95,13 +90,6 @@ CREATE TABLE `coursematerial` (
   `Mat_file` varchar(50) NOT NULL,
   `Mat_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `coursematerial`
---
-
-INSERT INTO `coursematerial` (`Course_id`, `Mat_file`, `Mat_name`) VALUES
-(9, '1699985010-Resume.pdf', 'Resume.pdf');
 
 -- --------------------------------------------------------
 
@@ -120,7 +108,11 @@ CREATE TABLE `department` (
 
 INSERT INTO `department` (`Dept_name`, `Head_id`) VALUES
 ('admin', 10),
-('CSE', 11);
+('CSE', 14),
+('ECE', 15),
+('BASIC SCIENCES', 16),
+('MECH', 17),
+('CIVIL', 18);
 
 -- --------------------------------------------------------
 
@@ -133,17 +125,6 @@ CREATE TABLE `notification` (
   `Course_id` int(11) NOT NULL,
   `Not_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `notification`
---
-
-INSERT INTO `notification` (`Announcement`, `Course_id`, `Not_id`) VALUES
-('Sutdy Material Uploaded - Resume.pdf', 9, 1),
-('New Assignment Added - test', 9, 2),
-('New Attendance Added - 2023-11-14', 9, 3),
-('Marks of - Marks_s1 Edited', 9, 4),
-('Course Ended', 9, 5);
 
 -- --------------------------------------------------------
 
@@ -160,13 +141,6 @@ CREATE TABLE `stucourse` (
   `Grade` varchar(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `stucourse`
---
-
-INSERT INTO `stucourse` (`Stu_id`, `Course_id`, `Marks_s1`, `Marks_s2`, `Marks_endsem`, `Grade`) VALUES
-(12, 9, 10, 0, 0, 'FF');
-
 -- --------------------------------------------------------
 
 --
@@ -177,17 +151,6 @@ CREATE TABLE `stunotification` (
   `Not_id` int(11) NOT NULL,
   `Stu_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `stunotification`
---
-
-INSERT INTO `stunotification` (`Not_id`, `Stu_id`) VALUES
-(1, 12),
-(2, 12),
-(3, 12),
-(4, 12),
-(5, 12);
 
 -- --------------------------------------------------------
 
@@ -202,13 +165,6 @@ CREATE TABLE `submission` (
   `Sub_file` varchar(20) DEFAULT NULL,
   `Grade` varchar(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `submission`
---
-
-INSERT INTO `submission` (`Assn_id`, `Stu_id`, `Sub_time`, `Sub_file`, `Grade`) VALUES
-(5, 12, '2023-11-14 23:35:52', '1699985152-Smit Aghe', NULL);
 
 -- --------------------------------------------------------
 
@@ -235,8 +191,12 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`User_id`, `Username`, `Password`, `First_name`, `Last_name`, `Off_id`, `Dept_name`, `Branch_name`, `type`, `Semester`) VALUES
 (10, 'admin', 'admin', 'Admin', ' ', 'Admin', 'admin', NULL, 'admin', NULL),
-(11, 'SmitAghera', '123', 'Smit', 'Aghera', 'emp2101', 'CSE', '', 'HOD', 0),
-(12, 'bino', '123', 'Bino', 'Manjesh', 'bt21cse098', 'CSE', 'CORE', 'student', 1);
+(13, 'Shishupal', '123', 'Shishupal', ' ', 'emp001', 'CSE', ' ', 'faculty', 0),
+(14, 'Tausif', '123', 'Tausif', 'Dewan', 'emp002', 'CSE', '', 'HOD', 0),
+(15, 'Mayur', '123', 'Mayur', 'Parate', 'emp003', 'ECE', '', 'HOD', 0),
+(16, 'Kirti', '123', 'Kirti', 'Doreshetwar', 'emp004', 'BASIC SCIENCES', '', 'HOD', 0),
+(17, 'Aatish', '123', 'Aatish', 'Daryapurkar', 'emp005', 'MECH', '', 'HOD', 0),
+(18, 'Puja', '123', 'Puja', 'Gudadhe', 'emp006', 'CIVIL', '', 'HOD', 0);
 
 --
 -- Indexes for dumped tables
@@ -326,19 +286,19 @@ ALTER TABLE `assignments`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `Course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `Course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `Not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `User_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `User_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
