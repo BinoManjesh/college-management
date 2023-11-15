@@ -284,11 +284,18 @@ if (is_post_request()) {
     }
 }
 
+function denyRequest() {
+    echo "Access Denied. Go back to <a href='dashboard.php'>dashboard</a>";
+    exit();
+}
 
 $material = getMaterial($course_id);
-echo $user_type === 'student';
 switch($user_type) {
     case 'faculty':
+        if ($course['Fac_id'] != $user_id){
+            denyRequest();
+        }
+    case 'HOD':
         $assignments = getAssignmentsForFaculty($course_id);
         $attendance = getAttendanceDates($course_id);
         break;
@@ -296,6 +303,9 @@ switch($user_type) {
         $assignments = getAssignmentsForStudent($user_id, $course_id);
         $attendance = getStudentAttendance($user_id, $course_id);
         $stu_marks = getStudentMarks($user_id, $course_id);
+        if (!$stu_marks) {
+            denyRequest();
+        }
         $gradecourse=make_query('Select Grade from stucourse where Course_id=:course_id and Stu_id=:stu_id',[':course_id'=>$course['Course_id'],':stu_id'=>$_SESSION['user_data']['User_id']],true,true);
 }
 
