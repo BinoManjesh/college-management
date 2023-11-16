@@ -318,7 +318,7 @@ view('header', [
                                 echo <<<END
                                 <div class="cardcourses">
                                     <h3>{$mat['Mat_name']}</h3>  
-                                    <p><a href="uploaded_files/{$mat['Mat_file']} download">Download</a></p>
+                                    <p><a href="uploaded_files/{$mat['Mat_file']}" download>Download</a></p>
                                 </div>
                                 END;
                             }
