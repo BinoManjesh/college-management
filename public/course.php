@@ -618,7 +618,7 @@ sidebarBtn.onclick = function() {
     function myFunction7()
     {
         document.getElementById("endcoursepopup").style.display="none";
-        // console.log((document.getElementById('startingmarksAA').value));
+ 
     }
 </script>
 
