@@ -292,7 +292,8 @@ function read_notification($stu_id)
         From stunotification, notification, course
         where stunotification.not_id = notification.not_id
         and stunotification.stu_id=:stu_id 
-        and notification.course_id=course.course_id;
+        and notification.course_id=course.course_id
+        order by notification.not_id desc;
     ';
     
     return make_query($sql,[":stu_id"=>$stu_id],true);
