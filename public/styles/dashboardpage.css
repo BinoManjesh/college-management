@@ -148,7 +148,7 @@ h1, .h1 {
 
 .dashboard-nav {
     min-width: 238px;
-    position: fixed;
+    /* position: fixed; */
     left: 0;
     top: 0;
     bottom: 0;
@@ -399,7 +399,7 @@ h1, .h1 {
 
 @media (min-width: 992px) {
     .dashboard-app {
-        margin-left: 238px;
+        margin-left: 0px;
     }
 
     .dashboard-compact .dashboard-app {
@@ -590,7 +590,8 @@ h1, .h1 {
 .table td,
 .table th {
     font-size: .8125rem;
-    white-space: nowrap;
+    /* white-space: nowrap; */
+    word-wrap: break-word;
 }
 
 .table.align-items-center td,
